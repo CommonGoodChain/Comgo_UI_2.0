@@ -56,9 +56,6 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FintTheme);
     MatListModule,
     TranslateModule,
     MatProgressBarModule,
-    AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyCa0WFUkd481foUKeLnUF9rLLlITdqSFNg'
-    }),
     LoadingModule
 
   ],

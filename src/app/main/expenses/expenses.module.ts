@@ -51,10 +51,6 @@ const routes = [
     NgxChartsModule,
     MatDialogModule,
     TranslateModule,
-    AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyCa0WFUkd481foUKeLnUF9rLLlITdqSFNg'
-    }),
-
     FuseSharedModule,
     FuseWidgetModule,
 

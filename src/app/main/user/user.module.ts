@@ -100,10 +100,6 @@ component: RegisterComponent
     MatDialogModule,
     MatExpansionModule,
     MatRadioModule,
-    AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyCa0WFUkd481foUKeLnUF9rLLlITdqSFNg'
-    }),
-
     FuseSharedModule,
     FuseWidgetModule,
 

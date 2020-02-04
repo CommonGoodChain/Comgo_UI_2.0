@@ -34,11 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
       MatCheckboxModule,
       NgxChartsModule,
       TranslateModule,
-      MatDialogModule,
-      AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyCa0WFUkd481foUKeLnUF9rLLlITdqSFNg'
-      }),
-     
+      MatDialogModule,     
       MatToolbarModule,
       MatStepperModule,
       MatDatepickerModule,
