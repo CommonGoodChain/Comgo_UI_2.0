@@ -1,0 +1,120 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+  <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <div class="top-bg mat-accent-900-bg"></div>
+  <div class="header mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button mat-icon-button class="mr-0 mr-sm-16" (click)="backToProfile()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div fxLayout="column" fxLayoutAlign="start start" *ngIf="operationalFlag == 0">
+        <div class="h2">
+          {{'Add Milestone' | translate}}
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start start" *ngIf="operationalFlag == 1">
+        <div class="h2">
+          {{'Update Milestone' | translate}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content p-24" fusePerfectScrollbar>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-md="row">
+      <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
+        [formGroup]="form" (ngSubmit)="addMilestoneData(form.value)" *ngIf="operationalFlag == 0">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field fxFlex="100">
+            <input #milestone maxlength="60" matInput placeholder="{{'Milestone Name' | translate}}" formControlName="milestone" required>
+            <mat-hint align="end">{{milestone.value.length}} / 60</mat-hint>
+            <mat-error *ngIf="form.get('milestone').hasError('required') && form.get('milestone').touched">
+              {{'Milestone Name is required!' | translate}}
+            </mat-error>
+            <mat-error *ngIf="form.get('milestone').hasError('pattern') && form.get('milestone').touched">
+              {{'Milestone Name is invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field fxFlex="50">
+            <input matInput [matDatepicker]="myDatepicker" [min]="minDate" [max]="maxDate" placeholder=" {{'Start Date' | translate}}" formControlName="startDate"
+              required>
+            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker></mat-datepicker>
+            <mat-error *ngIf="form.get('startDate').hasError('required') && form.get('startDate').touched">
+              {{'Start Date is required!' | translate}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="50">
+            <input matInput [matDatepicker]="myDatepicker1" [min]="minDate" [max]="maxDate" placeholder=" {{'End Date' | translate}}" formControlName="endDate"
+              required>
+            <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker1></mat-datepicker>
+            <mat-error *ngIf="form.get('endDate').hasError('required') && form.get('endDate').touched">
+              {{'End Date is required!' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-raised-button type="button" color="warn" (click)="cancel()">
+            {{'Cancel' | translate}}
+          </button>&nbsp;&nbsp;&nbsp;
+          <button mat-raised-button type="submit" [disabled]="!form.valid" color="accent-900-bg">
+            {{'Save' | translate}}
+          </button>
+        </div>
+      </form>
+      <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
+        [formGroup]="form" (ngSubmit)="editMilestoneData(form.value)" *ngIf="operationalFlag == 1">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field fxFlex="100">
+            <input #milestone maxlength="60" matInput placeholder="{{'Milestone Name' | translate}}" formControlName="milestone" required>
+            <mat-hint align="end">{{milestone.value.length}} / 60</mat-hint>
+            <mat-error *ngIf="form.get('milestone').hasError('required') && form.get('milestone').touched">
+                {{'Milestone name is required!' | translate}}
+            </mat-error>
+            <mat-error *ngIf="form.get('milestone').hasError('pattern') && form.get('milestone').touched">
+              Only 60 alphabets are allowed!
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field fxFlex="50">
+            <input matInput [matDatepicker]="myDatepicker2" [min]="minDate" [max]="maxDate" placeholder=" {{'Start Date' | translate}}" formControlName="startDate"
+              required>
+            <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker2></mat-datepicker>
+            <mat-error *ngIf="form.get('startDate').hasError('required') && form.get('startDate').touched">
+              {{'Start Date is required!' | translate}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="50">
+            <input matInput [matDatepicker]="myDatepicker3" [min]="minDate" [max]="maxDate" placeholder="{{'End Date' | translate}}" formControlName="endDate"
+              required>
+            <mat-datepicker-toggle matSuffix [for]="myDatepicker3"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker3></mat-datepicker>
+            <mat-error *ngIf="form.get('startDate').hasError('required') && form.get('startDate').touched">
+              {{'End Date is required!' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-raised-button type="button" color="warn" (click)="cancel()">
+            {{'Cancel' | translate}}
+          </button>&nbsp;&nbsp;&nbsp;
+          <button mat-raised-button type="submit" [disabled]="!form.valid" color="accent-900-bg">
+            {{'Update' | translate}}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

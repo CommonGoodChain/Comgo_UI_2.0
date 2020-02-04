@@ -1,0 +1,74 @@
+<div id="timeline" class="p-24" fxLayout="row wrap">
+    <div class="timeline-content" fxLayout="column" fxFlexAlign="center" fxFlex="100">
+        <header class="timeline-item mat-accent-900-bg mb-8" fxLayoutAlign="center center">
+            <h1>{{ 'Journey' | translate }}</h1>
+        </header>
+        <div class="profile-box info-box general timeline-item" fxLayout="column" *ngFor="let post of timeLine">
+            <header fxLayout="row" fxLayoutAlign="space-between start">
+                <div class="user" fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-icon-button class="mat-primary-400-bg" style="padding:0px 0 8px 2px">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">timeline</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-primary-400-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Project Updated'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">done_all</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-green-500-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Project Published'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">insert_drive_file</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-indigo-400-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Milestone Created'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">golf_course</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-cyan-400-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Milestone Updated'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">playlist_add_check</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-green-500-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Milestone Deleted'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">delete_sweep</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-orange-400-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Activity Created'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">assessment</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-orange-400-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Activity Updated'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">assignment_returned</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-orange-400-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Activity Deleted'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">delete_forever</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-accent-900-bg" style="padding:0px 0 8px 2px" *ngIf="post.currentStatus==='Fund Requested'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltipPosition="above">monetization_on</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mat-amber-400-bg" style="padding:0px 0 8px 2px;vertical-align:none" *ngIf="post.currentStatus==='Fund Released'">
+                        <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" style="vertical-align:none" role="img" aria-hidden="true"
+                            matTooltipPosition="above">check</mat-icon>
+                    </button>
+
+                    <div fxLayout="column" class="ml-8">
+                        <div class="title">
+                            <span style="color:#0040ff" class="username">{{post.username}}</span>
+                            <span> {{post.txnId}}</span>
+                        </div>
+                        <div style="color:grey">{{post.timeStamp}}</div>
+                    </div>
+                </div>
+            </header>
+            <div class="content">
+                <div class="info-line">
+                    <div class="info">
+                        <span class="title">Operation Performed: </span>{{post.Status}}</div>
+                </div>
+                <br/>
+                <div class= "info">
+                    {{'Fund Raised'| translate}} : {{post.fundRaised | number : '1.2-2'}} {{currency}}
+                </div>
+                <br/>
+                <div class= "info">
+                    {{'Fund Goal'| translate}} : {{post.fundGoal | number : '1.2-2'}} {{currency}}
+                </div>
+                <br/>
+                <div class= "info">
+                    {{'Project Budget'| translate}} : {{post.projectBudget | number : '1.2-2'}} {{currency}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

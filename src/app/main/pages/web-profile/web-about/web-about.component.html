@@ -1,0 +1,309 @@
+<div id="about" class="p-24" fxLayout="row wrap">
+  <div class="about-content" fxLayout="column" fxFlex="100" *ngFor="let data of dataOfProjectByProjectId">
+
+      <div class="profile-box info-box general" fxLayout="column">
+
+          <header class="mat-accent-900-bg">
+              <!-- <div fxFlex="100"> -->
+              <div fxLayout="row">
+                  <div fxFlex="95" class="title" fxLayoutAlign="start center">{{'Project Information' | translate}}</div>
+              </div>
+              <!-- <div fxFlex="5">
+                      <button mat-icon-button (click)="downloadFile()">
+                          <mat-icon class="secondary-text s-35 mat-icon material-icons" role="img" aria-hidden="true" matTooltip="Download Project Document"
+                              matTooltipPosition="above">file_download</mat-icon>
+                      </button>
+                  </div> -->
+              <!-- </div> -->
+              <!-- </div> -->
+
+          </header>
+          <div>
+              <div class="content">
+                  <div>
+                      <!-- Project Details -->
+                      <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                          <div fxFlex="60">
+
+                              <div fxFlex.gt-sm="50">
+                                  <div id="date" fxFlex.gt-sm="20">
+                                      <span style="color:#0a2474" class="username">{{dbStartDate | date:'dd'}}</span>
+                                      
+                                  </div>
+                                  <div class="pt-12" fxFlex.gt-sm="30">
+                                      <div>{{dbStartDate | date:'MMMM'}}</div>
+                                      <div>{{dbStartDate | date:'yyyy'}}</div>
+                                      <br>
+                                      <span style="color:grey">{{'Start' | translate}}</span>
+                                  </div>
+                                 
+                                  <!-- <div class="pt-12"><span style="color:grey">Start</span></div> -->
+                              </div>
+
+                              <div fxFlex.gt-sm="50">
+                                  <div id="date" fxFlex.gt-sm="20">
+                                      <span style="color:#092472" class="username">{{dbEndDate | date:'dd'}}</span>
+                                  </div>
+
+                                  <div class="pt-12" fxFlex.gt-sm="30">
+                                      <div>{{dbEndDate | date:'MMMM'}}</div>
+                                      <div>{{dbEndDate | date:'yyyy'}}</div>
+                                      <br>
+                                      <span style="color:grey">{{'End' | translate}}</span>
+                                  </div>
+                                  <!-- <div class="pt-12"><span style="color:grey">End</span></div> -->
+                              </div>
+
+                          </div>
+                          <!-- <div fxFlex="6">
+                                  <div class="secondary-text" *ngIf="balance > 0 ">
+                                      {{'Donate' | translate}}
+                                      </div>
+                              <div *ngIf="balance > 0 ">
+                                  <div fxFlex="100">
+          
+                                      <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                                          <button mat-icon-button aria-label="add to favorites" (click)="towardsDonation(data)" class="red-500-fg" matTooltip="{{'Donate' | translate}}">
+                                              <mat-icon class=" red-500-fg secondary-text s-50 mat-icon material-icons" role="img" aria-hidden="true">favorite</mat-icon>
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              <div *ngIf="balance == 0 ">
+                                  <div fxFlex="100">
+          
+                                      <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                                          <button mat-icon-button aria-label="add to favorites" matTooltip="Donation limit exceeded" disabled>
+                                              <mat-icon class="secondary-text s-50 mat-icon material-icons" role="img" aria-hidden="true" matTooltip="Donation limit exceeded">favorite</mat-icon>
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> -->
+
+
+                          <!-- fundRaised -->
+                          <div fxFlex="40">
+                                <div fxHide.gt-sm>
+                                    <br/>
+                                    <button mat-raised-button style="width:50%;height:50px;margin-left:25%" type="button" (click)="towardsDonation()" color="accent-900-bg">
+                                        {{'Donate' | translate}}
+                                      </button> 
+                                    </div>
+                                  <div class="info-line" fxHide.gt-sm>
+                                    
+                                          <div class="project">
+                                              <span>{{'Type' | translate}}:</span>
+                                          </div>
+                                          <div class="type">
+                                              <span [translate]="data.translate">{{data.projectType}}</span>
+                                          </div>
+                                      </div>
+                                      <div class="info-line" fxHide.gt-sm>
+                                              <div class="project">
+                                                  <span>{{'Description' | translate}}:</span>
+                                              </div>
+                                              <div>
+                                                  {{dbDescription}}
+                                              </div>
+                                          </div>
+                              <div fxLayoutAlign="center center" class="example-container" [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+                                  <mat-list role="list">
+                                      <mat-list-item class="pb-20" role="listitem">
+                                          <span style="font-size:45px;color:#0a2474">{{projectBudget | number : '1.2-2'}}</span>&nbsp;
+                                          <span style="font-size:15px">{{data.currency}}</span>
+                                      </mat-list-item>
+                                      <mat-list-item fxLayoutAlign="center center" style="color:grey" role="listitem">{{'Project Budget' | translate}}</mat-list-item>
+                                  </mat-list>
+                              </div>
+                              <button mat-button (click)="isActive = !isActive"></button>
+                          </div>
+                          <!-- /fundRaised -->
+                      </div>
+                  </div>
+                  <br/>
+                  <div>
+                      <div fxHide.lt-md><button mat-raised-button style="width:25%;height:50px;margin-left:10%" type="button" (click)="towardsDonation()" color="accent-900-bg">
+                            {{'Donate' | translate}}
+                          </button> </div>
+                      <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                        <div fxFlex="60">
+                              <div class="info-line" fxHide.lt-md>
+                                  <div class="project">
+                                      <span>{{'Type' | translate}}:</span>
+                                      <span style="margin-left:15%">
+                                          <!-- <button mat-icon-button aria-label="add to favorites" (click)="towardsDonation(data)" class="red-500-fg" matTooltip="{{'Donate' | translate}}">
+                                        <mat-icon class=" blue-500-fg secondary-text s-50 mat-icon material-icons" role="img" aria-hidden="true">favorite</mat-icon>
+                                    </button>  -->
+                                    <!-- <button mat-raised-button style="width:35%;height:50px" type="button" (click)="towardsDonation()" color="accent-900-bg">
+                                            {{'Donate' | translate}}
+                                          </button> -->
+                                </span>
+                                  </div>
+                                  <div class="type">
+                                          <span [translate]="data.translate">{{data.projectType}}</span>
+                                  </div>
+                                  
+                              </div>
+                              
+                          </div>
+  
+                          <!-- fundRaised -->
+                          <div fxFlex="40">
+                              <div fxLayoutAlign="center center" class="example-container" [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+                                  <mat-list role="list">
+                                      <mat-list-item class="pb-20" role="listitem">
+                                          <span style="font-size:45px;color:#0a2474">{{data.fundGoal | number : '1.2-2'}}</span>&nbsp;
+                                          <span style="font-size:15px">{{data.currency}}</span>
+                                      </mat-list-item>
+                                      <mat-list-item fxLayoutAlign="center center" style="color:grey" role="listitem">{{'Fund Goal' | translate}}</mat-list-item>
+                                  </mat-list>
+                              </div>
+                              <button mat-button (click)="isActive = !isActive"></button>
+                          </div>
+                          <!-- /fundRaised -->
+                      </div>
+                  </div>
+                  <div>
+                      <div fxFlex="100">
+                          <!-- ProjectTypes -->
+                          <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                              <!-- ProjectTypes  -->
+                              <div fxFlex="60">
+                                  <div class="info-line" fxHide.lt-md>
+                                      <div class="project">
+                                          <span>{{'Description' | translate}}:</span>
+                                      </div>
+                                      <div>
+                                          {{dbDescription}}
+                                      </div>
+                                  </div>
+                                  <div class="info-line" fxHide.lt-md>
+                                      <div class="project">
+                                          <span>{{'Board Remarks' | translate}}:</span>
+                                      </div>
+                                      <div>
+                                          {{dbRemarks}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <!-- Progressbar-->
+                              <div fxFlex="40">
+                                  <div>
+                                      <mat-progress-bar mode="determinate" class="probgressbar" value="{{percentage}}" matTooltip="{{data.fundRaised | number : '1.2-2'}} {{data.currency}}/{{balance | number : '1.2-2'}} {{data.currency}}"></mat-progress-bar>
+                                  </div>
+                                  <br/>
+                                  <div>
+                                      <div class="pl-20" fxFlex.gt-sm="50">
+                                          <span style="color:#0040ff" matTooltip="{{'Fund Raised' | translate}}" class="username">{{data.fundRaised | number : '1.2-2'}} {{data.currency}}</span>
+                                      </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <div fxFlex.gt-sm="50" fxLayoutAlign="end end">
+                                          <span style="color:#0040ff" matTooltip="Balance" class="username">{{balance | number : '1.2-2'}} {{data.currency}}</span>
+                                      </div>
+                                  </div>
+                                  <br/>
+                                  <div>
+                                      <div class="pl-20 secondary-text" fxFlex.gt-sm="50">
+                                          <span matTooltip="{{'Fund Raised' | translate}}" class="username secondary-text">{{'Fund Raised' | translate}}</span>
+                                      </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <div class="secondary-text" fxFlex.gt-sm="50" fxLayoutAlign="end end">
+                                          <span matTooltip="{{'Balance' | translate}}" class="username secondary-text">{{'Balance' | translate}}</span>
+                                      </div>
+                                  </div>
+                                  <!-- <div>
+                                          <div class="pl-20" fxFlex.gt-sm="50">
+                                              <span>Raised</span>
+                                          </div>
+                                          <div class="pr-20" fxLayoutAlign="end end" fxFlex.gt-sm="50">
+                                              <span>Goal</span>
+                                          </div>
+                                      </div> -->
+                                  <br>
+                                  <div class="info-line" fxHide.gt-md>
+                                          <div class="project">
+                                              <span>{{'Board Remarks' | translate}}:</span>
+                                          </div>
+                                          <div>
+                                              {{dbRemarks}}
+                                          </div>
+                                          <br/>
+                                      </div>
+                                      
+                              </div>
+                              <!-- Progressbar -->
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div fxFlex="100">
+                          <!-- Description -->
+                          <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                              <!-- /Description -->
+                              <div fxFlex="30">
+                                  <div class="info-line">
+                                      <div class="project">
+                                          <span>{{'Project Documents' | translate}}:</span>
+                                      </div>
+                                      <div>
+                                          <span *ngFor="let i of projectDocument">
+                                              <mat-icon _ngcontent-c20="" matTooltip="{{i.docName | translate}}" matTooltipPosition="above" class="secondary-text s-48 mat-icon material-icons"
+                                                  role="img" aria-hidden="true">insert_drive_file</mat-icon>
+                                          </span>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="info-line">
+                                      <div class="project">
+                                          <span>{{'Project Supporters' | translate}}:</span>
+                                      </div>
+                                      <div>
+
+                                          <span *ngFor="let data of projectSupporters">
+                                              <img class="p-4" matTooltip="{{data.fileName}}" matTooltipPosition="above" src="{{urlPort}}{{data.filePath}}" width="15%"
+                                                  height="15%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                          </span>
+                                          <span *ngIf="k > 2" class="pt-24" class="secondary-text s-48 mat-icon material-icons">...</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="30">
+                                      <div class="info-line">
+                                              <div class="project">
+                                                  <span>{{'Past Events' | translate}}:</span>
+                                              </div>
+                                              <div>
+                                                  <span *ngFor="let i of pastEvents">
+                                                      <mat-icon _ngcontent-c20="" matTooltip="{{i.fileName}}" matTooltipPosition="above"
+                                                          class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">picture_as_pdf</mat-icon>
+                                                  </span>
+                                                  <span *ngIf="j > 2" class="secondary-text s-48 mat-icon material-icons">...</span>
+                                                  &nbsp;
+                                              </div>
+                                          </div>
+                              </div>
+                              <!-- Map -->
+                              <div fxFlex="40">
+                                  <div class="mat-white-bg" fxFlex="100">
+                                      <agm-map [latitude]="lat" [longitude]="lng">
+                                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                      </agm-map>
+                                  </div>
+                              </div>
+                              <!-- /Map -->
+                          </div>
+                      </div>
+
+                  </div>
+                  
+                  <div>
+                      <div>
+                          <br/>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>

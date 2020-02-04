@@ -1,0 +1,60 @@
+<div id="profile" class="page-layout simple tabbed">
+  <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <div class="header p-24" *ngIf="bgImageUrl!==''" fxLayout="column" id="profileImg" [ngStyle]="{background: 'url('+bgImageUrl+') center center / cover no-repeat '}"
+      fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between end">
+      <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start center">
+          <!-- <img class="profile-image avatar huge" src="{{profileImageUrl}}{{projectOwner}}" onerror="this.src='assets/images/avatars/ngoDefault.jpg'"
+              [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"> -->
+          <div class="name" style="color:white" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+              <span id="ellipses" style="text-shadow: 2px 2px #080808;" matTooltip="{{projectName}}" matTooltipPosition="above">{{projectName}}</span>
+              <div style="font-size:15px;text-shadow: 2px 2px #080808;">{{'By' | translate}} {{ngoName}}
+
+              </div>
+          </div>
+
+
+      </div>
+      <div class="actions" *ngIf="SDGType.length <= 10" fxLayout="row" style="width:100%" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+          <img class="p-4" *ngFor="let sdgData of SDGType " matTooltip="{{sdgData.SDGType | translate}}" matTooltipPosition="above" src="{{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}"
+              width="8%" height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+      </div>
+      <div class="actions" *ngIf="SDGType.length > 10" fxLayout="row" style="width:100%" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+          <img class="p-4" *ngFor="let sdgData of SDGType " matTooltip="{{sdgData.SDGType | translate}}" matTooltipPosition="above" src="{{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}"
+              width="8%" height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+      </div>
+  </div>
+
+  <div class="header p-24" *ngIf="bgImageUrl==''" fxLayout="column" id="profileImg" [ngStyle]="{background: 'url('+defaultImageUrl+') center center / cover no-repeat '}"
+      fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between end">
+      <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start center">
+          <!-- <img class="profile-image avatar huge" src="{{profileImageUrl}}{{projectOwner}}" onerror="this.src='assets/images/avatars/ngoDefault.jpg'"
+              [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"> -->
+          <div class="name" style="color:white" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+              <span id="ellipses" style="text-shadow: 2px 2px #080808;" matTooltip="{{projectName}}" matTooltipPosition="above">{{projectName}}</span>
+              <div style="font-size:15px;text-shadow: 2px 2px #080808;">{{'By' | translate}} {{ngoName}}
+              </div>
+          </div>
+      </div>
+
+      <div class="actions" *ngIf="SDGType.length <= 10" fxLayout="row" style="width:100%" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+          <img class="p-4" *ngFor="let sdgData of SDGType " matTooltip="{{sdgData.SDGType | translate}}" matTooltipPosition="above" src="{{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}"
+              width="8%" height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+      </div>
+      <div class="actions" *ngIf="SDGType.length > 10" fxLayout="row" style="width:100%" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+          <img class="p-4" *ngFor="let sdgData of SDGType " matTooltip="{{sdgData.SDGType | translate}}" matTooltipPosition="above" src="{{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}"
+              width="8%" height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+      </div>
+  </div>
+  <!-- / HEADER -->
+  <!-- CONTENT -->
+  <div class="content">
+        <!-- <div *ngIf="response == ''"><span class="name">No Data Found</span>
+        </div> -->
+      <mat-tab-group dynamicHeight="true">
+          <mat-tab label="{{'About' | translate}}">
+              <app-web-about></app-web-about>
+          </mat-tab>
+      </mat-tab-group>
+  </div>
+  <!-- / CONTENT -->
+</div>

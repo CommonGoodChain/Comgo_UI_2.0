@@ -1,0 +1,106 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <div class="top-bg mat-accent-900-bg"></div>
+    <div class="center">
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button id="viewactivityBackward" mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/projects/milestone/viewmilestone'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                <div class="h2">
+                    {{'View Activities' | translate}}
+                </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field>
+                    <input matInput id="viewactivitySearch" (keyup)="applyFilter($event.target.value)" placeholder="{{'Search' | translate}}">
+                </mat-form-field>
+            </div>
+            <button type="button" (click)="startTour()">
+                <mat-icon _ngcontent-c41="" class="secondary-text s-35 mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">help</mat-icon>
+            </button>
+            <button id="viewactivityAddActivity" mat-raised-button (click)="addNewActivity()" class="add-product-button mat-white-bg my-12 mt-sm-0">
+                <span>{{'ADD ACTIVITY' | translate}}</span>
+            </button>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start start" style="flex-shrink:0">
+            <div class="logo my-12 m-sm-0 mat-accent-900-bg" fxLayout="row" fxLayoutAlign="start none">
+
+                <span class="logo-text h2" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    {{projectName}}/{{milestoneName}}
+                </span>&nbsp;
+            </div>
+        </div>
+        <div class="content-card mat-white-bg" *ngIf="activities.length == 0">
+            <div style="margin-top:18%">
+                <div fxLayoutAlign="center start">
+                    <span class="icon-name secondary-text mt-8">{{'No Activities Added' | translate}}</span>
+                </div>
+                <div fxLayoutAlign="center center">
+                    <mat-icon _ngcontent-c56="" class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">warning</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div class="content-card mat-white-bg" *ngIf="activities.length !== 0">
+
+            <mat-table class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                <ng-container matColumnDef="Activityname">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Activity Name' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.activityName}}" matTooltipPosition="above">{{data.activityName}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="StartDate">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxHide fxShow.gt-md>{{'Start Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="category text-truncate">
+                            {{data.startDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="EndDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>{{'End Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="price text-truncate">
+                            {{data.endDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Activitybudget">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Activity Budget' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.activityBudget | number : '1.2-2'}} {{currency}}" matTooltipPosition="above">{{data.activityBudget | number : '1.2-2'}} {{currency}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Operations">
+                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>{{'Operations' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+                        <span>
+                            <button mat-icon-button *ngIf="data.status != 'Activity Closed'" (click)="forUpdatingActivity(data)">
+                                <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltip="{{'Update Activity'|translate}}"
+                                    matTooltipPosition="above">create</mat-icon>
+                            </button>
+                            <button *ngIf="data.approved == false  && data.fundAllocated == 0" mat-icon-button (click)="deleteActivity(data)">
+                                <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltip="{{'Delete Activity'|translate}}"
+                                    matTooltipPosition="above">delete</mat-icon>
+                            </button>
+                            <mat-icon *ngIf="data.status == 'Activity Closed'" class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted"
+                                role="img" aria-hidden="true" matTooltip="{{'Activity Closed' | translate}}" matTooltipPosition="above">minimize</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let data; columns: displayedColumns;" class="order">
+                </mat-row>
+            </mat-table>
+        </div>
+    </div>
+</div>

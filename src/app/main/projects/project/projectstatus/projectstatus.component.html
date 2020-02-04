@@ -1,0 +1,127 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll">
+<ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+        <!-- TOP BACKGROUND -->
+        <div class="top-bg mat-accent-900-bg"></div>
+        <!-- / TOP BACKGROUND -->
+    
+        <!-- CENTER -->
+        <div class="center">
+    
+             <!-- HEADER -->
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+                <!-- APP TITLE -->
+                <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/pages/profile'">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        {{projectName}}
+                    </span>
+                </div>
+                <!-- / APP TITLE -->
+    
+                <!-- SEARCH -->
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                    <label for="search" class="mr-8">
+                        <mat-icon class="secondary-text">search</mat-icon>
+                    </label>
+                    <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Search' | translate }}">
+                        </mat-form-field>
+                </div>
+                <!-- / SEARCH -->
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start start" style="flex-shrink:0">
+                <div class="logo my-12 m-sm-0 mat-accent-900-bg" fxLayout="row" fxLayoutAlign="start none">
+                </div>
+            </div>
+    
+            <!-- / HEADER -->
+    
+            <!-- CONTENT CARD --><div class="content-card mat-white-bg" *ngIf="milestone.length == 0">
+                <div style="margin-top:18%">
+                    <div fxLayoutAlign="center start">
+                        <span class="icon-name secondary-text mt-8">{{'No Data Found' | translate}}</span>
+                    </div>
+                    <div fxLayoutAlign="center center"><mat-icon _ngcontent-c56="" class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">warning</mat-icon></div>
+                </div></div>
+            <!-- <div class="content-card mat-white-bg" *ngIf="milestone.length !== 0"> -->
+                    <div class="mat-elevation-z8">
+                <mat-table *ngIf="milestone.length !== 0" class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+    
+                       <!-- Milestone Column -->
+                <ng-container matColumnDef="milestone">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Milestone' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <p class="text-truncate">{{data.milestoneName}}</p>
+                        </mat-cell>
+                    </ng-container>
+                    <!-- Activity Column -->
+                    <ng-container matColumnDef="activity">
+                        <mat-header-cell *matHeaderCellDef  mat-sort-header>{{'Activity' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <p class=" text-truncate">
+                                {{data.activityName}}
+                            </p>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <!-- StartDate Column -->
+                    <ng-container matColumnDef="startDate">
+                        <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>{{'Start Date' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                            <p class=" text-truncate">
+                                {{data.startDate |date:'dd-MM-yyyy'}}
+                            </p>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <!-- EndDate Column -->
+                    <ng-container matColumnDef="endDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'End Date' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+                            <p class=" text-truncate">
+                                {{data.endDate | date:'dd-MM-yyyy'}}
+                            </p>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <!-- Fund Column -->
+                    <ng-container matColumnDef="fund">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'Fund' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+    
+                            <span class=" text-truncate">
+                            </span>
+                            <span>
+                                {{data.fundBudgeted | number}}
+                            </span>
+    
+                        </mat-cell>
+                    </ng-container>
+    
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Status' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <span>
+                                {{data.status}}
+                            </span>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+    
+                    <mat-row *matRowDef="let data; columns: displayedColumns;" class="order"
+                   >
+                    </mat-row>
+                </mat-table>
+                <mat-paginator
+#MatPaginator [length]="milestone.length"
+[pageIndex]="0" [pageSize]="5"></mat-paginator>
+            </div>
+            <!-- / CONTENT CARD -->
+        </div>
+        <!-- / CENTER -->
+    </div>

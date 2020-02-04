@@ -1,0 +1,64 @@
+<div id="login" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+  <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <div class="row">
+          <div fxFlexOffset="15" fxFlex="30"><img style="width: 200px" src="assets/images/logos/comgologo.png"></div>
+          <div fxFlex="55" style="margin-top:10%">
+          <span style="color:#7a7a7a!important;font-size:50px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-size:50px;font-weight:bold;font-family:Roboto">go</span>
+          </div>
+      </div>
+      <div ><span style="color:#7a7a7a!important;font-size:25px;">{{'Welcome to ComGo, please create an account or log in to start tracking your impact' | translate}}</span></div>
+     <!-- <p>comgo</p> -->
+  </div>
+<div id="login-form-wrapper" fusePerfectScrollbar [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+  <div id="login-form">
+
+      <div class="comgologo" fxHide.gt-xs>
+              <div fxFlexOffset="50">
+                      <img style="width: 100px" src="assets/images/logos/ComgoLogo-Navbar.png">
+                      <div>
+                      <span style="color:#7a7a7a!important;font-size:30px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-weight:bold;font-size:30px;font-family:Roboto">go
+                          </span>
+                      </div>
+                      </div>
+                      <!-- <div style="margin-top:10%">
+                          <span style="color:#7a7a7a!important;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-weight:bold;font-family:Roboto">go</span>
+                          </div> -->
+                      <!-- <div fxFlex="55" style="margin-top:10%">
+                          <span style="color:#7a7a7a!important;font-size:10px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-size:10px;font-weight:bold;font-family:Roboto">go</span>
+                          </div> -->
+      </div>
+      <div>
+      <div fxFlex="60" class="title">{{'Home Page' | translate}}</div>
+      </div>
+      <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="submit(loginForm.value)" novalidate>
+        <div>
+        <mat-form-field fxFlex="65">
+            <input matInput placeholder="{{'Organization Name' | translate}}" formControlName="orgName" required>
+            <mat-error *ngIf="loginForm.get('orgName').hasError('required') && loginForm.get('orgName').touched">
+                Organization Name is required
+            </mat-error>
+        </mat-form-field>
+        <div fxFlex="35"><h2>.ledgeropen.com</h2></div>
+        </div>
+        <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+        fxLayoutAlign="space-between center">
+       <!-- <mat-checkbox class="forgot-password" aria-label="Remember Me"> -->
+            <a (click)="findWorkspace()">{{'Find Your Workspace' | translate}}</a>
+       <!-- </mat-checkbox> -->
+       <a (click)="register()">{{'Registration' | translate}}</a>
+       <!-- <a id="forgotPassword" class="forgot-password" [routerLink]="'/pages/auth/forgot-password-2/'">
+           {{'Forgot Password?' | translate}}
+       </a> -->
+   </div>
+        <button id="loginButton" mat-raised-button color="accent-900-bg" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
+            Submit
+        </button>
+    </form>
+  </div>
+</div>
+</div>

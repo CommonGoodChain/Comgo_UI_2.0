@@ -1,0 +1,26 @@
+<div class="timeline-sidebar p-24">
+        <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <div class="profile-box latest-activity" fxLayout="column" fxFlex.gt-sm="80" fxFlex.gt-md="80">
+      <header class="mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="title">{{'Visibility' | translate}}</div>
+      </header>
+      <div class="content card" fxLayout="row wrap">
+          <div fxLayout="row" fxLayoutAlign="center center">
+              <!-- <button (click)="communication()" mat-raised-button type="submit">
+                  <a>{{'Communication' | translate}}</a>
+              </button> -->
+              <form name="form" [formGroup]="form">
+              <mat-radio-group aria-label="Select an option" formControlName="visibility">
+                <mat-radio-button *ngFor="let i of radioStatus" (click)="checkVisibility(i)" [value]="i">
+                  <span>{{i | translate}}</span>
+                  &nbsp;
+                </mat-radio-button>
+              </mat-radio-group>
+              <!-- <button mat-raised-button [disabled]="!form.valid" type="submit" color="accent-900-bg" >
+                Save
+              </button> -->
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

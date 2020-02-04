@@ -1,0 +1,55 @@
+<!-- form to show Images and videos -->
+<div id="photos-videos" class="p-24">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <!-- <div class="period">
+        <div class="period-media">
+            <div class="media" > -->
+    <div class="period-title">
+        <span class="name">{{ 'Maximum File size can be upto 50 MB' | translate }} </span>
+    </div><br/>
+    <div class="period-title">
+        <span class="name">{{ 'Photos' | translate }}</span>
+    </div>
+    <br/>
+    <div fxLayout="row wrap" fxLayoutAlign="start start">
+        <div *ngFor="let data of imageCollection; let i = index" class="img_wrp pr-8 pb-8">
+            <img id="photos" (click)="showDialogue(data.imageName)" style=" width: 168px;height: 128px;display: block" src="{{imageUrl}}/{{projectId}}/{{data.imageName}}" 
+            />
+
+            <img class="close" (click)="deleteImage(data)" src="../../../../../../assets/images/logos/closeIcon.png"
+            />
+        </div>
+        <div class="video">
+            <img style=" width: 168px;height: 128px;display: block" (click)="fileInput.click()"
+                src="../../../../../../assets/images/logos/camera.png" />
+            <input hidden type="file" id="photos" (change)="uploadImageFile($event)" #fileInput>
+        </div>
+    </div>
+    <br/>
+    <div class="period-title">
+        <span class="name">{{ 'Videos' | translate }}</span>
+    </div>
+    <br/>
+    <div fxLayout="row wrap" fxLayoutAlign="start start">
+        <div *ngFor="let data of videoCollection" class="img_wrp pr-8">
+            <video style=" width: 168px;height: 128px;display: block" controls (click)="toggleVideo()" #videoPlayer>
+                <source src="{{imageUrl}}/{{projectId}}/{{data.imageName}}" type="video/mp4" /> Browser not supported
+            </video>
+            <img class="close" (click)="deleteVideo(data)" src="../../../../../../assets/images/logos/closeIcon.png"
+            />
+        </div>
+        <div>
+            <img style=" width: 168px;height: 128px;display: block" (click)="fileVideoInput.click()"
+                src="../../../../../../assets/images/logos/videoCam.png" />
+            <!-- <div style="border: 3px solid rgba(0, 0, 0, 0.12)" fxLayoutAlign="center center">
+                    <mat-icon class="secondary-text s-34 mat-icon material-icons" id="img" role="img" aria-hidden="true">add_a_photo</mat-icon>
+                </div> -->
+
+            <input hidden type="file" id="photos" (change)="uploadVideoFile($event)" #fileVideoInput>
+        </div>
+    </div>
+    <!-- </div>
+            </div>
+        </div>
+    </div> -->
+</div>

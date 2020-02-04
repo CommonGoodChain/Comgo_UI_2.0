@@ -1,0 +1,705 @@
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+  /* .txt-center {
+    text-align: center;
+}
+.hide {
+    display: none;
+}
+
+.clear {
+    float: none;
+    clear: both;
+}
+
+.rating {
+    width: 200px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+    position: relative;
+}
+.rating > label {
+    float: right;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 1.1em;
+    cursor: pointer;
+    color: #000;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+    color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+} */
+</style>
+<div *ngIf="data.operation == 'showSDG'">
+  <div fxLayout="row" fxLayoutAlign="center start">
+    <!-- <mat-tab-group>
+          <mat-tab> -->
+    <div *ngFor="let i of data.SDG">
+      <img class="p-4" matTooltip="{{i.SDGType}}" matTooltipPosition="above" src="{{sdgUrl}}{{i.SDGType}}{{imageExtenstion}}" width="50px"
+        height="50px" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+    </div>
+    <!-- </mat-tab>
+  </mat-tab-group> -->
+  </div>
+
+</div>
+
+
+<div *ngIf="data.operation == 'resetSession'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to keep logged in?'|translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+      <button mat-raised-button color="warn" mat-dialog-close (click)="noForSessionAddOperation()">Logout</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForSessionAddOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for add -->
+<div *ngIf="data.operation == 'addProof'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <div>{{data.smsBody}}</div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to save?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForAddOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForAddOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'setProfile'">
+    <div mat-dialog-actions fxLayoutAlign="center center">
+      <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="setProfile()" cdkFocusInitial>{{'Set' | translate}} {{data.imageName}} {{'as Profile Image' | translate}}.</button>
+    </div>
+  </div>
+
+<div *ngIf="data.operation == 'add'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to save?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForAddOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForAddOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+
+
+<div *ngIf="data.operation == 'approveActivity'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">Do you want to approve activity?</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForActivityApprovalOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForActivityApprovalOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'rejectActivity'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Are you sure you want to'|translate}} continue?</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForActivityRejectionOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForActivityRejectionOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for update -->
+<div *ngIf="data.operation == 'update'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to update?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close color="warn" (click)="noForUpdateOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForUpdateOperation()" color="accent-900-bg"
+      cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for cancel -->
+<div *ngIf="data.operation == 'cancel'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to cancel?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForCancelOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForCancelOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for delete -->
+<div *ngIf="data.operation == 'delete'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to delete?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForDeleteOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForDeleteOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for donate -->
+<div *ngIf="data.operation == 'donate'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to donate?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForDonateOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForDonateOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for publish project -->
+<div *ngIf="data.operation == 'publishProject'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to publish project?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForPublishProjectOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForPublishProjectOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for released fund -->
+<div *ngIf="data.operation == 'releaseFund'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to released fund?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForReleaseFundOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForReleaseFundOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for request fund -->
+<div *ngIf="data.operation == 'requestFund'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to request fund?'| translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForRequestFundOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForRequestFundOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for request fund -->
+<div *ngIf="data.operation == 'sendForApproval'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to send for approval?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForSendForApprovalOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForSendForApprovalOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+
+<div *ngIf="data.operation == 'sendForApprovalActivity'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to send for approval?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForSendForApprovalOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForSendForApprovalOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+
+<!-- for project approve -->
+<div *ngIf="data.operation == 'ApproveOrRejectActivity'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Are you sure want to continue?' | translate}}</h2>
+  <input mat-dialog-content placeholder="{{'Enter remarks *' | translate}}" id="statusForApprove">
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForApproveRejectActivityOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForApproveRejectActivityOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+
+<!-- for validate approve -->
+<div *ngIf="data.operation == 'validateApprove'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to approve?'|translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForValidateApproveOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForValidateApproveOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for validate reject -->
+<div *ngIf="data.operation == 'validateReject'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to reject?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForValidateRejectOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForValidateRejectOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for project approve -->
+<div *ngIf="data.operation == 'projectApprove'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to approve project?'|translate}}</h2>
+  <input mat-dialog-content placeholder="Enter remarks *" id="statusForApprove">
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForProjectApproveOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForProjectApproveOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<!-- for project reject -->
+<div *ngIf="data.operation == 'projectReject'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">Do you want to reject project?</h2>
+  <input mat-dialog-content placeholder="Enter remarks *" id="statusForReject">
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForProjectRejectOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" id="yesForProjectRejectOperation" (click)="yesForProjectRejectOperation()"
+      cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'changeStat'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Are you sure you want to'|translate}} {{data.statBody}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForChangeStatus()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForChangeStatus()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'AllocateFunds'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to allocate funds?'|translate}}</h2>
+  <!-- <input mat-dialog-content placeholder="Enter remarks *" id="statusForApprove"> -->
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForFundAllocation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForFundAllocation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'paypalInfo'">
+  <div>
+    <img src="../../../assets/images/comgo2.0gif//generatePaypalToken.gif">
+</div>
+  <div mat-dialog-actions fxLayoutAlign="center end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="closePaypalDialog()">{{'Exit' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'closeActivity'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">Do you want to close activity?</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForCloseActivity()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="yesForCloseActivity()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'expenseApprove'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to approve?' | translate}}</h2>
+  <input mat-dialog-content placeholder="{{'Enter remarks *' | translate}}" id="remarksForExpenseApprove">
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForExpenseApproveOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForExpenseApproveOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'expenseReject'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Do you want to reject?' | translate}}</h2>
+  <input mat-dialog-content placeholder="{{'Enter remarks *' | translate}}" id="remarksForExpenseRejection">
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForExpenseRejectOperation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForExpenseRejectOperation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'donationType'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Select Donation Type' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="selfDonateOperation()" cdkFocusInitial>{{'Self Donate' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" [mat-dialog-close]="true" (click)="donateOperation()" cdkFocusInitial>{{'Donate' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'sendInvitation'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Are you sure want to send invitation?' | translate}}</h2>
+  <input mat-dialog-content placeholder="{{'Enter email id *' | translate}}" id="emailIdForInvitation">
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForSendInvitation()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForSendInvitation()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'changeProjectVisibility'">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button class="mr-0 mr-md-16">
+      <mat-icon style="font-size:50px">warning</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      <div>
+        <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Confirm' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Are you sure want to continue?' | translate}}</h2>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="noForchangeProjectVisibility()">{{'No' | translate}}</button>
+    <button mat-raised-button color="accent-900-bg" (click)="yesForchangeProjectVisibility()" cdkFocusInitial>{{'Yes' | translate}}</button>
+  </div>
+</div>
+
+<div *ngIf="data.operation == 'addReview'">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div>
+          <p style="font-size:40px;margin-bottom: 15px;margin-top: 15px;color:#7b7b7b;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Give Rating' | translate}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="rate">
+    <input type="radio" id="star5" name="rate" value="5" />
+    <label for="star5" title="text">5 stars</label>
+    <input type="radio" id="star4" name="rate" value="4" />
+    <label for="star4" title="text">4 stars</label>
+    <input type="radio" id="star3" name="rate" value="3" />
+    <label for="star3" title="text">3 stars</label>
+    <input type="radio" id="star2" name="rate" value="2" />
+    <label for="star2" title="text">2 stars</label>
+    <input type="radio" id="star1" name="rate" value="1" />
+    <label for="star1" title="text">1 star</label>
+  </div>
+            <!-- <div class="rating">
+                <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+                <label for="star5">☆</label>
+                <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+                <label for="star4">☆</label>
+                <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+                <label for="star3">☆</label>
+                <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+                <label for="star2">☆</label>
+                <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+                <label for="star1">☆</label>
+                <div class="clear"></div>
+            </div> -->
+    <!-- <div class="rating">
+        <span><input type="radio" name="rating" id="str5" value="5"><label for="star5">☆</label></span>
+        <span><input type="radio" name="rating" id="str4" value="4"><label for="str4">☆</label></span>
+        <span><input type="radio" name="rating" id="str3" value="3"><label for="str3">☆</label></span>
+        <span><input type="radio" name="rating" id="str2" value="2"><label for="str2">☆</label></span>
+        <span><input type="radio" name="rating" id="str1" value="1"><label for="str1">☆</label></span>
+    </div> -->
+    <!-- <h2 mat-dialog-content style="color:#4c4848;font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;">{{'Are you sure want to continue?' | translate}}</h2>
+    <div mat-dialog-actions fxLayoutAlign="end end">
+      <button mat-raised-button color="warn" mat-dialog-close (click)="noForchangeProjectVisibility()">{{'No' | translate}}</button>
+      <button mat-raised-button color="accent-900-bg" (click)="yesForchangeProjectVisibility()" cdkFocusInitial>{{'Yes' | translate}}</button>
+    </div> -->
+  </div>

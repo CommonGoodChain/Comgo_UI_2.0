@@ -1,0 +1,256 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+  <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+  <!-- HEADER -->
+  <div class="header mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+    <!-- APP TITLE -->
+    <div *ngIf="operationalFlag == 0" fxLayout="row" fxLayoutAlign="start center">
+      <button mat-icon-button class="mr-0 mr-sm-16" (click)="backTo()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div class="h2">
+          {{'Add Proof'|translate}}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="operationalFlag == 1" fxLayout="row" fxLayoutAlign="start center">
+      <button mat-icon-button class="mr-0 mr-sm-16" (click)="backTo()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div class="h2">
+          {{'Update Proof'|translate}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT FOR ADDING MILESTONE -->
+  <div class="content p-24">
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-md="row">
+
+      <!-- Add Prrof Form-->
+
+      <form  class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+        fxFlex="1 0 auto" name="form" [formGroup]="form" *ngIf="operationalFlag == 0" (ngSubmit)="addProofData(form.value)">
+        <div  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="50">
+            <input matInput placeholder="{{'Beneficiary' | translate}}" formControlName="supplierName">
+            <mat-error *ngIf="form.get('supplierName').hasError('required') && form.get('supplierName').touched">
+              {{'Description is required!' | translate}}
+            </mat-error>
+            <mat-error *ngIf="form.get('supplierName').hasError('pattern') && form.get('supplierName').touched">
+              {{'Only 40 alphanumericss are allowed!' | translate}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="15">
+              <mat-select (click)="getCountryCode()" placeholder="{{'Country Code' | translate}} *" formControlName="countryCode">
+                <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCareUnit($event.target.value)"></ngx-mat-select-search>     
+                <mat-option  *ngFor="let countryCode of getCountryCodes" [value]='countryCode.code'>
+                    {{countryCode.code}}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="form.get('countryCode').hasError('required') && form.get('countryCode').touched">
+                  Country code is required!
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="35">
+            <input matInput class="right" type="number" placeholder="{{'Beneficiary Mobile No' | translate}}" formControlName="supplierMobNo">
+            <mat-error *ngIf="form.get('supplierMobNo').hasError('pattern') && form.get('supplierMobNo').touched">
+              {{'Enter valid mobile number!' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <input matInput placeholder="{{'Beneficiary Proof Type' | translate}}" formControlName="proofType" required>
+
+            <mat-error *ngIf="form.get('proofType').hasError('required') && form.get('proofType').touched">
+              {{'Beneficiary Proof Type is required!' | translate}}
+            </mat-error>
+            <mat-error *ngIf="form.get('proofType').hasError('pattern') && form.get('proofType').touched">
+              {{'Only 80 alphanumericss are allowed!' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="30">
+            <input matInput class="right" type="number" placeholder="{{'Amount' | translate}}" formControlName="amount">
+            <mat-error *ngIf="form.get('amount').hasError('pattern') && form.get('amount').touched">
+              {{'Enter valid amount!' | translate}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="30" fxFlexOffset="5">
+            <mat-select (click)="getCurrencies()" placeholder="{{'Currency' | translate}}" formControlName="currencyType">
+              <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCurrency($event.target.value)"></ngx-mat-select-search>     
+              <mat-option *ngFor="let data of getCurrency" [value]=data.currencyCode> {{data.currencyCode}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="30" fxFlexOffset="5">
+            <mat-select placeholder="{{'Doc Type' | translate}}" formControlName="docType">
+              <mat-option *ngFor="let data of getDocTypes" [value]=data.DocType> {{data.DocType}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- SMS -->
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <input matInput placeholder="{{'SMS Body' | translate}}" formControlName="smsBody">
+            <mat-error *ngIf="form.get('smsBody').hasError('pattern') && form.get('smsBody').touched">
+              {{'Only 1000 alphanumerics are allowed!' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <input matInput placeholder="{{'Remarks' | translate}}" formControlName="remarks" required>
+
+            <mat-error *ngIf="form.get('remarks').hasError('required') && form.get('remarks').touched">
+              {{'Remarks is required!' | translate}}
+            </mat-error>
+            <mat-error *ngIf="form.get('remarks').hasError('pattern') && form.get('remarks').touched">
+              {{'Only 200 alphanumerics are allowed!' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- SMS ends -->
+        <!-- Email -->
+        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <input matInput placeholder="Email Body" formControlName="emailBody">
+            <mat-error *ngIf="form.get('emailBody').hasError('pattern') && form.get('emailBody').touched">
+              Only 300 alphanumericss are allowed!
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+        <!-- Email ends -->
+        <div class="file-uploader">
+          <input hidden type="file" (change)="uploadFile($event)" #fileInput/>
+          <button mat-fab type="button" class="add-file-button mat-warn" (click)="fileInput.click()" aria-label="Add file" matTooltip="{{'Upload Proof' | translate}}">
+            <mat-icon>add</mat-icon>
+          </button>&nbsp;&nbsp;
+          <span style="color:red">{{filename}}</span>&nbsp;&nbsp;
+          <!-- <span style="color:red">({{validationCheck}})</span> -->
+        </div>
+        
+        <div>
+            <br/>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-raised-button type="button" color="warn" (click)="cancel()">
+            {{'Cancel' | translate}}
+          </button>&nbsp;&nbsp;&nbsp;
+          <button mat-raised-button type="submit" [disabled]="!form.valid" color="accent-900-bg">
+            {{'Save' | translate}}
+          </button>
+        </div>
+        </div>
+      </form>
+
+      <form  class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+      fxFlex="1 0 auto" name="form" [formGroup]="form" *ngIf="operationalFlag == 1" (ngSubmit)="updateProofData(form.value)">
+      <div  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="50">
+          <input id="otherValidator" matInput placeholder="{{'Beneficiary *'| translate}}" formControlName="supplierName" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex="15">
+            <mat-select id="proofCountryCode" (click)="getCountryCode()" placeholder="{{'Country Code' | translate}} *" formControlName="countryCode">
+              <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCareUnit($event.target.value)"></ngx-mat-select-search>     
+              <mat-option  *ngFor="let countryCode of getCountryCodes" [value]='countryCode.code'>
+                  {{countryCode.code}}
+                </mat-option>
+              </mat-select>
+            <mat-error *ngIf="form.get('countryCode').hasError('required') && form.get('countryCode').touched">
+                Country code is required!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex="35">
+          <input id="otherValidatorMobNo" matInput class="right" type="number" placeholder="{{'Beneficiary Mobile No *' | translate}}" formControlName="supplierMobNo">
+          <mat-error *ngIf="form.get('supplierMobNo').hasError('pattern') && form.get('supplierMobNo').touched">
+            {{'Enter valid mobile number!' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="100">
+          <input id="otherValidatorProofType" matInput placeholder="{{'Beneficiary Proof Type' | translate}}" formControlName="proofType" required>
+
+          <mat-error *ngIf="form.get('proofType').hasError('required') && form.get('proofType').touched">
+            {{'Beneficiary Proof Type is required!' | translate}}
+          </mat-error>
+          <mat-error *ngIf="form.get('proofType').hasError('pattern') && form.get('proofType').touched">
+            {{'Only 80 alphanumericss are allowed!' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="30">
+          <input id="proofAmount" matInput class="right" type="number" placeholder="{{'Amount' | translate}}" formControlName="amount">
+          <mat-error *ngIf="form.get('amount').hasError('pattern') && form.get('amount').touched">
+            {{'Enter valid amount!' | translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex="30" fxFlexOffset="5">
+          <mat-select id="proofCurrency" (click)="getCurrencies()" placeholder="{{'Currency' | translate}}" formControlName="currencyType" disabled>
+            <!-- <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCurrency($event.target.value)"></ngx-mat-select-search>      -->
+            <mat-option *ngFor="let data of getCurrency" [value]=data.currencyCode> {{data.currencyCode}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="30" fxFlexOffset="5">
+          <mat-select id="proofDocType" placeholder="{{'Doc Type' | translate}}" formControlName="docType" disabled>
+            <mat-option *ngFor="let data of getDocTypes" [value]=data.DocType> {{data.DocType}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="100">
+          <input id="proofSMSBody" matInput placeholder="{{'SMS Body' | translate}}" formControlName="smsBody">
+          <mat-error *ngIf="form.get('smsBody').hasError('pattern') && form.get('smsBody').touched">
+            {{'Only 1000 alphanumerics are allowed!' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="100">
+          <input id="proofRemarks" matInput placeholder="{{'Remarks' | translate}}" formControlName="remarks" required>
+
+          <mat-error *ngIf="form.get('remarks').hasError('required') && form.get('remarks').touched">
+            {{'Remarks is required!' | translate}}
+          </mat-error>
+          <mat-error *ngIf="form.get('remarks').hasError('pattern') && form.get('remarks').touched">
+            {{'Only 200 alphanumerics are allowed!' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div>
+          <br/>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-raised-button type="button" color="warn" (click)="cancel()">
+          {{'Cancel' | translate}}
+        </button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button type="submit" [disabled]="!form.valid" color="accent-900-bg">
+          {{'Update' | translate}}
+        </button>
+      </div>
+      </div>
+    </form>
+
+      <!-- / Add Proof Form -->
+      <!-- </div> -->
+      <!-- </div> -->
+    </div>
+    <!-- / CONTENT -->
+  </div>
+  <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>
+<!-- / CENTER -->

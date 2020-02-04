@@ -1,0 +1,236 @@
+<div id="register" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <!-- <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row">
+            <div fxFlexOffset="15" fxFlex="30"><img style="width: 200px" src="assets/images/logos/comgologo.png"></div>
+            <div fxFlex="55" style="margin-top:10%">
+            <span style="color:#7a7a7a!important;font-size:50px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-size:50px;font-weight:bold;font-family:Roboto">go</span>
+            </div>
+        </div>
+    </div> -->
+    <div id="register-intro" fxFlex fxHide fxShow.gt-xs>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row">
+            <div fxFlexOffset="15" fxFlex="30"><img style="width: 200px" src="assets/images/logos/comgologo.png"></div>
+            <div fxFlex="55" style="margin-top:10%">
+            <span style="color:#7a7a7a!important;font-size:50px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-size:50px;font-weight:bold;font-family:Roboto">go</span>
+            </div>
+        </div>
+    </div>
+<!-- <div id="video-intro" fxFlex fxHide fxShow.gt-xs>
+        <div class="appVideo">
+<video  fxFlex fxHide fxShow.gt-xs style="display: block;border: 3px solid rgba(0, 0, 0, 0.12);" controls (click)="toggleVideo()"
+    #videoPlayer>
+    <source src="{{imageUrl}}/Amazing Technology For Handycap People (4).3gp" type="video/mp4" /> Browser not supported
+</video>
+</div></div> -->
+<div id="register-form-wrapper" fusePerfectScrollbar [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+    <div id="register-form">
+        <div class="comgologo" fxHide.gt-xs>
+            <!-- <div>
+                <img class="styleLogo" src="assets/images/logos/ComgoLogo-Navbar.png">
+            </div> -->
+            <div fxFlexOffset="50">
+                <img style="width: 100px" src="assets/images/logos/ComgoLogo-Navbar.png">
+                <div>
+                <span style="color:#7a7a7a!important;font-size:30px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-weight:bold;font-size:30px;font-family:Roboto">go
+                    </span>
+                </div>
+                </div>
+            <br/>
+        </div>
+        <div class="title">{{'CREATE AN ACCOUNT' | translate}}</div>
+        <button mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <img class="flag mr-8" [src]="'assets/images/flags/'+selectedLanguage.flag+'.png'">
+                <span class="iso text-uppercase">{{selectedLanguage.flag}}</span>
+            </div>
+        </button>
+        <mat-menu #languageMenu="matMenu" [overlapTrigger]="false">
+    
+            <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                <span fxLayout="row" fxLayoutAlign="start center">
+                    <img class="flag mr-16" [src]="'assets/images/flags/'+lang.flag+'.png'">
+                    <span class="iso">{{lang.title}}</span>
+                </span>
+            </button>
+        </mat-menu>
+        <form name="registerForm" [formGroup]="registerForm" novalidate (ngSubmit)="registration(registerForm.value)">
+            <div id="registrationStep1">
+                    <!-- <mat-form-field>
+                           
+                        <input matInput id="foundationOrg" placeholder="Organization" disabled>
+                        </mat-form-field> -->
+                        <mat-form-field>
+                            <mat-select placeholder="{{'User Type' | translate}} *" (selectionChange)="changeUserType($event)" formControlName="userType">
+                                <mat-option *ngFor="let data of getUserType" [value]=data.userType>
+                                    {{data.userType | translate}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="registerForm.get('userType').hasError('required') && registerForm.get('userType').touched">
+                                {{'User Type is required!' | translate}}
+                                </mat-error>
+                        </mat-form-field>
+                        <mat-form-field id="organization">
+                                <input #orgName maxlength="40" matInput placeholder="{{'Organization *'| translate}}" formControlName="orgName">
+                                <mat-hint align="end">{{orgName.value.length}} / 40</mat-hint>
+                                <mat-error *ngIf="registerForm.get('orgName').hasError('pattern') && registerForm.get('orgName').touched">
+                                    {{'Enter valid Organization Name!'|translate}}                        </mat-error>
+                            </mat-form-field>
+                            <mat-form-field id="firstName">
+                                    <input #firstName matInput maxlength="80" placeholder="{{'First Name' | translate}}" formControlName="firstName">
+                                    <mat-hint align="end">{{firstName.value.length}} / 80</mat-hint>
+                                    <mat-error *ngIf="registerForm.get('firstName').hasError('pattern') && registerForm.get('firstName').touched">
+                                        {{'First Name is Invalid!' | translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field id="firstSurname">
+                                        <input #firstSurname maxlength="80" matInput placeholder="{{'First Surname' | translate}}" formControlName="firstSurname">
+                                        <mat-hint align="end">{{firstSurname.value.length}} / 80</mat-hint>
+                                        <mat-error *ngIf="registerForm.get('firstSurname').hasError('pattern') && registerForm.get('firstSurname').touched">
+                                            {{'First Surname is Invalid!' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field id="secondSurname">
+                                            <input #secondSurname maxlength="80" matInput placeholder="{{'Second Surname' | translate}}" formControlName="secondSurname">
+                                            <!-- <mat-error *ngIf="registerForm.get('secondSurname').hasError('required') && registerForm.get('secondSurname').touched">
+                                                Second surname is required!
+                                            </mat-error> -->
+                                            <mat-hint align="end">{{secondSurname.value.length}} / 80</mat-hint>
+                                            
+                                            <mat-error *ngIf="registerForm.get('secondSurname').hasError('pattern') && registerForm.get('secondSurname').touched">
+                                                Second Surname is invalid!
+                                            </mat-error>
+                                        </mat-form-field>
+                        <div>
+                                <mat-form-field fxFlex="100">
+                                    <input maxlength="80" matInput placeholder="{{'User Name' | translate}}" formControlName="username" required>
+                                    <mat-error *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched">
+                                        User Name is required!
+                                    </mat-error>
+                                    <mat-error *ngIf="registerForm.get('username').hasError('pattern') && registerForm.get('username').touched">
+                                        {{'Enter valid User Name!' | translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                                </div>
+                                <mat-form-field>
+                                        <input matInput type="password" placeholder="{{'Password' | translate}}" formControlName="password" required>
+                                        <mat-error>
+                                            {{'Password is required!' | translate }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput type="password" placeholder="{{'Password (Confirm)' | translate}}" formControlName="confirmPassword" required>
+                                        <mat-error *ngIf="registerForm.get('confirmPassword').hasError('required')">
+                                            {{'Password confirmation is required' | translate}}
+                                        </mat-error>
+                                        <mat-error *ngIf="!registerForm.get('confirmPassword').hasError('required') &&
+                                                           registerForm.get('confirmPassword').hasError('passwordsNotMatching')">
+                                     {{'Passwords must match' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                            <input matInput placeholder="{{'Email' | translate}}" formControlName="email" required>
+                                            <mat-error *ngIf="registerForm.get('email').hasError('required')">
+                                                Email is required
+                                            </mat-error>
+                                            <mat-error *ngIf="registerForm.get('email').hasError('pattern')">
+                                                {{'Enter valid Email Id!' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                <mat-form-field>
+                        <input #idNumber maxlength="15" style="text-align:right" matInput placeholder="{{'Id Number' | translate}}" formControlName="idNumber" required>
+                        <mat-hint align="end">{{idNumber.value.length}} / 15</mat-hint>
+                        <mat-error *ngIf="registerForm.get('idNumber').hasError('required') && registerForm.get('idNumber').touched">
+                            {{'Id Number is required!' | translate}}
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('idNumber').hasError('pattern') && registerForm.get('idNumber').touched">
+                            {{'Enter valid Id Number!' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                <div>
+                        <mat-form-field fxFlex="30" id="country">
+                                <mat-select (click)="changedCountryName()" placeholder="{{'Country' | translate}} *" (selectionChange)="changeCountry($event)" formControlName="country">
+                                    <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCountry($event.target.value)"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let data of getCountry" [value]=data.countryName>
+                                        {{data.countryName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="registerForm.get('country').hasError('required') && registerForm.get('country').touched">
+                                        Country Name is required!
+                                    </mat-error>
+                            </mat-form-field>
+                    <mat-form-field fxFlex="25">
+                        <mat-select id="countryCode" matTooltip="{{'Country Code' | translate}} *" matTooltipPosition="above" placeholder="{{'Country Code' | translate}}" formControlName ="countryCode" required disabled>
+                               
+                                <!-- <ngx-mat-select-search [formControl] ="countryCode"></ngx-mat-select-search> -->
+                            <mat-option  *ngFor="let countryCode of getCountryCodes" [value]='countryCode.code'>
+                              {{countryCode.code}}
+                            </mat-option>
+                          </mat-select>
+                        <mat-error *ngIf="registerForm.get('countryCode').hasError('required') && registerForm.get('countryCode').touched">
+                            Country Code is required!
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="40">
+                        <input #phone maxlength="15" style="text-align:right" matInput placeholder="{{'Contact Number' | translate}}" formControlName="phone" required>
+                        <mat-hint align="end">{{phone.value.length}} / 15</mat-hint>
+                        <mat-error *ngIf="registerForm.get('phone').hasError('required') && registerForm.get('phone').touched">
+                            {{'Contact Number is required!' | translate}}
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('phone').hasError('pattern') && registerForm.get('phone').touched">
+                            {{'Enter valid Contact Number!' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <mat-form-field id="address">
+                        <input #address maxlength="80" matInput placeholder="{{'Address' | translate}} *" formControlName="address">
+                        <mat-hint align="end">{{address.value.length}} / 80</mat-hint>
+                        <mat-error *ngIf="registerForm.get('address').hasError('pattern') && registerForm.get('address').touched">
+                            Enter valid Address!
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field id="zipCode">
+                            <input #zipCode maxlength="5" matInput placeholder="{{'Zip Code' | translate}} *" formControlName="zipCode">
+                            <mat-hint align="end">{{zipCode.value.length}} / 5</mat-hint>
+                            <mat-error *ngIf="registerForm.get('zipCode').hasError('pattern') && registerForm.get('zipCode').touched">
+                                {{'Enter valid Zip Code!' | translate}}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field id="city">
+                                <input #city maxlength="30" matInput placeholder="{{'City' | translate}} *" formControlName="city">
+                                <mat-hint align="end">{{city.value.length}} / 30</mat-hint>
+                                <mat-error *ngIf="registerForm.get('city').hasError('pattern') && registerForm.get('city').touched">
+                                    {{'Enter valid City!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                <mat-form-field id="domainName" style="display:none">
+                        <input matInput placeholder="{{'Domain Name' | translate}} *" formControlName="domainName">
+                        <mat-error *ngIf="registerForm.get('domainName').hasError('required') && registerForm.get('domainName').touched">
+                            Organization Name is required!
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('domainName').hasError('pattern') && registerForm.get('domainName').touched">
+                            {{'Enter valid Domain Name!'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- <div id="domainExtension" fxFlex="35"><h2>.ledgeropen.com</h2></div> -->
+                <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="registerForm.invalid">
+                    {{'CREATE AN ACCOUNT' | translate}}
+                </button>
+            </div>
+        </form>
+
+        <div class="register" fxLayout="column" fxLayoutAlign="center center">
+            <span class="text">{{'Already have an account?' | translate}}</span>
+            <a class="link" [routerLink]="'/pages/auth/login-2'">{{'Login' | translate}}</a>
+        </div>
+    </div>
+</div>
+</div>

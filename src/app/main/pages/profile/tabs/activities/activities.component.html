@@ -1,0 +1,352 @@
+<div id="orders" class="page-layout carded fullwidth">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <br>
+    <div class="center">
+        <div fxLayoutAlign="start end" style="width:25%" class="example-container mat-accent-900-bg" [class.mat-elevation-z2]="!isActive"
+            [class.mat-elevation-z8]="isActive">
+            &nbsp;
+            <p>
+                <b>{{'Available Funds' | translate}}: {{fundNotAllocated}} {{currency}}</b>
+            </p>
+        </div>
+        <br/>
+        <div *ngIf="viewActivities == 0" class="mat-elevation-z8">
+            <mat-table class="orders-table" #table [dataSource]="milestone" matSort fusePerfectScrollbar>
+
+                <ng-container matColumnDef="milestone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg" style="display:flex !important;">{{'Milestone' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.Record.milestoneName}}" matTooltipPosition="above">{{data.Record.milestoneName}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="startDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important" class="mat-accent-900-bg">{{'Start Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{data.Record.startDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="endDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important" class="mat-accent-900-bg">{{'End Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{data.Record.endDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Status' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.Record.status}}" matTooltipPosition="above">
+                            <span [translate]="data.translate">{{data.Record.status}}</span>
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="operation">
+                    <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                    " class="mat-accent-900-bg">{{'Operation' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Milestone" matTooltip="{{'Create Milestone' | translate}}" matTooltipPosition="above"
+                            mat-icon-button (click)="addNewMilestone()">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">add_box</mat-icon>
+                        </button>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let data;let i = index">
+                        <button id="{{data.Record.milestoneId}}" matTooltip="{{'View Activities' | translate}}" matTooltipPosition="above" mat-icon-button
+                            (click)="viewActivitiesDetails(data.Record.milestoneId,data.Record)">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Milestone" mat-icon-button (click)="forEditingMilestone(data.Record.milestoneId)">
+                            <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltip="{{'Edit Milestone'|translate}}"
+                                matTooltipPosition="above">create</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let order; columns: displayedColumns;" class="order">
+                </mat-row>
+            </mat-table>
+        </div>
+
+        <!-- Donor milestones -->
+        <div *ngIf="viewActivities == 0 && donated == 0">
+            <span class="name">{{ 'Only donors can track milestones and activities. Become a donor' | translate }} </span>
+        </div>
+        <!--Activties  -->
+        <div class="content-card mat-white-bg" *ngIf="viewActivities == 1">
+            <mat-table class="orders-table" #table [dataSource]="activities" multiTemplateDataRows matSort fusePerfectScrollbar>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="activity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Activity' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.Record.activityName}}" matTooltipPosition="above">{{data.Record.activityName}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- StartDate Column -->
+                <ng-container matColumnDef="startDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important" class="mat-accent-900-bg">{{'Start Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{data.Record.startDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- EndDate Column -->
+                <ng-container matColumnDef="endDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important" class="mat-accent-900-bg">{{'End Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
+                            {{data.Record.endDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="funds">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important;
+                                    " class="mat-accent-900-bg">{{'Funds' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class="text-truncate" matTooltip="{{data.Record.activityBudget | number : '1.2-2'}} {{currency}}" matTooltipPosition="above">
+                            {{data.Record.activityBudget | number : '1.2-2'}} {{currency}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Status' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.Record.status}}" matTooltipPosition="above">
+                            <span [translate]="data.translate">{{data.Record.status}}</span>
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Remarks">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Remarks' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p *ngIf="data.Record.remarks;else noRemarks" class="text-truncate" matTooltip="{{data.Record.remarks}}" matTooltipPosition="above">
+                            <span [translate]="data.translate">{{data.Record.remarks}}</span>
+                        </p>
+                        <ng-template #noRemarks>
+                            <p class="text-truncate" matTooltip="{{'No Remarks Added' | translate}}" matTooltipPosition="above">{{'No Remarks Added' | translate}}</p>
+                        </ng-template>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="operation">
+                    <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                    " class="mat-accent-900-bg">{{'Operation' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data; let i = dataIndex;">
+                        <button mat-icon-button matTooltip="{{'View Expense' | translate}}" matTooltipPosition="above" (click)="viewProof(data.Record)"
+                            *ngIf="data.Record.status==='Request Fund'">
+                            <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Expense' | translate}}" matTooltipPosition="above" (click)="viewProof(data.Record)"
+                            *ngIf="data.Record.status==='Request FundFund Released'">
+                            <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Expense' | translate}}" matTooltipPosition="above" (click)="viewProof(data.Record)"
+                            *ngIf="data.Record.status==='Proof Submitted'">
+                            <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Expense' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="data.Record.status==='Fund Allocated'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+
+                        <button mat-icon-button matTooltip="{{'Release Fund' | translate}}" matTooltipPosition="above" (click)="releaseFund(data.Record)"
+                            *ngIf="data.Record.status==='Request Fund' && userRules!= undefined && userRules!= '' && userRules.release_Fund">
+                            <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="data.Record.status==='Validation Successful'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                        *ngIf="data.Record.status==='Activity Closed'">
+                        <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                    </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="(data.Record.status.startsWith('Partial Validation Successful') && role ==='ngo') || (data.Record.status.startsWith('Partial Validation Successful') && role ==='donor')">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="(data.status==='Validation failed' && role ==='ngo') || (data.status==='Validation failed' && role ==='donor')">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="(data.Record.status.startsWith('Partial Validation Successful') && role ==='foundation') || (data.status==='Validation failed' && role ==='ngo')">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="data.status==='Validation Successful' && role ==='ngo'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="data.status==='Validation Successful' && role ==='foundation'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof' | translate}}" matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                            *ngIf="data.status==='Validation failed' && role ==='foundation'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Approve Activity'|translate}}" matTooltipPosition="above" (click)="validationApproved(data.Record)"
+                            *ngIf="(data.Record.status==='Proof Submitted' || data.Record.status.startsWith('Partial Validation')) && !data.Record.status.endsWith(username)  && (data.Record.validatorId.startsWith(username) || data.Record.validatorId.endsWith(username)) && userRules!= undefined && userRules!= '' && userRules.validate_Proof">
+                            <mat-icon id="approvalButtonForValidator" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Reject Activity' | translate}}" matTooltipPosition="above" (click)="validationRejected(data.Record)"
+                            *ngIf="(data.Record.status==='Proof Submitted' || data.Record.status.startsWith('Partial Validation')) && !data.Record.status.endsWith(username) && (data.Record.validatorId.startsWith(username) || data.Record.validatorId.endsWith(username)) && userRules!= undefined && userRules!= '' && userRules.validate_Proof">
+                            <mat-icon id="rejectButtonForValidator" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel</mat-icon>
+                        </button>
+
+                        <!-- send for approval -->
+                        <button matTooltip="{{'Send For Approval' | translate}}" matTooltipPosition="above" mat-icon-button type="button" *ngIf="data.Record.status == 'Activity Created' && userRules!= undefined && userRules!= '' && userRules.send_For_Approval"
+                            (click)="sendForApproval(data.Record)" id="approvalButtonForFoundation">
+                            <mat-icon id="approvalButtonForFoundation" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                        </button>
+
+                        <button matTooltip="{{'Send For Approval' | translate}}" matTooltipPosition="above" mat-icon-button type="button" *ngIf="data.Record.status == 'Activity Rework' && userRules!= undefined && userRules!= '' && userRules.send_For_Approval"
+                            (click)="sendForApproval(data.Record)" id="approvalButtonForFoundation">
+                            <mat-icon id="approvalButtonForFoundation" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                        </button>
+
+                        <button matTooltip="{{'Send For Approval' | translate}}" matTooltipPosition="above" mat-icon-button type="button" *ngIf="data.Record.status == 'Activity Updated' && userRules!= undefined && userRules!= '' && userRules.send_For_Approval"
+                            (click)="sendForApproval(data.Record)" id="approvalButtonForFoundation">
+                            <mat-icon id="approvalButtonForFoundation" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                        </button>
+
+                        <!-- approve or reject activity -->
+                        <button mat-icon-button matTooltip="{{'Approve Activity' | translate}}" matTooltipPosition="above" (click)="approveActivity(data.Record,true)"
+                            *ngIf="data.Record.status === 'Budgeted' && userRules!= undefined && userRules!= '' && userRules.approve_Reject">
+                            <mat-icon id="approvalButtonForValidator" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Reject Activity' | translate}}" matTooltipPosition="above" (click)="approveActivity(data.Record,false)"
+                            *ngIf="data.Record.status === 'Budgeted' && userRules!= undefined && userRules!= '' && userRules.approve_Reject">
+                            <mat-icon id="rejectButtonForValidator" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Close Activity' | translate}}"  *ngIf="(data.Record.status==='Validation Successful' || data.Record.status.startsWith('Partial Validation Successful') || (data.Record.status == 'Proof Submitted' && data.Record.validatorId == '-')) && userRules!= undefined && userRules!= '' && userRules.activity_Closed" matTooltipPosition="above" (click)="closeActivity(data.Record,i)"
+                        >
+                            <mat-icon _ngcontent-c56="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel_presentation</mat-icon>
+                        </button>
+                        <!-- <button mat-icon-button matTooltip="{{'Close Activity' | translate}}" matTooltipPosition="above" (click)="closeActivity(data,i)"
+                            *ngIf="data.Record.status.startsWith('Partial Validation Successful') && role == 'foundation'">
+                            <mat-icon _ngcontent-c56="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel_presentation</mat-icon>
+                        </button> -->
+                        <!-- <button mat-icon-button matTooltip="{{'Close Activity' | translate}}" matTooltipPosition="above" (click)="closeActivity(data,i)"
+                            *ngIf="data.status==='Proof Submitted' && role == 'foundation' && data.validatorId == '-'">
+                            <mat-icon _ngcontent-c56="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel_presentation</mat-icon>
+                        </button> -->
+                        <button mat-icon-button matTooltip="{{'Allocate Funds' | translate}}" matTooltipPosition="above" (click)="allocateFunds(data.Record)"
+                            *ngIf="projectStatusForPublish == 'true' && fundAllocationType == 1 && data.Record.status == 'Activity Approved'&& fundNotAllocated >= data.Record.activityBudget && userRules!= undefined && userRules!= '' && userRules.allocate_Fund">
+                            <mat-icon _ngcontent-c39="" class="secondary-text s-20 mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">input</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="forUpdatingActivity(data.Record)">
+                            <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Activity" role="img" aria-hidden="true" matTooltip="{{'Edit Activity'|translate}}"
+                                matTooltipPosition="above">create</mat-icon>
+                        </button>
+                        <!-- <button mat-icon-button matTooltip="{{'Close Activity' | translate}}" matTooltipPosition="above" (click)="closeActivity(data)">
+                            <mat-icon _ngcontent-c56="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel_presentation</mat-icon>
+                        </button> -->
+                        <img *ngIf="compareDates(data.endDate) && data.status != 'Validation Successful'  && !data.Record.status.startsWith('Partial Validation Successful') && data.status != 'Activity Closed' && projectStatusForPublish == 'true'"
+                            style="width:10%;height:10%" src="../../../../../../assets/images/error_dots/redDot.png">
+                        <img *ngIf="data.status == 'Activity Closed'" style="width:16%;height:16%" src="../../../../../../assets/images/error_dots/greenDot.jpg">
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="exit">
+                    <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                    " class="mat-accent-900-bg">
+                        <button matTooltip="{{'View Milestones' | translate}}" matTooltipPosition="above" mat-icon-button (click)="backToMilestones()">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">arrow_back</mat-icon>
+                        </button> &nbsp;&nbsp;
+                        <button *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Activity" matTooltip="{{'Create Activity' | translate}}" matTooltipPosition="above"
+                            mat-icon-button (click)="addNewActivity()">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">add_box</mat-icon>
+                        </button>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="expandedDetail">
+                        <mat-cell *matCellDef="let element">
+                            <div fxFlex="50">
+                                    <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div>
+                                        Activity Id:
+                                        <span> {{element.Record.activityId}} </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div>
+                                        Start Date:
+                                        <span> {{element.Record.startDate}} </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div>
+                                        Validators:
+                                        <span> {{element.Record.validatorId}} </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                        <div>
+                                            Technical Validation Criteria:
+                                            <span> {{element.Record.technicalCriteria}} </span>
+                                        </div>
+                                    </div>
+                                <br/>
+                            </div>
+                            <div fxFlex="50">
+                                    <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div>
+                                        Activity Name:
+                                        <span> {{element.Record.activityName}} </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div>
+                                        End Date:
+                                        <span> {{element.Record.endDate}} </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div>
+                                        Activity Budget:
+                                        <span> {{element.Record.activityBudget}} </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                        <div>
+                                            Financial Validation Criteria:
+                                            <span> {{element.Record.financialCriteria}} </span>
+                                        </div>
+                                    </div>
+                                <br/>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let element; columns: displayedColumns;"
+                (click)="expandedElement = expandedElement === element ? null : element" (click)="getActivity(element.Record)">
+                </mat-row>
+                
+                <mat-row *matRowDef="let element; columns: ['expandedDetail']" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
+            </mat-table>
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

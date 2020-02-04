@@ -1,0 +1,72 @@
+<div id="orders" class="page-layout carded fullwidth">
+  <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+<div class="top-bg mat-accent-900-bg"></div>
+<!-- CENTER -->
+<div class="center">
+<!-- HEADER -->
+<div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+            shopping_basket
+        </mat-icon>
+        <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            {{'My Workspace' | translate}}
+        </span>
+    </div>
+   
+</div>
+<!-- / HEADER -->
+
+<!-- CONTENT CARD -->
+<div class="mat-elevation-z8">
+    <mat-table class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+        fusePerfectScrollbar>
+        <!-- Expense Item Column -->
+        <ng-container matColumnDef="OrganizationName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Organization Name' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let data; let i = dataIndex;">
+                <p class="text-truncate" matTooltip="{{data.orgName}}" matTooltipPosition="above">{{data.orgName}}</p>
+            </mat-cell>
+        </ng-container>
+        <!-- Description Column -->
+        <ng-container matColumnDef="Domain">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'Domain' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+                <p class=" text-truncate" matTooltip="{{data.domain}}" matTooltipPosition="above">
+                    {{data.domain}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="icons">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'Operation' | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let data" fxHide fxShow.gt-xs>
+                  <!-- <button mat-raised-button color="accent" (click)="gotoWebsite(data)" class="submit-button" aria-label="Launch">
+                          {{'Launch' | translate}}
+                      </button> -->
+                      <button mat-icon-button (click)="viewUserPermissions(data)" matTooltip="{{'View Permissions'|translate}}"
+                      matTooltipPosition="above">
+                      <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                  </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row *matRowDef="let data; columns: displayedColumns;" class="order">
+        </mat-row>
+    </mat-table>
+    <mat-paginator #MatPaginator [length]="dataofOrganizations.length" [pageIndex]="0" [pageSize]="5"></mat-paginator>
+</div>
+<!-- / CONTENT CARD -->
+</div>
+<!-- / CENTER -->
+<hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

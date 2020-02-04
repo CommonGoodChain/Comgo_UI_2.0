@@ -1,0 +1,170 @@
+<!-- For TO-DO Activity -->
+<div id="orders" class="page-layout carded fullwidth">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <br>
+    <div class="center">
+        <!-- CONTENT CARD -->
+        <!-- <div class="content-card mat-white-bg" *ngIf="role === 'validator'">
+            <mat-table *ngIf="publishedStatus === true" class="orders-table" #table [dataSource]="validatorActivities" matSort fusePerfectScrollbar>
+
+                <ng-container matColumnDef="activity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Activity' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.activityName}}" matTooltipPosition="above">{{data.activityName | translate}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Tasks Completed' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.status}}" matTooltipPosition="above">
+                            {{data.status}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="tasksPending">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Tasks Pending' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p *ngIf="data.status.startsWith('Partial Validation Successful')" class="text-truncate" matTooltip="Both validators has to validate the activity." matTooltipPosition="above">
+                            Both validators has to validate the activity.
+                        </p>
+                        <p *ngIf="data.status == 'Validation Successful' || data.status == 'Validation failed'" class="text-truncate" matTooltip="Validation is done so activity is completed." matTooltipPosition="above">
+                            Validation is done so activity is completed.
+                        </p>
+                        <p *ngIf="data.status == 'Validation failed'" class="text-truncate" matTooltip="Ngo has provided invalid proof need to provide valid proof." matTooltipPosition="above">
+                            Ngo has provided invalid proof need to provide valid proof.
+                        </p>
+                        <p *ngIf="data.status == 'Proof Submitted'" class="text-truncate" matTooltip="{{'Validator has to validate the activity.' | translate}}'" matTooltipPosition="above">
+                            {{'Validator has to validate the activity.' | translate}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="exit">
+                    <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                    " class="mat-accent-900-bg">
+                        <button mat-icon-button (click)="backToMilestones()">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true" matTooltip="View Milestones"
+                                matTooltipPosition="above">arrow_back</mat-icon>
+                        </button>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let order; columns: displayedColumns;" class="order">
+                </mat-row>
+            </mat-table>
+            
+        </div> -->
+        
+        <div class="content-card mat-white-bg">
+            <mat-table  *ngIf="projectStatusForPublish == 'false'" class="orders-table" #table [dataSource]="todoData" matSort (matSortChange)="sortData($event)" fusePerfectScrollbar>
+                <!-- activity Column -->
+                <ng-container matColumnDef="activity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header="activity" class="mat-accent-900-bg">{{ 'Activity' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <div id="forActivityName">
+                            <h4>{{data.activityName | translate}}</h4>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header="status" class="mat-accent-900-bg">{{ 'Status' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <div id="forActivityStatus">
+                            <h4>{{data.currentStatus | translate}}</h4>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Operation Column -->
+                <ng-container matColumnDef="operation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{ 'Operation' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                                <div  class="profile-box latest-activity" fxLayout="column">
+                            <div class="pt-16" fxLayout="row" id="approvalButtonForBoard" fxLayoutAlign="center center">
+                                <button *ngIf="activityApprovedStatus == 0 && approveStatusForPublish == 'false' && userRules!= undefined && userRules!= '' && userRules.approve_Project" mat-icon-button matTooltip="{{'Approve Project' | translate}}" matTooltipPosition="above" (click)="approveProject()">
+                                    <mat-icon id="approvalButtonForValidator" class="secondary-text s-20 mat-icon material-icons"
+                                        role="img" aria-hidden="true">check</mat-icon>
+                                </button>
+                                <button *ngIf="approveStatusForPublish == 'true' && projectStatusForPublish == 'false' && userRules!= undefined && userRules!= '' && userRules.publish_Project" (click)="publishProject()" mat-raised-button matTooltip="{{'Publish Project' | translate}}" matTooltipPosition="above" type="button">
+                                        <mat-icon id="publishProject" class="secondary-text s-20 mat-icon material-icons"
+                                            role="img" aria-hidden="true">check</mat-icon>
+                                    </button>
+                            </div>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+                <mat-row *matRowDef="let product; columns: displayedColumns;">
+                </mat-row>
+            </mat-table>
+            <mat-table *ngIf="projectStatusForPublish == 'true'" class="orders-table" #table [dataSource]="activities" matSort fusePerfectScrollbar>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="activity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Activity' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.Record.activityName}}" matTooltipPosition="above">{{data.Record.activityName | translate}}</p>
+                    </mat-cell>
+                </ng-container>
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Tasks Completed' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.Record.status | translate}}" matTooltipPosition="above">
+                            {{data.Record.status | translate}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="operation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Tasks Pending' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p *ngIf="data.Record.status == 'Fund Allocated'" class="text-truncate" matTooltip="{{'Funds need to be requested for this activity.' | translate}}" matTooltipPosition="above">
+                           {{'Funds need to be requested for this activity.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status.startsWith('Partial Validation Successful')" class="text-truncate" matTooltip="{{'Both validators have to validate the activity.' | translate}}" matTooltipPosition="above">
+                            {{'Both validators have to validate the activity.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Validation Successful' || data.Record.status == 'Validation failed'" class="text-truncate" matTooltip="{{'Validation is done so activity is completed.' | translate}}" matTooltipPosition="above">
+                            {{'Validation is done so activity is completed.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Validation failed'" class="text-truncate" matTooltip="{{'Invalid proof need to provide valid proof.' | translate}}" matTooltipPosition="above">
+                            {{'Invalid proof need to provide valid proof.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Request Fund'" class="text-truncate" matTooltip="{{'Funds need to be released for this activity.' | translate}}" matTooltipPosition="above">
+                            {{'Funds need to be released for this activity.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Proof Submitted'" class="text-truncate" matTooltip="{{'Validator has to validate the activity.' | translate}}" matTooltipPosition="above">
+                            {{'Validator has to validate the activity.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Request FundFund Released'" class="text-truncate" matTooltip="{{'Proof need to be submitted for this activity.' | translate}}" matTooltipPosition="above">
+                            {{'Proof need to be submitted for this activity.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Activity Created' || data.Record.status == 'Activity Updated'" class="text-truncate" matTooltip="{{'Activity needs to send for approval.' | translate}}" matTooltipPosition="above">
+                            {{'Activity needs to send for approval.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Activity Approved'" class="text-truncate" matTooltip="{{'Funds need to be allocated for this activity.' | translate}}" matTooltipPosition="above">
+                            {{'Funds need to be allocated for this activity.' | translate}}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Budgeted'" class="text-truncate" matTooltip="{{'Activity needs to be approved.' | translate}}" matTooltipPosition="above">
+                            {{'Activity needs to be approved.' | translate}
+                        </p>
+                        <p *ngIf="data.Record.status == 'Activity Closed'" class="text-truncate" matTooltip="{{'Activity Closed.' | translate}}" matTooltipPosition="above">
+                            {{'Activity Closed.' | translate}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let order; columns: displayedColumns;" class="order">
+                </mat-row>
+            </mat-table>
+        </div>
+    </div>
+
+    <!-- </div> -->
+</div>
+<!-- /For TO-DO Activity -->

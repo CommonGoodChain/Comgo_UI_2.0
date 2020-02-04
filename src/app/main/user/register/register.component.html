@@ -1,0 +1,158 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+    <!-- HEADER -->
+
+    <div class="header mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- APP TITLE -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button class="mr-0 mr-sm-16" (click)="back()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                <div class="h2">
+                    {{'User Information'| translate}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    
+    <!-- CONTENT -->
+    <div class="content p-24">
+        <div *ngIf="userType == 'Private User'" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-md="row">
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column"
+                fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="50">
+                        <input id="firstName" matInput placeholder="{{'First Name'| translate}}" formControlName="firstName" disabled>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="50">
+                        <input #firstSurname id="firstSurname" matInput placeholder="{{'First Surname'| translate}}" formControlName="firstSurname" disabled>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="50">
+                        <input #secondSurname id="secondSurname" matInput placeholder="{{'Second Surname'| translate}}" formControlName="secondSurname" disabled>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50">
+                        <input #username id="username" matInput placeholder="{{'User Name'| translate}}" formControlName="username" disabled>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50">
+                                <input type="email" id="email" matInput placeholder="{{'Email' | translate}}" formControlName="email" required disabled>
+        
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                    <input #username id="idNumber" matInput placeholder="{{'Id Number'| translate}}" formControlName="idNumber" disabled>
+                                </mat-form-field>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                        <mat-form-field fxFlex="30" id="country">
+                                                <mat-select  placeholder="{{'Country' | translate}} *" formControlName="country" disabled>
+                                                    <ngx-mat-select-search matInput placeholder="Search"></ngx-mat-select-search>
+                                                    <mat-option *ngFor="let data of getCountry" [value]=data.countryName>
+                                                        {{data.countryName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                    <mat-form-field fxFlex="30">
+                                        <mat-select id="countryCode" matTooltip="{{'Country Code' | translate}} *" matTooltipPosition="above" placeholder="{{'Country Code' | translate}}" formControlName ="countryCode" disabled>
+                                               
+                                                <!-- <ngx-mat-select-search [formControl] ="countryCode"></ngx-mat-select-search> -->
+                                            <mat-option  *ngFor="let countryCode of getCountryCodes" [value]='countryCode.code'>
+                                              {{countryCode.code}}
+                                            </mat-option>
+                                          </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field fxFlex="40">
+                                <input #phone id="phone" matInput placeholder="Contact Number" formControlName="phone" disabled>
+                            </mat-form-field>
+                    <!-- <mat-form-field id="idNumber" fxFlex="50">
+                        <input #idNumber matInput placeholder="Employee Number" formControlName="idNumber">
+                    </mat-form-field> -->
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="100">
+                                <input matInput id="address" placeholder="{{'Address'| translate}}" formControlName="address" disabled>
+                            </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50">
+                                <input matInput id="zipCode" placeholder="{{'Zip Code'| translate}}" formControlName="zipCode" disabled>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                    <input matInput id="city" placeholder="{{'City'| translate}}" formControlName="city" disabled>
+                                </mat-form-field>
+                </div>
+                <br/>
+            </form>
+        </div>
+        <div *ngIf="userType == 'Organization'" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-md="row">
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column"
+                fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="form" (ngSubmit)="updateUserDetails(form.value)">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="50">
+                                <input id="orgName" maxlength="40" matInput placeholder="{{'Organization *'| translate}}" formControlName="orgName">
+                            </mat-form-field>
+                    <mat-form-field fxFlex="50">
+                        <input id="username" matInput placeholder="{{'User Name'| translate}}" formControlName="username" disabled>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="50">
+                            <input type="email" id="email" matInput placeholder="{{'Email' | translate}}" formControlName="email" disabled>
+    
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50">
+                                <input #username id="idNumber" matInput placeholder="{{'Id Number'| translate}}" formControlName="idNumber" disabled>
+                            </mat-form-field>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field fxFlex="30" id="country">
+                                    <mat-select  placeholder="{{'Country' | translate}} *" formControlName="country" disabled>
+                                        <ngx-mat-select-search matInput placeholder="Search"></ngx-mat-select-search>
+                                        <mat-option *ngFor="let data of getCountry" [value]=data.countryName>
+                                            {{data.countryName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            <mat-form-field fxFlex="30">
+                                <mat-select id="countryCode" matTooltip="{{'Country Code' | translate}} *" matTooltipPosition="above" placeholder="{{'Country Code' | translate}}" formControlName ="countryCode" disabled>
+                                       
+                                        <!-- <ngx-mat-select-search [formControl] ="countryCode"></ngx-mat-select-search> -->
+                                    <mat-option  *ngFor="let countryCode of getCountryCodes" [value]='countryCode.code'>
+                                      {{countryCode.code}}
+                                    </mat-option>
+                                  </mat-select>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="40">
+                        <input #phone id="phone" matInput placeholder="Contact Number" formControlName="phone" disabled>
+                    </mat-form-field>
+            <!-- <mat-form-field id="idNumber" fxFlex="50">
+                <input #idNumber matInput placeholder="Employee Number" formControlName="idNumber">
+            </mat-form-field> -->
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field fxFlex="100">
+                    <input id="domainName" matInput placeholder="{{'Domain Name' | translate}}" formControlName="domainName" disabled>
+
+                </mat-form-field>
+                </div>
+                <br/>
+            </form>
+        </div>
+
+    </div>
+    <!-- / CONTENT -->
+    <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

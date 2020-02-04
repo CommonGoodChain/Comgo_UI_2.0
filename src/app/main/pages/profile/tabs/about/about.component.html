@@ -1,0 +1,270 @@
+<!-- from db -->
+<div id="about" class="p-24" fxLayout="row wrap">
+    <div class="about-content" fxLayout="column" fxFlex="100">
+
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="mat-accent-900-bg">
+                        <div fxLayout="row">
+                                <div fxFlex="95" class="title" fxLayoutAlign="start center">{{'Project Information' | translate}}</div>
+                                <!-- <button type="button" (click)="startTour()">
+                                        <mat-icon _ngcontent-c41="" class="secondary-text s-35 mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">help</mat-icon>
+                                    </button> -->
+                                <div fxFlex="5">
+                                    <button *ngIf="userRules!= undefined && userRules!='' && userRules.edit_Project" id="editProject" mat-icon-button matTooltip="{{'Edit Project' | translate}}" matTooltipPosition="above" (click)="editPublishedProject()">
+                                        <mat-icon class="secondary-text s-35 mat-icon material-icons" role="img" aria-hidden="true">edit</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+            </header>
+            <div>
+                <div class="content">
+                    <div>
+                        <!-- Project Details -->
+                        <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                            <div fxFlex="60">
+
+                                <div fxFlex.gt-sm="50">
+                                    <div id="date" fxFlex.gt-sm="20">
+                                        <span style="color:#0a2474" class="username">{{projectsAll.startDate | date:'dd'}}</span>
+                                    </div>
+
+                                    <div class="pt-12" fxFlex.gt-sm="30">
+                                        <div>{{projectsAll.startDate | date:'MMMM'}}</div>
+                                        <div>{{projectsAll.startDate | date:'yyyy'}}</div>
+                                        <br>
+                                        <span style="color:grey">{{'Start' | translate}}</span>
+                                    </div>
+                                </div>
+
+                                <div fxFlex.gt-sm="50">
+                                    <div id="date" fxFlex.gt-sm="20">
+                                        <span style="color:#092472" class="username">{{projectsAll.endDate | date:'dd'}}</span>
+                                    </div>
+
+                                    <div class="pt-12" fxFlex.gt-sm="30">
+                                        <div>{{projectsAll.endDate | date:'MMMM'}}</div>
+                                        <div>{{projectsAll.endDate | date:'yyyy'}}</div>
+                                        <br>
+                                        <span style="color:grey">{{'End' | translate}}</span>
+                                    </div>
+
+                                </div>
+                               
+                            </div>
+
+                            <div fxFlex="40">
+                                    <div class="info-line" fxHide.gt-sm>
+                                            <div class="project">
+                                                <span>{{'Type' | translate}}:</span>
+                                            </div>
+                                            <div class="type">
+                                                <span>{{projectsAll.projectType}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-line" fxHide.gt-sm>
+                                                <div class="project">
+                                                    <span>{{'Description' | translate}}:</span>
+                                                </div>
+                                                <div>
+                                                    {{projectsAll.description}}
+                                                </div>                                        
+                                            </div>
+                                <div fxLayoutAlign="center center" class="example-container" >
+                                    <mat-list role="list">
+                                        <mat-list-item class="pb-20" role="listitem">
+                                            <span style="font-size:45px;color:#0a2474">{{projectsAll.projectBudget | number : '1.2-2'}}</span>&nbsp;
+                                            <span style="font-size:15px">{{projectsAll.currency}}</span>
+                                        </mat-list-item>
+                                        <mat-list-item fxLayoutAlign="center center" style="color:grey" role="listitem">{{'Project Budget' | translate}}</mat-list-item>
+                                    </mat-list>
+                                </div>
+                                <button mat-button></button>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div>
+                        <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                            <div fxFlex="60">
+                                <div class="info-line" fxHide.lt-md>
+                                    <div class="project">
+                                        <span>{{'Type' | translate}}:</span>
+                                    </div>
+                                    <div class="type">
+                                        <span>{{projectsAll.projectType}}</span>
+                                    </div>
+        
+                                </div>
+                                <button (click)="rateProject()" style="margin-left:72%" mat-raised-button color="accent-900-bg">
+                                        Add a Review
+                                      </button>
+                            </div>
+                            <div fxFlex="40">
+                                <div fxLayoutAlign="center center" class="example-container">
+                                    <mat-list role="list">
+                                        <mat-list-item class="pb-20" role="listitem">
+                                            <span style="font-size:45px;color:#0a2474">{{projectsAll.fundGoal | number : '1.2-2'}}</span>&nbsp;
+                                            <span style="font-size:15px">{{projectsAll.currency}}</span>
+                                        </mat-list-item>
+                                        <mat-list-item fxLayoutAlign="center center" style="color:grey" role="listitem">{{'Fund Goal' | translate}}</mat-list-item>
+                                    </mat-list>
+                                </div>
+                                <button mat-button></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div fxFlex="100">
+                            <!-- ProjectTypes -->
+                            <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                                <div fxFlex="60">
+                                    <div class="info-line" fxHide.lt-md>
+                                        <div class="project">
+                                            <span>{{'Description' | translate}}:</span>
+                                        </div>
+                                        <div>
+                                            {{projectsAll.description}}
+                                        </div>
+                                    </div>
+                                    <div class="info-line" fxHide.lt-md>
+                                        <div class="project">
+                                            <span>{{'Board Remarks' | translate}}:</span>
+                                        </div>
+                                        <div>
+                                            {{projectsAll.remarks}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ProjectTypes  -->
+
+                                <!-- Progressbar-->
+                                <div fxFlex="40">
+                                    <div>
+                                        <mat-progress-bar mode="determinate" class="probgressbar" value="{{percentage}}" matTooltip="{{projectsAll.fundRaised}}/{{balance}} {{projectsAll.currency}}"></mat-progress-bar>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="pl-20" fxFlex.gt-sm="50">
+                                            <span style="color:#0040ff" matTooltip="{{'Fund Raised' | translate}}" class="username">{{projectsAll.fundRaised | number : '1.2-2'}} {{projectsAll.currency}}</span>
+                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div fxFlex.gt-sm="50" fxLayoutAlign="end end">
+                                            <span style="color:#0040ff" matTooltip="{{'Balance' | translate}}" class="username">{{balance | number : '1.2-2'}} {{projectsAll.currency}}</span>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="pl-20 secondary-text" fxFlex.gt-sm="50">
+                                            <span matTooltip="{{'Fund Raised' | translate}}" class="username secondary-text">{{'Fund Raised' | translate}}</span>
+                                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class="secondary-text" fxFlex.gt-sm="50" fxLayoutAlign="end end">
+                                            <span matTooltip="{{'Balance' | translate}}" class="username secondary-text">{{'Balance' | translate}}</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div>
+                                                <div class="pl-20" fxFlex.gt-sm="50">
+                                                    <span>Raised</span>
+                                                </div>
+                                                <div class="pr-20" fxLayoutAlign="end end" fxFlex.gt-sm="50">
+                                                    <span>Goal</span>
+                                                </div>
+                                            </div> -->
+                                    <br>
+                                    <div class="info-line" fxHide.gt-md>
+                                            <div class="project">
+                                                <span>{{'Board Remarks' | translate}}:</span>
+                                            </div>
+                                            <div>
+                                                {{projectsAll.remarks}}
+                                            </div>
+                                            <br/>
+                                        </div>
+                                </div>
+                                <!-- Progressbar -->
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div fxFlex="100">
+                            <!-- Description -->
+                            <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+                                <div fxFlex="30">
+                                    <div class="info-line">
+                                        <div class="project">
+                                            <span>{{'Project Documents' | translate}}:</span>
+                                        </div>
+                                        <div>
+                                            <span *ngFor="let i of projectDocument">
+                                                <mat-icon _ngcontent-c20="" (click)="downloadFile()" matTooltip="{{i.docName | translate}}" matTooltipPosition="above" class="secondary-text s-48 mat-icon material-icons"
+                                                    role="img" aria-hidden="true">insert_drive_file</mat-icon>
+                                            </span>
+                                            <input hidden type="file" (change)="editProjectDocuments($event)" #projectDocEventInput/>
+                                            <button *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_ProjectDoc" type="button" (click)="projectDocEventInput.click()" aria-label="Add file"
+                                                matTooltip="{{'Edit Project Document'|translate}}">
+                                                <mat-icon _ngcontent-c56="" class="secondary-text s-28 mat-icon material-icons" role="img" aria-hidden="true">edit</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="info-line">
+                                        <div class="project">
+                                            <span>{{'Project Supporters' | translate}}:</span>
+                                        </div>
+                                        <div>
+                                            <span *ngFor="let data of projectSupporters">
+                                                <img class="p-4" matTooltip="{{data.fileName}}" matTooltipPosition="above" src="{{urlPort}}{{data.filePath}}" width="15%"
+                                                    height="15%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                            </span>
+                                            <span *ngIf="k > 2" class="secondary-text s-48 mat-icon material-icons pt-24">...</span>
+                                            <button *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Project_Supporters" id="aboutEditProjectSupporters" type="button" class="pt-24" matTooltip="{{'Edit Project Supporters' | translate}}" matTooltipPosition="above"
+                                                (click)="gotoProjectUploads('projectSupporters')">
+                                                <mat-icon _ngcontent-c56="" class="secondary-text s-28 mat-icon material-icons" role="img" aria-hidden="true">edit</mat-icon>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div fxFlex="30">
+                                        <div class="info-line">
+                                                <div class="project">
+                                                    <span>{{'Past Events' | translate}}:</span>
+                                                </div>
+                                                <div>
+                                                    <span *ngFor="let i of pastEvents">
+                                                        <mat-icon _ngcontent-c20="" (click)="downloadProjectPastEvents(i.fileName)" matTooltip="{{i.fileName}}" matTooltipPosition="above"
+                                                            class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">picture_as_pdf</mat-icon>
+                                                    </span>
+                                                    <span *ngIf="j > 2" class="secondary-text s-48 mat-icon material-icons">...</span>
+                                                    &nbsp;
+                                                    <button *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Project_PastEvents" id="aboutEditPastEvents" type="button" matTooltip="{{'Edit Past Events' | translate}}" matTooltipPosition="above" (click)="gotoProjectUploads('pastEvents')">
+                                                        <mat-icon _ngcontent-c56="" class="secondary-text s-28 mat-icon material-icons" role="img" aria-hidden="true">edit</mat-icon>
+                                                    </button>
+                                                    <!-- <button id="aboutEditPastEvents" type="button" matTooltip="{{'Edit Past Events' | translate}}" matTooltipPosition="above" (click)="gotoProjectUploads('pastEvents')">
+                                                        <mat-icon _ngcontent-c56="" class="secondary-text s-28 mat-icon material-icons" role="img" aria-hidden="true">edit</mat-icon>
+                                                    </button> -->
+                                                </div>
+                                            </div>
+                                </div>
+                                <!-- Map -->
+                                <div fxFlex="40">
+                                    <div class="mat-white-bg" fxFlex="100">
+                                        <agm-map [latitude]="lat" [longitude]="lng">
+                                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                        </agm-map>
+                                    </div>
+                                </div>
+                                <!-- /Map -->
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

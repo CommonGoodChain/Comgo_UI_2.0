@@ -1,0 +1,674 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <div class="top-bg mat-accent-900-bg"></div>
+    <!-- HEADER -->
+    <div class="header mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <!-- APP TITLE -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+
+            <button *ngIf="operationalFlag == 0" mat-icon-button class="mr-0 mr-sm-16" [routerLink]="routeBack">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button *ngIf="operationalFlag == 1" mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/pages/profile'">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+
+            <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                <div class="h2" *ngIf="operationalFlag == 1">
+                    {{projectName}}
+                </div>
+                <div class="h2" *ngIf="operationalFlag == 0">
+                    {{'ADD PROJECT' | translate}}
+                </div>
+            </div>
+        </div>
+        <!-- / APP TITLE -->
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content p-24">
+        <!-- / Edit Project Form -->
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-md="row">
+            <!-- / Edit Project Form -->
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-40 ml-40 mb-24" *ngIf="operationalFlag == 1" fxLayout="column" fxLayoutAlign="start"
+                fxFlex="1 0 auto" name="editProjectForm" [formGroup]="editProjectForm" (ngSubmit)="editProject(editProjectForm.value)">
+                <mat-tab-group>
+                    <mat-tab label="{{'Project Info' | translate}}">
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <mat-select placeholder="{{'Project Type' | translate}}" formControlName="projectType" required>
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let data of getProjectType" [value]=data.projectType>
+                                        <span [translate]="data.translate">{{data.projectType}}</span>
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-error *ngIf="editProjectForm.get('projectType').hasError('required') && editProjectForm.get('projectType').touched">
+                                    {{'Project Type is required!' | translate}}
+                                </mat-error>
+
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                <input #projectName maxlength="60" matInput placeholder="{{'Project Name' | translate}}" formControlName="projectName" required>
+                                <mat-hint align="end">{{projectName.value.length}} / 60</mat-hint>
+                                <mat-error *ngIf="editProjectForm.get('projectName').hasError('required') && editProjectForm.get('projectName').touched">
+                                    {{'Project Name is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="editProjectForm.get('projectName').hasError('pattern') && editProjectForm.get('projectName').touched">
+                                    {{'Enter valid Project Name!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <input #projectBudget id="projectBudget" maxlength="15" matInput class="right" type="number" placeholder="{{'Project Budget' | translate}}" formControlName="projectBudget"
+                                    required>
+                                <mat-hint align="end">{{projectBudget.value.length}} / 15</mat-hint>
+                                <mat-error *ngIf="editProjectForm.get('projectBudget').hasError('required') && editProjectForm.get('projectBudget').touched">
+                                    {{'Project Budget is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="editProjectForm.get('projectBudget').hasError('pattern') && editProjectForm.get('projectBudget').touched">
+                                    {{'Please Enter Correct Value!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field type="number" fxFlex="50">
+                                <input #fundGoal id="fundGoal" maxlength="15" matInput class="right" type="number" placeholder="{{'Fund Goal' | translate}}" formControlName="fundGoal" required>
+                                <mat-hint align="end">{{fundGoal.value.length}} / 15</mat-hint>
+                                <mat-error *ngIf="editProjectForm.get('fundGoal').hasError('required') && editProjectForm.get('fundGoal').touched">
+                                    {{'Fund Goal is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="editProjectForm.get('fundGoal').hasError('pattern') && editProjectForm.get('fundGoal').touched">
+                                    {{'Please Enter Correct Value!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <input matInput placeholder="{{'NGO' | translate}}" formControlName="projectOwner" required>
+                                <mat-error *ngIf="editProjectForm.get('projectOwner').hasError('required') && editProjectForm.get('projectOwner').touched">
+                                    {{'NGO is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                <mat-select placeholder="{{'Organizations' | translate}}" (selectionChange)="changedEditOrganizations($event.value)" formControlName="organizations" multiple>
+                                  <mat-option *ngFor="let i of organizations" [value]="i.orgName">{{i.orgName}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="30">
+                                <mat-select (click)="changedCountryName()" placeholder="{{'Country' | translate}}" (selectionChange)="changeCountry($event)" formControlName="country"
+                                    required>
+                                    <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCountry($event.target.value)"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let data of getCountry" [value]=data.countryName>
+                                        {{data.countryName}}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-error *ngIf="editProjectForm.get('country').hasError('required') && editProjectForm.get('country').touched">
+                                    {{'Country is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="20">
+                                <mat-select (click)="changedCurrency()" placeholder="{{'Currency' | translate}}" formControlName="currency" required>
+                                    <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCurrency($event.target.value)"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let data of getCurrency" [value]=data.currencyCode>
+                                        {{data.currencyCode}}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-error *ngIf="editProjectForm.get('currency').hasError('required') && editProjectForm.get('currency').touched">
+                                    {{'Currency is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="25">
+                                <input matInput [matDatepicker]="myDatepicker" [max]="maxDate" placeholder="{{'Start Date' | translate}}" formControlName="startDate" required>
+                                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker></mat-datepicker>
+
+                                <mat-error *ngIf="editProjectForm.get('startDate').hasError('required') && editProjectForm.get('startDate').touched">
+                                    {{'Start Date is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="25">
+                                <input matInput [matDatepicker]="myDatepicker1" [max]="maxDate" placeholder="{{'End Date' | translate}}" formControlName="endDate" required>
+                                <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker1></mat-datepicker>
+
+                                <mat-error *ngIf="editProjectForm.get('endDate').hasError('required') && editProjectForm.get('endDate').touched">
+                                    {{'End Date is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field class="example-full-width" fxFlex="100">
+                                <input matInput #message maxlength="2000" placeholder="{{'Description' | translate}}" formControlName="description" required>
+                                <mat-hint align="end">{{message.value.length}} / 2000</mat-hint>
+
+                                <mat-error *ngIf="editProjectForm.get('description').hasError('required') && editProjectForm.get('description').touched">
+                                    {{'Description is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="editProjectForm.get('description').hasError('pattern') && editProjectForm.get('description').touched">
+                                    {{'Enter valid Description!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-checkbox formControlName="fundAllocation" fxFlexOffset="1">{{'Manual Allocation of Funds' | translate}}</mat-checkbox>
+                        <br/>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancelForEdit()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" [disabled]="!editProjectForm.valid || !mapStatus || !sdgStatus"
+                                    type="submit" color="accent">
+                                    {{'Update' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!editProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+
+                    </mat-tab>
+                    <mat-tab *ngIf="userRules!= undefined && userRules!= '' && userRules.update_Beneficiaries" label="{{'Beneficiaries' | translate}}">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <h2>{{'Add Beneficiaries' | translate}}</h2>
+                        </div>
+                        <div formArrayName="beneficiaries" 
+                        *ngFor="let beneficiaries of editProjectForm.get('beneficiaries').controls; let i=index">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Beneficiary" type="text"
+                           [formControl]="beneficiaries.get('beneficiary')">
+                           </mat-form-field>
+                           <span *ngIf="i == 0">
+                           <mat-icon _ngcontent-idj-c39="" (click)="addBenefeciariesFields2()" class="secondary-text s-18 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">add_circle</mat-icon>
+                          </span>
+                          <span *ngIf="i > 0">
+                                  <mat-icon _ngcontent-idj-c39="" (click)="removeBenefeciariesFields2(i)" class="secondary-text s-18 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">cancel</mat-icon>
+                                 </span>
+                          </div>
+                     </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancelForEdit()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" [disabled]="!editProjectForm.valid || !mapStatus || !sdgStatus"
+                                    type="submit" color="accent">
+                                    {{'Update' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!editProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="{{'SDG' | translate}}">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <h2 *ngIf="selectedSDGs.length==0" fxLayoutAlign="center center" style="color:gray">{{'Click on SDG icons to select / deselect the Sustainable Development Goals' | translate}}</h2>
+                            <h2 *ngIf="selectedSDGs.length>0">{{'Sustainable Developement Goals' | translate}}</h2>
+
+                            <div formControlName="SDG">
+                                <img class="pl-8 p-2 pb-8" matTooltip="{{data.SDGType | translate}}" *ngFor="let data of selectedSDGs" src={{sdgUrl}}{{data.SDGType}}{{imageExtenstion}}
+                                    (click)="removeSelectedSDGForEdit(data)" width="8%" height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                            </div>
+                            <h2>{{'Sustainable Developement Goals' | translate}}</h2>
+                            <div>
+                                <img class="pl-8 p-2 pb-8" matTooltip="{{data.SDGType}}" *ngFor="let data of sdg" src={{sdgUrl}}{{data.SDGType}}{{imageExtenstion}}
+                                    (click)="selectedSDGForEdit(data.SDGType)" width="8%" height="8%">
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancelForEdit()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" [disabled]="!editProjectForm.valid || !mapStatus || !sdgStatus"
+                                    type="submit" color="accent">
+                                    {{'Update' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!editProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="{{'Documents/Images' | translate}}">
+                        <div id="photos-videos" class="p-24">
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <div fxFlex="100">
+                                    <div fxLayout="row wrap" fxFlex="50" fxLayoutAlign="start start">
+                                        <div *ngIf="imgUploaded==0">
+                                            <img [src]="bgImageUrl" height="300" width="300">
+                                        </div>
+                                        <div *ngIf="imgUploaded==1">
+                                            <img [src]="imgUrl" height="300" width="300">
+                                        </div>
+                                    </div>&nbsp;
+                                    <div fxLayout="row wrap" fxFlex="50" (click)="fileInput.click()" [style.border]="'1px dashed gray'" id="documentUploaderDiv"
+                                        fxLayoutAlign="center center">
+
+                                        <div fxFlex="100" fxLayoutAlign="center center">
+                                            <h1 style="color:gray">{{'To change image click here' | translate}}</h1>
+                                        </div>
+                                        <br/>
+                                        <div>
+                                            <input hidden type="file" multiple (change)="onSelectFile($event)" #fileInput/>
+                                            <button type="button" matTooltip="Upload Project Image">
+                                                <mat-icon style="vertical-align: center" class="secondary-text s-24 mat-icon material-icons" role="img" aria-hidden="true">add_a_photo</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancelForEdit()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" [disabled]="!editProjectForm.valid || !mapStatus || !sdgStatus"
+                                    type="submit" color="accent">
+                                    {{'Update' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!editProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+
+                    </mat-tab>
+                    <mat-tab label="Map">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="true" [fullscreenControl]="true" (mapClick)="mapClicked($event)">
+
+                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            </agm-map>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancelForEdit()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" [disabled]="!editProjectForm.valid || !mapStatus || !sdgStatus"
+                                    type="submit" color="accent">
+                                    {{'Update' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!editProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </form>
+            <!-- Add project Form -->
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-40 ml-40 mb-24" *ngIf="operationalFlag == 0" fxLayout="column" fxLayoutAlign="start"
+                fxFlex="1 0 auto" name="addProjectForm" [formGroup]="addProjectForm" (ngSubmit)="addProject(addProjectForm.value)">
+                <mat-tab-group>
+                    <mat-tab label="{{'Project Info' | translate}}">
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <mat-select placeholder="{{'Project Type' | translate}}" formControlName="projectType" required>
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let data of getProjectType" [value]=data.projectType>
+                                        <span [translate]="data.translate">{{data.projectType}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="addProjectForm.get('projectType').hasError('required') && addProjectForm.get('projectType').touched">
+                                    {{'Project Type is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                <input #projectName maxlength="60" matInput placeholder="{{'Project Name' | translate}}" formControlName="projectName" required>
+                                <mat-hint align="end">{{projectName.value.length}} / 60</mat-hint>
+                                <mat-error *ngIf="addProjectForm.get('projectName').hasError('required') && addProjectForm.get('projectName').touched">
+                                    {{'Project Name is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="addProjectForm.get('projectName').hasError('pattern') && addProjectForm.get('projectName').touched">
+                                    {{'Enter valid Project Name!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <input #projectBudget maxlength="15" matInput class="right" type="number" placeholder="{{'Project Budget' | translate}}" formControlName="projectBudget"
+                                    required>
+                                <mat-hint align="end">{{projectBudget.value.length}} / 15</mat-hint>
+                                <mat-error *ngIf="addProjectForm.get('projectBudget').hasError('required') && addProjectForm.get('projectBudget').touched">
+                                    {{'Project Budget is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="addProjectForm.get('projectBudget').hasError('pattern') && addProjectForm.get('projectBudget').touched">
+                                    {{'Please Enter Correct Value!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field type="number" fxFlex="50">
+                                <input #fundGoal maxlength="15" matInput class="right" type="number" placeholder="{{'Fund Goal' | translate}}" formControlName="fundGoal" required>
+                                <mat-hint align="end">{{fundGoal.value.length}} / 15</mat-hint>
+                                <mat-error *ngIf="addProjectForm.get('fundGoal').hasError('required') && addProjectForm.get('fundGoal').touched">
+                                    {{'Fund Goal is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="addProjectForm.get('fundGoal').hasError('pattern') && addProjectForm.get('fundGoal').touched">
+                                    {{'Please Enter Correct Value!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <input matInput placeholder="{{'NGO' | translate}}" formControlName="projectOwner" required>
+                                <mat-error *ngIf="addProjectForm.get('projectOwner').hasError('required') && addProjectForm.get('projectOwner').touched">
+                                    {{'NGO is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                <mat-select (selectionChange)="changedAddOrganizations($event.value)" placeholder="Organizations" formControlName="organizations" multiple>
+                                        <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListOrg($event.target.value)"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let i of organizations" [value]="i.orgName">{{i.orgName}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <mat-icon _ngcontent-idj-c39="" (click)="sendInvitation()" class="secondary-text s-18 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">email</mat-icon>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="30">
+                                <mat-select (click)="changedCountryName()" placeholder="{{'Country' | translate}}" formControlName="country" required>
+                                    <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCountry($event.target.value)"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let data of getCountry" [value]=data.countryName>
+                                        {{data.countryName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="addProjectForm.get('country').hasError('required') && addProjectForm.get('country').touched">
+                                    {{'Country is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="20">
+                                <mat-select (click)="changedCurrency()" placeholder="{{'Currency' | translate}}" formControlName="currency" required>
+                                    <ngx-mat-select-search matInput placeholder="Search" (keyup)="filterListCurrency($event.target.value)"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let data of getCurrency" [value]=data.currencyCode>
+                                        {{data.currencyCode}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="addProjectForm.get('currency').hasError('required') && addProjectForm.get('currency').touched">
+                                    {{'Currency is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="25">
+                                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker></mat-datepicker>
+                                <input matInput [matDatepicker]="myDatepicker" [max]="maxDate" placeholder="{{'Start Date' | translate}}" formControlName="startDate" required>
+
+                                <mat-error *ngIf="addProjectForm.get('startDate').hasError('required') && addProjectForm.get('startDate').touched">
+                                    {{'Start Date is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="25">
+                                <input matInput [matDatepicker]="myDatepicker1" [max]="maxDate" placeholder="{{'End Date' | translate}}" formControlName="endDate" required>
+                                <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker1></mat-datepicker>
+                                <mat-error *ngIf="addProjectForm.get('endDate').hasError('required') && addProjectForm.get('endDate').touched">
+                                    {{'End Date is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="50">
+                                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker></mat-datepicker>
+                                <input matInput [matDatepicker]="myDatepicker" [max]="maxDate" placeholder="{{'Start Date' | translate}}" formControlName="startDate" required>
+
+                                <mat-error *ngIf="addProjectForm.get('startDate').hasError('required') && addProjectForm.get('startDate').touched">
+                                    {{'Start Date is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="50">
+                                <input matInput [matDatepicker]="myDatepicker1" [max]="maxDate" placeholder="{{'End Date' | translate}}" formControlName="endDate" required>
+                                <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker1></mat-datepicker>
+                                <mat-error *ngIf="addProjectForm.get('endDate').hasError('required') && addProjectForm.get('endDate').touched">
+                                    {{'End Date is required!' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div> -->
+
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field class="example-full-width" fxFlex="100">
+                                <input matInput #message maxlength="2000" placeholder="{{'Description' | translate}}" formControlName="description" required>
+                                <mat-hint align="end">{{message.value.length}} / 2000</mat-hint>
+                                <mat-error *ngIf="addProjectForm.get('description').hasError('required') && addProjectForm.get('description').touched">
+                                    {{'Description is required!' | translate}}
+                                </mat-error>
+                                <mat-error *ngIf="addProjectForm.get('description').hasError('pattern') && addProjectForm.get('description').touched">
+                                    {{'Only 2000 alphanumerics are allowed!'|translate}}
+                                </mat-error>
+
+                            </mat-form-field>
+                        </div>
+                        <mat-checkbox formControlName="fundAllocation" fxFlexOffset="1">{{'Manual Allocation of Funds' | translate}}</mat-checkbox>
+                        <br/>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancel()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button id="addBtn" *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" mat-raised-button [disabled]="!addProjectForm.valid || !sdgStatus || !mapStatus"
+                                    type="submit" color="accent-900-bg">
+                                    {{'Save' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!addProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Beneficiaries" label="{{'Beneficiaries' | translate}}">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <h2>{{'Add Beneficiaries' | translate}}</h2>
+                        </div>
+                        <div formArrayName="beneficiaries" 
+                        *ngFor="let beneficiaries of addProjectForm.get('beneficiaries').controls; let i=index">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Beneficiary" type="text"
+                           [formControl]="beneficiaries.get('beneficiary')">
+                           </mat-form-field>
+                           <span *ngIf="i == 0">
+                           <mat-icon _ngcontent-idj-c39="" (click)="addBenefeciariesFields()" class="secondary-text s-18 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">add_circle</mat-icon>
+                          </span>
+                          <span *ngIf="i > 0">
+                                  <mat-icon _ngcontent-idj-c39="" (click)="removeBenefeciariesFields(i)" class="secondary-text s-18 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">cancel</mat-icon>
+                                 </span>
+                          </div>
+                     </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancel()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button id="addBtn" *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" mat-raised-button [disabled]="!addProjectForm.valid || !sdgStatus || !mapStatus"
+                                    type="submit" color="accent-900-bg">
+                                    {{'Save' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!addProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="{{'SDG' | translate}}">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <h2 *ngIf="selectedSDGs.length==0" fxLayoutAlign="center center" style="color:gray">{{'Click on SDG icons to select / deselect the Sustainable Development Goals' | translate}}</h2>
+                            <h2 *ngIf="selectedSDGs.length>0">{{'Selected Sustainable Developement Goals' | translate}}</h2>
+
+                            <div formControlName="SDG">
+                                <img class="pl-8 p-2 pb-8" matTooltip="{{data}}" *ngFor="let data of selectedSDGs" src={{sdgUrl}}{{data}}{{imageExtenstion}}
+                                    (click)="removeSelectedSDG(data)" width="8%" height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                            </div>
+                            <h2>{{'Sustainable Developement Goals' | translate}}</h2>
+                            <div>
+                                <img class="pl-8 p-2 pb-8" matTooltip="{{data.SDGType | translate}}" *ngFor="let data of sdg" src={{sdgUrl}}{{data.SDGType}}{{imageExtenstion}}
+                                    (click)="selectedSDG(data.SDGType)" width="8%" height="8%">
+                            </div>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancel()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button id="addBtn" *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" mat-raised-button [disabled]="!addProjectForm.valid || !sdgStatus || !mapStatus"
+                                    type="submit" color="accent-900-bg">
+                                    {{'Save' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!addProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="{{'Documents/Images' | translate}}">
+
+                        <div id="photos-videos" class="p-24">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <div fxFlex="100">
+                                    <div fxLayout="row wrap" fxFlex="50" fxLayoutAlign="start start">
+                                        <div *ngIf="imgUploaded==0">
+                                            <img [src]="bgImageUrl" height="300" width="300">
+                                        </div>
+                                        <div *ngIf="imgUploaded==1">
+                                            <img [src]="imgUrl" height="300" width="300">
+                                        </div>
+                                    </div>
+                                    &nbsp;
+                                    <div fxLayout="row wrap" fxFlex="50" (click)="fileInput.click()" [style.border]="'1px dashed gray'" id="documentUploaderDiv"
+                                        fxLayoutAlign="center center">
+
+                                        <div fxFlex="100" fxLayoutAlign="center center">
+                                            <h1 style="color:gray">{{'To change image click here' | translate}}</h1>
+                                        </div>
+                                        <br/>
+                                        <div class="mb-8">
+                                            <input hidden type="file" multiple (change)="onSelectFile($event)" #fileInput/>
+                                            <button type="button" matTooltip="{{'Upload image'|translate}}">
+                                                <mat-icon style="vertical-align: center" class="secondary-text s-24 mat-icon material-icons" role="img" aria-hidden="true">add_a_photo</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="25" style="color:black">{{'Project Documents' | translate}}</div>
+                            <div fxFlex="10" class="file-uploader">
+                                <input hidden type="file" (change)="onSelectDocument($event)" #docInput/>
+                                <button mat-mini-fab type="button" class="add-file-button mat-warn" (click)="docInput.click()" aria-label="Add file" matTooltip="{{'Upload Document'|translate}}">
+                                    <mat-icon>add</mat-icon>
+                                </button>&nbsp;&nbsp;
+                            </div>
+                            <div fxFlex="50">
+                                <span class="text-truncate" style="color:#0059ab" matTooltip="{{docName | translate}}">{{docName | translate}}</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div style="color:black" fxFlex="25">{{'Past Events (PDF)' | translate}}</div>
+                            <div class="file-uploader" fxFlex="10">
+                                <input hidden type="file" (change)="onSelectPastEvents($event)" #pastEventInput/>
+                                <button mat-mini-fab type="button" class="add-file-button mat-warn" (click)="pastEventInput.click()" aria-label="Add file"
+                                    matTooltip="{{'Upload Past Events'|translate}}">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div fxFlex="50">
+                                <span class="text-truncate" style="color:#0059ab" matTooltip="{{pastEventDocName | translate}}">{{pastEventDocName | translate}}</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div style="color:black" fxFlex="25" matTooltip="asdsdsd">{{'Project Supporter Logo' | translate}}</div>
+                            <div class="file-uploader" fxFlex="10">
+                                <input hidden type="file" (change)="onSelectProjectSupporters($event)" #projectSupportersInput/>
+                                <button mat-mini-fab type="button" class="add-file-button mat-warn" (click)="projectSupportersInput.click()" aria-label="Add file"
+                                    matTooltip="{{'Upload Project Supporters'|translate}}">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div fxFlex="50">
+                                <span class="text-truncate" style="color:#0059ab" aria-label="Add file" matTooltip="{{projectSupportersDocName | translate}}">{{projectSupportersDocName | translate}}</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancel()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button id="addBtn" *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" mat-raised-button [disabled]="!addProjectForm.valid || !sdgStatus || !mapStatus"
+                                    type="submit" color="accent-900-bg">
+                                    {{'Save' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!addProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Map">
+                        <div class="tab-content" fusePerfectScrollbar>
+                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="true" [fullscreenControl]="true" (mapClick)="mapClicked($event)">
+
+                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            </agm-map>
+                        </div>
+                        <br/>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxFlex="30">
+                                <button mat-raised-button type="button" color="warn" (click)="cancel()">
+                                    {{'Cancel' | translate}}
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button id="addBtn" *ngIf="uploadPastEventsError == 0 && uploadProjectSupportersError == 0" mat-raised-button [disabled]="!addProjectForm.valid || !sdgStatus || !mapStatus"
+                                    type="submit" color="accent-900-bg">
+                                    {{'Save' | translate}}
+                                </button>
+                            </div>
+                            <div fxFlex="30">
+                                <span class="text-truncate" *ngIf="!addProjectForm.valid || !mapStatus || !sdgStatus" style="color:gray">{{formStatus | translate}}</span>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </form>
+
+        </div>
+        <!--/ Add project Form -->
+    </div>
+    <!-- / CONTENT -->
+    <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

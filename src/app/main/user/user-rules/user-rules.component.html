@@ -1,0 +1,86 @@
+<div id="orders" class="page-layout carded fullwidth">
+        <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+            <!-- TOP BACKGROUND -->
+            <div class="top-bg mat-accent-900-bg"></div>
+            <!-- / TOP BACKGROUND -->
+        
+            <!-- CENTER -->
+            <div class="order-details center" fusePerfectScrollbar>    
+                        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+               <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <button id="viewExpensesBackward" mat-icon-button class="mr-0 mr-sm-16" (click)="backSpace()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    shopping_basket
+                </mat-icon>
+                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                        {{'User Rules'|translate}}
+                    </div>
+                </div>
+            </div>
+               
+                <div class="search-input-wrapper mx-14 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="end end">
+                <button *ngIf="userType == 'Organization'" type="button" mat-raised-button (click)="Submit(form.value)" [disabled]="!form.valid" class="add-product-button mat-white-bg my-12 mt-sm-0">
+                <span>{{'Submit' | translate}}</span>
+            </button>&nbsp;
+                </div>
+            </div>
+                                <form name="form" [formGroup]="form">
+                                    <div class="content-card mat-white-bg">
+                        <mat-table class="orders-table" #table [dataSource]="dataSource" matSort  [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                                <ng-container matColumnDef="rules">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Rules'|translate}}</mat-header-cell>
+                                    <mat-cell *matCellDef="let data">
+                                        <p class="text-truncate">{{data.rules | translate}}</p>
+                                    </mat-cell>
+                                </ng-container>
+                               
+                                <ng-container matColumnDef="icons">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Operations'|translate}}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let data">
+                                            <mat-radio-group aria-label="Select an option" formControlName="{{data.id}}">
+                                                    <mat-radio-button *ngFor="let reportType of reportTypes" [value]="reportType">
+                                                      <span *ngIf="reportType;else showFalse">{{'true' | translate}}</span>
+                                                      <ng-template #showFalse>
+                                                        <span>{{'false' | translate}}</span>
+                                                      </ng-template>
+                                                      &nbsp;
+                                                    </mat-radio-button>
+                                                  </mat-radio-group>
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="selectAll">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <mat-checkbox [checked]="checkValue" (change)="clickedCheckBtn($event)"></mat-checkbox>
+                                                <mat-select (selectionChange)="changedSelect($event.value)">
+                                                        <mat-option value="true">{{'True' | translate}}</mat-option>
+                                                        <mat-option value="false">{{'False' | translate}}</mat-option>
+                                                    </mat-select>
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let data">
+                                        </mat-cell>
+                                    </ng-container>
+                                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+                
+                                <mat-row *matRowDef="let data; columns: displayedColumns;" class="order">
+                                </mat-row>
+                            </mat-table>  
+                        </div>
+                        <br/>
+                            </form>
+                            <!-- <hr> -->
+                        </div>
+                        
+              <!-- <br/> -->
+              <footer>
+                    <br/>
+                    <br/>
+                <p style="text-align: center;">Copyright © 2020</p>
+                <br/>
+                <br/>
+              </footer>
+                        <!-- <hr size="30"> -->
+        </div>

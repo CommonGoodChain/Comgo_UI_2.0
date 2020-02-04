@@ -1,0 +1,174 @@
+<div id="orders" class="page-layout carded fullwidth">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-900-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+        <!-- HEADER -->
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+            <!-- APP TITLE -->
+            <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                <button id="viewExpensesBackward" mat-icon-button class="mr-0 mr-sm-16" (click)="backToMilestone()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    {{'Expenses' | translate}}
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="search-input-wrapper mx-14 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field floatLabel="never" fxFlex="1 0 auto" class="mr-80">
+                    <input id="viewExpensesSearch" matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'Search' | translate}}">
+                </mat-form-field>
+            </div>
+            <button id="viewExpensesAddExpense" mat-raised-button (click)="addNewExpense()" class="add-product-button mat-white-bg my-12 mt-sm-0"
+                *ngIf="activityStatus ==='Fund Allocated' && userRules!= undefined && userRules!= '' && userRules.add_Expense">
+                <span>{{'ADD EXPENSE' | translate}}</span>
+            </button>&nbsp;
+            <button id="viewExpensesRequestFund" mat-raised-button (click)="requestFund()" color="accent" class="add-product-button mat-white-bg my-12 mt-sm-0"
+                *ngIf="activityStatus ==='Fund Allocated' && userRules!= undefined && userRules!= '' && userRules.request_Fund && dataOfExpenses.length !== 0" style="margin-right: 10px;">
+                <span>{{'REQUEST FUND' | translate}}</span>
+            </button>
+            <button type="button" (click)="startTour()">
+                <mat-icon _ngcontent-c41="" class="secondary-text s-25 mat-icon material-icons mat-icon-no-color mb-12" role="img" aria-hidden="true">help</mat-icon>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg" *ngIf="dataOfExpenses.length == 0">
+            <div style="margin-top:10%">
+                <div fxLayoutAlign="center start">
+                    <span class="icon-name secondary-text mt-8">{{'No Data Found' | translate}}</span>
+                </div>
+                <div fxLayoutAlign="center center">
+                    <mat-icon _ngcontent-c56="" class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">warning</mat-icon>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="content-card mat-white-bg" *ngIf="dataOfExpenses.length !== 0"> -->
+        <div *ngIf="dataOfExpenses.length !== 0" class="mat-elevation-z8">
+            <mat-table class="orders-table" #table [dataSource]="dataSource" multiTemplateDataRows
+                matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                <!-- Expense Item Column -->
+                <ng-container matColumnDef="ExpenseItem">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Expense Item' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.expenseItem}}" matTooltipPosition="above">{{data.expenseItem}}</p>
+                    </mat-cell>
+                </ng-container>
+                <!-- Description Column -->
+                <ng-container matColumnDef="Description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'Description' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+                        <p class=" text-truncate" matTooltip="{{data.description}}" matTooltipPosition="above">
+                            {{data.description}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="Status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'Status' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+                    <p class=" text-truncate" matTooltip="{{data.status}}" matTooltipPosition="above">
+                        {{data.status}}
+                    </p>
+                </mat-cell>
+            </ng-container> -->
+
+                <!-- <ng-container matColumnDef="Remarks">
+                <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'Remarks' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let data" fxHide fxShow.gt-sm>
+                    <p class=" text-truncate" matTooltip="{{data.remarks}}" matTooltipPosition="above">
+                        {{data.remarks}}
+                    </p>
+                </mat-cell>
+            </ng-container> -->
+                <!-- Invoice Column -->
+
+                <ng-container matColumnDef="icons">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'Operation' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-xs>
+                        <button mat-icon-button matTooltip="{{'Edit Expense'|translate}}" matTooltipPosition="above" (click)="forEditingExpense(data)"
+                            *ngIf="activityStatus ==='Fund Allocated' && userRules!= undefined && userRules!= '' && userRules.update_Expense">
+                            <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Add Proof'|translate}}" matTooltipPosition="above" (click)="addProof(data)" *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Proof && activityStatus=='Request FundFund Released'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">add_circle</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Add Proof'|translate}}" matTooltipPosition="above" (click)="addProof(data)" *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Proof && activityStatus=='Proof Submitted'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">add_circle</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Add Proof'|translate}}" matTooltipPosition="above" (click)="addProof(data)" *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Proof && activityStatus=='Validation failed'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">add_circle</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'View Proof'|translate}}" matTooltipPosition="above" (click)="viewProof(data)">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'Delete Expense' | translate}}" matTooltipPosition="above" (click)="deleteDocument(data)"
+                            *ngIf="activityStatus ==='Fund Allocated' && role==='ngo'">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">delete</mat-icon>
+                        </button>
+                        <!-- <button mat-icon-button matTooltip="{{'Approve Expense' | translate}}" matTooltipPosition="above" (click)="expenseStatusChange(data,'Approved')"
+                        *ngIf="data.status ==='Not Approved' && role==='foundation'">
+                        <mat-icon id="approvalButtonForValidator" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">check</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="{{'Reject Expense' | translate}}" matTooltipPosition="above" (click)="expenseStatusChange(data,'Rejected')"
+                        *ngIf="data.status ==='Not Approved' && role==='foundation'">
+                        <mat-icon id="rejectButtonForValidator" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">cancel</mat-icon>
+                    </button> -->
+                    </mat-cell>
+                </ng-container>
+                <!-- <ng-container matColumnDef="expandedDetail">
+                    <mat-cell *matCellDef="let element">
+                        <div fxFlex="50">
+                                <br/>
+                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                <div>
+                                    Expense Item:
+                                    <span>{{element.expenseItem}} </span>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                        <div fxFlex="50">
+                                <br/>
+                                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                        <div>
+                                                Expense Description:
+                                                <span> {{element.description}} </span>
+                                            </div>
+                                </div>
+                            <br/>
+                        </div>
+                    </mat-cell>
+                </ng-container> -->
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let element; columns: displayedColumns;" (click)="expandedElement = expandedElement === element ? null : element"
+                    (click)="getExpense(element)">
+                </mat-row>
+                <!-- <mat-row *matRowDef="let element; columns: ['expandedDetail']" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row> -->
+            </mat-table>
+            <mat-paginator #MatPaginator [length]="dataOfExpenses.length" [pageIndex]="0" [pageSize]="5"></mat-paginator>
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+    <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

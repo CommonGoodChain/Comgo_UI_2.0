@@ -1,0 +1,6 @@
+<mat-card>  
+  <div class="alert alert-info" *ngIf="chart == 'bubble'">  
+      <strong style="color:rgb(155, 123, 75)">Bubble Chart</strong>  
+  </div>  
+  <fusioncharts *ngIf="chart == 'bubble'" [id]="id" [width]="width" [height]="height" [type]="type" [dataFormat]="dataFormat" [dataSource]="dataSource"></fusioncharts>  
+</mat-card> 

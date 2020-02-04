@@ -1,0 +1,86 @@
+<div id="login" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+        <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+        <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div fxFlexOffset="15" fxFlex="30"><img style="width: 200px" src="assets/images/logos/comgologo.png"></div>
+                <div fxFlex="55" style="margin-top:10%">
+                <span style="color:#7a7a7a!important;font-size:50px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-size:50px;font-weight:bold;font-family:Roboto">go</span>
+                </div>
+            </div>
+            <div ><span style="color:#7a7a7a!important;font-size:25px;">{{'Welcome to ComGo, please create an account or log in to start tracking your impact' | translate}}</span></div>
+        </div>
+    <div id="login-form-wrapper" fusePerfectScrollbar [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="login-form">
+
+            <div class="comgologo" fxHide.gt-xs>
+                    <div fxFlexOffset="50">
+                            <img style="width: 100px" src="assets/images/logos/ComgoLogo-Navbar.png">
+                            <div>
+                            <span style="color:#7a7a7a!important;font-size:30px;font-family:Roboto">com</span><span style="color:#7a7a7a!important;font-weight:bold;font-size:30px;font-family:Roboto">go
+                                </span>
+                            </div>
+                            </div>
+            </div>
+            <div>
+            <div fxFlex="60" class="title">{{'Sign in' | translate}}</div>
+            <div fxFlex="40" id="language">
+                <button mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <img class="flag mr-8" [src]="'assets/images/flags/'+selectedLanguage.flag+'.png'">
+                    <span class="iso text-uppercase">{{selectedLanguage.flag}}</span>
+                </div>
+            </button>
+            <mat-menu #languageMenu="matMenu" [overlapTrigger]="false">
+    
+                <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                    <span fxLayout="row" fxLayoutAlign="start center">
+                        <img class="flag mr-16" [src]="'assets/images/flags/'+lang.flag+'.png'">
+                        <span class="iso">{{lang.title}}</span>
+                    </span>
+                </button>
+            </mat-menu></div>
+            <button type="button" (click)="startTour()"><mat-icon _ngcontent-c41="" class="secondary-text s-25 mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">help</mat-icon></button>
+            </div>
+            <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" novalidate>
+                <mat-form-field>
+                    <input matInput placeholder="{{'User Name' | translate}}" formControlName="username" required>
+                    <mat-error *ngIf="formErrors.username.required">
+                        User name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="password" placeholder="{{'Password' | translate}}" formControlName="password" required>
+                    <mat-error *ngIf="formErrors.password.required">
+                        {{'Password is required!' | translate }}
+                    </mat-error>
+                </mat-form-field>
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                fxLayoutAlign="space-between center">
+               <mat-checkbox class="forgot-password" aria-label="Remember Me">
+                    <a>{{'Remember Me' | translate}}</a>
+               </mat-checkbox>
+
+               <a id="forgotPassword" class="forgot-password" [routerLink]="'/pages/auth/forgot-password-2/'">
+                   {{'Forgot Password?' | translate}}
+               </a>
+           </div>
+                <button id="loginButton" mat-raised-button color="accent-900-bg" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
+                    {{'LOGIN' | translate}}
+                </button>
+            </form>
+            <div _ngcontent-c64="" class="separator">
+                <span _ngcontent-c64="" class="text">{{'OR' | translate}}</span>
+            </div>
+            <div _ngcontent-c64="" class="register" fxlayout="column" fxlayoutalign="center center" style="flex-direction: column; box-sizing: border-box; display: flex; max-width: 100%; place-content: center; align-items: center;">
+                <span _ngcontent-c64="" class="text">{{'Don’t have a account?' | translate}}</span>
+                <a _ngcontent-c64="" id="registerUser" class="link" (click)="goToRegister()">{{'Create an account' | translate}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+

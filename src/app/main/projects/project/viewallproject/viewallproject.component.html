@@ -1,0 +1,164 @@
+<div id="orders" class="page-layout carded fullwidth">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-900-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center"
+            fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    shopping_basket
+                </mat-icon>
+                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                        {{ 'View Projects' | translate }}
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field>
+                    <input id="viewallprojectSearch" matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Search' | translate }}">
+                </mat-form-field>
+            </div>
+            <!-- / SEARCH -->
+            <!-- <button type="button" *ngIf="role == 'foundation' || role == 'ngo'" (click)="startTour()">
+                <mat-icon _ngcontent-c41="" class="secondary-text s-35 mat-icon material-icons mat-icon-no-color" role="img"
+                    aria-hidden="true">help</mat-icon>
+            </button> &nbsp;&nbsp;&nbsp;&nbsp; -->
+            <button mat-raised-button *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Project" (click)="addNewProject()" class="add-product-button mat-white-bg my-12 mt-sm-0" style="margin-right: 10px; margin-left: 10px;">
+                <span>{{ 'ADD PROJECT' | translate }}</span>
+            </button>
+            <button type="button" *ngIf="role == 'foundation' || role == 'ngo'" (click)="startTour()">
+                <mat-icon _ngcontent-c41="" class="secondary-text s-35 mat-icon material-icons mat-icon-no-color mb-12"
+                    role="img" aria-hidden="true">help</mat-icon>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <!-- <div class="content-card mat-white-bg" *ngIf="projectsAll.length !== 0"> -->
+                <div class="mat-elevation-z8">
+            <mat-table class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                <ng-container matColumnDef="projectType">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Type' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <mat-icon (click)="showProjectDetails(data)" _ngcontent-c20="" *ngIf="data.Record.projectType==='Educational'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">school</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" _ngcontent-c20="" *ngIf="data.Record.projectType==='Children'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">child_care</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Health Care'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">local_hospital</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Homeless'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">sentiment_very_dissatisfied</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Research'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">search</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Sports'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">pool</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Arts and Culture'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">palette</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Environmental'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">local_florist</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Agricultural'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Human Rights'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Infrastructure'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Employment'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Microfinance'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Entrepreneurship'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                        <mat-icon (click)="showProjectDetails(data)" *ngIf="data.Record.projectType==='Equal Gender'" matTooltip="{{data.Record.projectType | translate}}"
+                            matTooltipPosition="above">nature_people</mat-icon>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="projectName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Name' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" (click)="showProjectDetails(data.Record)" matTooltip="{{data.Record.projectName}}" matTooltipPosition="above">{{data.Record.projectName}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="SDG">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'SDG' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <img *ngIf="data.Record.SDG != null" class="p-4" (mouseenter)="showSDGDialogue(data.Record)" matTooltip="{{data.Record.SDG[0].SDGType}}" matTooltipPosition="above"
+                            src="{{sdgUrl}}{{data.Record.SDG[0].SDGType}}{{imageExtenstion}}" width="25%" height="25%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"> ->
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="projectBudget">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important;
+                    justify-content:flex-end!important;">{{'Project Budget' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md style="display:flex !important;
+                    justify-content:flex-end!important;">
+                        <span class="text-truncate" matTooltip="{{data.Record.projectBudget | number : '1.2-2'}} {{data.Record.currency}}" matTooltipPosition="above">
+                            {{data.Record.projectBudget | number : '1.2-2'}}&nbsp;{{data.Record.currency}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fundGoal">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md style="display:flex !important;
+                        justify-content:flex-end!important;">{{'Fund Goal' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md style="display:flex !important;
+                        justify-content:flex-end!important;">
+                        <span class="text-truncate" matTooltip="{{data.Record.fundGoal | number : '1.2-2'}} {{data.Record.currency}}" matTooltipPosition="above">
+                            {{data.Record.fundGoal | number : '1.2-2'}}&nbsp;{{data.Record.currency}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Status' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="price text-truncate" (click)="showProjectDetails(data.Record)" matTooltip="{{data.Record.status | translate}}" matTooltipPosition="above">
+                            <span [translate]="data.translate">{{data.Record.status}}</span>
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <!-- Operation Column -->
+                <ng-container matColumnDef="operation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>{{'Operation' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data;let a = index" fxHide fxShow.gt-sm>
+                        <button id="viewallprojectProjectDetails" mat-icon-button (click)="showProjectDetails(data.Record)" matTooltip="{{'Show Project Details'|translate}}"
+                            matTooltipPosition="above">
+                            <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let data; columns: displayedColumns;">
+                </mat-row>
+            </mat-table>
+            <mat-paginator
+#MatPaginator [length]="5"
+[pageIndex]="0" [pageSize]="5"></mat-paginator>
+        </div>
+    <!-- </ng-template> -->
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+
+    <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

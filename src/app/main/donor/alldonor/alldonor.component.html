@@ -1,0 +1,115 @@
+<div id="orders" class="page-layout carded fullwidth">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-900-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+        
+
+                <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/pages/profile'">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        {{ 'View Donors' | translate }}
+                    </span>
+                </div>
+            <!-- / APP TITLE -->
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- SEARCH -->
+            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Search' | translate }}">
+                </mat-form-field>
+            </div>
+            <!-- / SEARCH -->
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg" *ngIf="donorList.length == 0">
+            <div style="margin-top:18%">
+                <div fxLayoutAlign="center start">
+                    <span class="icon-name secondary-text mt-8">{{'No Data Found' | translate}}</span>
+                </div>
+                <div fxLayoutAlign="center center">
+                    <mat-icon _ngcontent-c56="" class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">warning</mat-icon>
+                </div>
+            </div>
+        </div>
+        <!-- <div *ngIf="donorList.length !== 0" class="content-card mat-white-bg"> -->
+             <div class="mat-elevation-z8">
+            <mat-table *ngIf="donorList.length !== 0" class="orders-table" #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
+                <!-- Donar Name Column -->
+                <ng-container matColumnDef="donarAmount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Donor Name' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.aliasName}}" matTooltipPosition="above">{{data.aliasName}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Amount Column -->
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Amount' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.amount | number : '1.2-2'}} {{currencyType}}" matTooltipPosition="above">{{data.amount | number : '1.2-2'}}&nbsp;{{currencyType}}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Document Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Document Name'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <a *ngIf="data.uploadedDocument;else fileNotUploaded" class=" text-truncate" href="{{urlPort}}{{data.docPath}}/{{data.uploadedDocument}}" matTooltip="{{data.uploadedDocument}}"
+                            matTooltipPosition="above" target="_blank">
+                            {{data.uploadedDocument}}
+                        </a>
+                        <ng-template #fileNotUploaded>
+                            <p class=" text-truncate" matTooltip="{{'File not uploaded' | translate}}" matTooltipPosition="above">{{'File not uploaded' | translate}}</p>
+                        </ng-template>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Operation">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Operation' | translate }}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                                <button mat-icon-button matTooltip="{{'View Profile'|translate}}" matTooltipPosition="above" (click)="viewUserProfile(data)">
+                                        <mat-icon class="secondary-text s-24 mat-icon material-icons" role="img" aria-hidden="true">account_box</mat-icon>
+                                    </button>
+                        </mat-cell>
+                    </ng-container>
+                
+
+                <!-- Notification Column -->
+            
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let product; columns: displayedColumns;" class="product">
+                </mat-row>
+
+            </mat-table>
+            <mat-paginator
+            #MatPaginator [length]="donorList.length"
+            [pageIndex]="0" [pageSize]="5"></mat-paginator>
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+    <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

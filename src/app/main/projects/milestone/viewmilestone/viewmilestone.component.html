@@ -1,0 +1,102 @@
+<div id="orders" class="page-layout carded fullwidth inner-scroll">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <div class="top-bg mat-accent-900-bg"></div>
+    <div class="center">
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button id="viewMilestoneBackward" mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/pages/profile'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                <div class="h2">
+                    {{'View Milestones' | translate}}
+                </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;
+            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field>
+                    <input matInput id="viewMilestoneSearch" (keyup)="applyFilter($event.target.value)" placeholder="{{'Search' | translate}}">
+                </mat-form-field>
+            </div>
+            <button type="button" *ngIf="role == 'foundation' || role == 'ngo'" (click)="startTour()">
+                <mat-icon _ngcontent-c41="" class="secondary-text s-35 mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">help</mat-icon>
+            </button>
+            <button id="viewMilestoneAddMilestone" mat-raised-button (click)="addNewMilestone()" class="add-product-button mat-white-bg my-12 mt-sm-0">
+                <span>{{'ADD MILESTONE' | translate}}</span>
+            </button>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start start" style="flex-shrink:0">
+            <div class="logo my-12 m-sm-0 mat-accent-900-bg" fxLayout="row" fxLayoutAlign="start none">
+                <span class="logo-text h2" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    {{projectName}}
+                </span>
+            </div>
+        </div>
+        <div class="content-card mat-white-bg" *ngIf="milestoneAll.length == 0">
+            <div style="margin-top:18%">
+                <div fxLayoutAlign="center start">
+                    <span class="icon-name secondary-text mt-8">{{'No Milestones Added' | translate}}</span>
+                </div>
+                <div fxLayoutAlign="center center">
+                    <mat-icon _ngcontent-c56="" class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">warning</mat-icon>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="content-card mat-white-bg" *ngIf="milestoneAll.length !== 0"> -->
+            <div class="mat-elevation-z8">
+            <mat-table *ngIf="milestoneAll.length !== 0" class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                <ng-container matColumnDef="Milestone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Milestone' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.milestoneName}}" matTooltipPosition="above">{{data.milestoneName}}</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="StartDate">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header="Start Date" fxHide fxShow.gt-md>{{'Start Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class=" text-truncate">
+                            {{data.startDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="EndDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>{{'End Date' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                        <p class=" text-truncate">
+                            {{data.endDate | date:'dd-MM-yyyy'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="operations">
+                    <mat-header-cell *matHeaderCellDef>{{'Operations' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <button mat-icon-button (click)="forEditingMilestone(data)">
+                            <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltip="{{'Edit Milestone'|translate}}"
+                                matTooltipPosition="above">create</mat-icon>
+                        </button>
+                        <button *ngIf="data.approved == false && data.fundAllocated == 0" mat-icon-button (click)="onDelete(data)">
+                            <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" role="img" aria-hidden="true" matTooltip="{{'Delete Milestone'|translate}}"
+                                matTooltipPosition="above">delete</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="forAddingActivity(data)">
+                            <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons" role="img" aria-hidden="true" matTooltip="{{'View Activity'|translate}}"
+                                matTooltipPosition="above">remove_red_eye</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let data; columns: displayedColumns;" class="order">
+                </mat-row>
+            </mat-table>
+            <mat-paginator
+            #MatPaginator [length]="milestoneAll.length"
+            [pageIndex]="0" [pageSize]="5"></mat-paginator>
+        </div>
+    </div>
+</div>

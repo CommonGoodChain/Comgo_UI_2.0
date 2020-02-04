@@ -1,0 +1,1475 @@
+<div id="profile" class="page-layout simple tabbed inner-scroll fullwidth pageBackground">
+    <div class="scroll" style="overflow:scroll;" (scroll)="handleScroll($event)">
+        <mat-toolbar id="toolbar" class="p-0 mat-elevation-z1">
+
+            <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
+                <button id="language" mat-button fxHide fxShow.gt-xs class="language-button"
+                    [matMenuTriggerFor]="languageMenu">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <img class="flag mr-8" [src]="'assets/images/flags/'+selectedLanguage.flag+'.png'">
+                        <span class="iso text-uppercase">{{selectedLanguage.flag}}</span>
+                    </div>
+                </button>
+                <mat-menu #languageMenu="matMenu" [overlapTrigger]="false">
+
+                    <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                        <span fxLayout="row" fxLayoutAlign="start center">
+                            <img class="flag mr-16" [src]="'assets/images/flags/'+lang.flag+'.png'">
+                            <span class="iso">{{lang.title}}</span>
+                        </span>
+                    </button>
+                </mat-menu>
+                <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar"
+                        (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
+                        <mat-icon class="secondary-text">menu</mat-icon>
+                    </button>
+
+                    <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
+
+                    <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNavbar">
+                        <div class="logo ml-16">
+                            <img class="logo-icon" src="assets/images/logos/fuse.png">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="" id="toolbarDropdown" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
+
+                    <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <img class="avatar mr-0 mr-sm-16" src="{{profileImageUrl}}{{userName}}"
+                                onerror="this.src='assets/images/avatars/Velazquez.jpg'">
+                            <span class="username mr-12">{{userName}}</span>
+                            <mat-icon class="s-16">keyboard_arrow_down</mat-icon>
+                        </div>
+                    </button>
+
+                    <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+                        <button *ngIf="userType == 'Organization'" mat-menu-item class="" (click)="gotoUserProfile()">
+                            <mat-icon>assignment_ind</mat-icon>
+                            <span>{{'Organization Profile' | translate}}</span>
+                        </button>
+                        <button mat-menu-item class="" (click)="updateUser()">
+                            <mat-icon>account_circle</mat-icon>
+                            <span>{{'Update User Details' | translate}}</span>
+                        </button>
+                        <button mat-menu-item class="" (click)="changePassword()">
+                            <mat-icon>vpn_key</mat-icon>
+                            <span>{{'Change Password' | translate}}</span>
+                        </button>
+                        <button mat-menu-item class="" (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>{{'Logout' | translate}}</span>
+                        </button>
+                    </mat-menu>
+
+                    <div class="toolbar-separator" fxHide fxShow.gt-xs></div>
+                    <div class="toolbar-separator" fxHide.gt-md></div>
+
+                    <div class="toolbar-separator" *ngIf="!hiddenNavbar && rightNavbar" fxHide fxShow.gt-xs></div>
+
+                    <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && rightNavbar"
+                        (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
+                        <mat-icon class="secondary-text">menu</mat-icon>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </mat-toolbar>
+        <div class="header" fxLayout="column"
+            [ngStyle]="{background: 'url('+bgImageUrl+') center center / cover no-repeat '}">
+            <div fxLayout.gt-sm="row">
+                <div fxLayoutAlign="start start">
+                    <button style="margin-left:1%" class="btn" type="button" (click)="fileInput.click()"
+                        aria-label="Add file" matTooltip="{{'Upload Project Image' | translate}}">
+                        <mat-icon style="margin-top:30%" class="secondary-text s-24 mat-icon material-icons" id="img"
+                            role="img" aria-hidden="true">
+                            add_a_photo</mat-icon>
+                    </button>
+                </div>
+                <div class="actions" fxLayout="row" style="width:100%" fxLayoutAlign="end center"
+                    [@animate]="{value:'*',params:{delay:'200ms'}}">
+                    <img class="p-4" *ngFor="let sdgData of SDGType " matTooltip="{{sdgData.SDGType | translate}}"
+                        matTooltipPosition="above" src="{{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}" width="5%"
+                        height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    <input hidden type="file" id="photos" (change)="uploadFile($event)" #fileInput
+                        multiple />&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="actions" *ngIf="SDGType.length > 10" fxLayout="row" style="width:100%"
+                    fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+                    <img class="p-4" *ngFor="let sdgData of SDGType " matTooltip="{{sdgData.SDGType | translate}}"
+                        matTooltipPosition="above" src="{{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}" width="5%"
+                        height="8%" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    <input hidden type="file" id="photos" (change)="uploadFile($event)" #fileInput
+                        multiple />&nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+            <div fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between end" fxLayout.gt-sm="row">
+            </div>
+            <div>
+            </div>
+            <div style="margin-top:10%">
+                <div fxLayout.gt-sm="row">
+                    <div fxLayoutAlign.gt-sm="start center">
+                        <img class="profile-image avatar huge" src="{{profileImageUrl}}{{projectOwner}}"
+                            onerror="this.src='assets/images/avatars/ngoDefault.jpg'"
+                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    </div>
+                    <div class="ratings" style="margin-top:5%;" fxFlexOffset="77">
+                        <div style="background-color: white;">
+                            <div class="empty-stars"></div>
+                            <div class="full-stars"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- {{myString?.length > 200 ? (myString | slice: 0:200) + "..." : myString}} -->
+                <div class="name" style="font-family: Roboto Mono,monospace;"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div fxLayoutAlign="start start" id="ellipses" class="projectName" matTooltip="{{projectName}}"
+                        matTooltipPosition="above"><b>{{projectName}}</b></div>
+                    <div fxLayoutAlign="start start" style="font-size:18px">{{'By' | translate}}
+                        {{projectOwner?.length > 15 ? (projectOwner | slice: 0:15) + "..." : projectOwner}} | <span
+                            matTooltip="{{projectsAll.projectType}}" matTooltipPosition="above">{{projectsAll.projectType?.length > 15 ? (projectsAll.projectType
+                        | slice: 0:15) + "..." : projectsAll.projectType}} | </span>
+                        <span *ngIf="projectsAll.isApproved">
+                            <mat-icon matTooltip="{{'Board Remarks' | translate}}: {{projectsAll.remarks}}"
+                                class="pt-8 green-icon secondary-text s-14 mat-icon notranslate material-icons ">
+                                check_circle</mat-icon>
+                        </span>
+                        <span *ngIf="!projectsAll.isApproved">
+                            <mat-icon
+                                matTooltip="{{'Board Remarks' | translate}}: {{projectsAll.remarks.length > 0 ? projectsAll.remarks : 'Waiting for project approval'}}"
+                                class="pt-8 secondary-text s-14 mat-icon notranslate material-icons mat-icon-no-color">
+                                error
+                            </mat-icon>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+
+        <div id="navbar" class="pageBackground">
+            <br />
+            <div>
+                <a id="tab1" [ngClass]="{'active': selectedItem === 'tab1'}"
+                    (click)="gotoMilestones('destination1','tab1')">About</a>
+                <!-- <a id="tab2" [ngClass]="{'active': selectedItem === 'tab2'}"
+                        (click)="gotoMilestones('destination2','tab2')">Project Budget</a> -->
+                <a id="tab2" [ngClass]="{'active': selectedItem === 'tab2'}"
+                    (click)="gotoMilestones('destination2','tab2')">Milestones</a>
+                <a id="tab3" [ngClass]="{'active': selectedItem === 'tab3'}"
+                    (click)="gotoMilestones('destination3','tab3')">Photos &
+                    Videos</a>
+                     <a id="tab4" [ngClass]="{'active': selectedItem === 'tab4'}"
+                    (click)="gotoMilestones('destination4','tab4')">Docs</a>
+                <a id="tab5" [ngClass]="{'active': selectedItem === 'tab5'}"
+                    (click)="gotoMilestones('destination5','tab5')">To-Do</a>
+                <a *ngIf="userRules != undefined && userRules!= '' && userRules.crm_Notification && isPublished"
+                    id="tab6" [ngClass]="{'active': selectedItem === 'tab6'}"
+                    (click)="gotoMilestones('destination6','tab6')">CRM</a>
+                <a *ngIf="approved && userRules != undefined && userRules!= '' && userRules.publish_Project" id="tab7"
+                    [ngClass]="{'active': selectedItem === 'tab7'}"
+                    (click)="gotoMilestones('destination7','tab7')">Visibility</a>
+                <a id="tab8" [ngClass]="{'active': selectedItem === 'tab8'}"
+                    (click)="gotoMilestones('destination8','tab8')">Timeline</a>
+               
+                <div style="float:right"><button *ngIf="donated == 1"
+                        class="StyledButton__StyledButtonContent-dv1k1j-0 iRbFrs" (click)="rateProject()">Add a
+                        Review</button><button class="StyledButton__StyledButtonContent-dv1k1j-0 iRbFrs2"
+                        (click)="towardsDonation()">Donate Now</button></div>
+            </div>
+        </div>
+
+        <div class="order-details tab-content pb-24
+        pl-24 pr-24 pageBackground">
+
+            <div>
+                <div class="about-content" fxLayout="column" fxFlex="100">
+
+                    <div style="font-size: 15px;color:#FFFFFF"><u>About:</u></div>
+                    <div fxLayout="row" fxFlex="100">
+                        <div fxFlex="55" fxLayout="column">
+                            <div fxFlex="35" fxLayout="row">
+                                <div fxFlex="30">
+                                    <mat-card>
+                                        <div fxFlexLayout="row">
+                                            <div fxFlex="50">
+                                                <span id="date" style="color:#0a2474"
+                                                    >{{projectsAll.startDate | date:'dd'}}</span>
+                                            </div>
+
+                                            <div class="pt-12" fxFlex="50">
+                                                <div>{{projectsAll.startDate | date:'MMM'}}</div>
+                                                <div>{{projectsAll.startDate | date:'yyyy'}}</div>
+                                            </div>
+                                        </div>
+                                        <div style="color:grey;float:left">{{'Start Date' | translate}}</div>
+                                    </mat-card>
+                                </div>
+                                <div fxFlexOffset="5" fxFlex="60">
+                                    <mat-card style="height:110px; padding: 0px !important;">
+                                        <mat-card-header>
+                                            <mat-list role="list">
+                                                <mat-list-item>
+                                                    <span
+                                                        style="margin-left:36%;font-size:30px;color:#0a2474">{{projectsAll.projectBudget | number : '1.2-2'}}</span>&nbsp;
+                                                    <span style="font-size:10px">{{projectsAll.currency}}</span>
+                                                </mat-list-item>
+                                                <mat-list-item fxLayoutAlign="center center"
+                                                    style="margin-left:20%;width:100%;color:grey" role="listitem">
+                                                    {{'Project Budget' | translate}}</mat-list-item>
+                                            </mat-list>
+                                        </mat-card-header>
+                                    </mat-card>
+                                </div>
+
+                            </div>
+                            <div id="destination1" #destinationRef1 fxFlexOffset="4" fxFlex="35" fxLayout="row">
+                                <div fxFlex="30">
+                                    <mat-card>
+                                        <div fxFlexLayout="row">
+                                            <div fxFlex="50">
+                                                <span id="date" style="color:#0a2474"
+                                                    class="username">{{projectsAll.endDate | date:'dd'}}</span>
+                                            </div>
+
+                                            <div class="pt-12" fxFlex="50">
+                                                <div>{{projectsAll.endDate | date:'MMM'}}</div>
+                                                <div>{{projectsAll.endDate | date:'yyyy'}}</div>
+                                            </div>
+                                        </div>
+                                        <div style="color:grey;float:left">{{'End Date' | translate}}</div>
+                                    </mat-card>
+                                </div>
+                                <div fxFlexOffset="5" fxFlex="60">
+                                    <mat-card style="height:110px; padding: 0px !important;">
+                                        <mat-card-header>
+                                            <mat-list role="list">
+                                                <mat-list-item>
+                                                    <span
+                                                        style="margin-left:36%;font-size:30px;color:#0a2474">{{projectsAll.fundGoal | number : '1.2-2'}}</span>&nbsp;
+                                                    <span style="font-size:10px">{{projectsAll.currency}}</span>
+                                                </mat-list-item>
+                                                <mat-list-item fxLayoutAlign="center center"
+                                                    style="margin-left:20%;width:100%;color:grey" role="listitem">
+                                                    {{'Fund Goal' | translate}}</mat-list-item>
+                                            </mat-list>
+                                        </mat-card-header>
+                                    </mat-card>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:4%" fxLayout="row">
+                                <div fxFlex="95">
+                                    <mat-progress-bar mode="determinate" class="probgressbar" value="{{percentage}}"
+                                        matTooltip="{{projectsAll.fundRaised}}/{{balance}} {{projectsAll.currency}}">
+                                    </mat-progress-bar>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div fxLayout="row">
+                                <div fxFlex="94">
+                                    <div fxFlex="50">
+                                        <span style="float:left;color:#0040ff"
+                                            matTooltip="{{'Fund Raised' | translate}}"
+                                            class="username">{{projectsAll.fundRaised | number : '1.2-2'}}
+                                            {{projectsAll.currency}}</span>
+                                    </div>
+                                    <div fxFlex="50">
+                                        <span style="float:right;color:#0040ff" matTooltip="{{'Balance' | translate}}"
+                                            class="username">{{balance | number : '1.2-2'}}
+                                            {{projectsAll.currency}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div fxLayout="row">
+                                <div fxFlex="94">
+                                    <div fxFlex="50">
+                                        <span style="float:left" matTooltip="{{'Fund Raised' | translate}}"
+                                            class="username secondary-text">{{'Fund Raised' | translate}}</span>
+                                    </div>
+                                    <div fxFlex="50">
+                                        <span style="float:right" matTooltip="{{'Balance' | translate}}"
+                                            class="username secondary-text">{{'Balance' | translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxFlex="45">
+                            <owl-carousel *ngIf="loaded" [options]="mySlideOptions" [items]="images"
+                                [carouselClasses]="['owl-theme', 'sliding']">
+                                <div *ngFor="let image of imageCollection;let i = index">
+                                    <div>
+                                        <img style="height:245px" src="{{imageUrl}}/{{projectId}}/{{image.imageName}}">
+                                    </div>
+                                </div>
+
+                            </owl-carousel>
+                            <br />
+                            <div class="info-line" fxHide.lt-md>
+                                <div class="project">
+                                    <span>{{'Description' | translate}}:</span>
+                                </div>
+                                <div>
+                                    {{myString?.length > 200 ? (myString | slice: 0:200) + "..." : myString}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- <div id="destination2" #destinationRef2>
+                    <div class="about-content" fxLayout="column" fxFlex="100">
+    
+                        <h1><u>Project Budget:</u></h1>
+                        <br />
+                        <div class="profile-box info-box general" fxLayout="column">
+                            <div>
+                                <div class="content">
+                                    <div>
+                                        <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row"
+                                            fxLayoutAlign.gt-sm="start start">
+    
+    
+                                            <div fxFlex="30">
+                                                <div fxLayoutAlign="start center">
+                                                    <mat-card>
+                                                        <mat-card-header>
+                                                            <mat-list role="list">
+                                                                <mat-list-item class="pb-20" role="listitem">
+                                                                    <span
+                                                                        style="font-size:30px;color:#0a2474">{{projectsAll.projectBudget | number : '1.2-2'}}</span>&nbsp;
+                                                                    <span
+                                                                        style="font-size:10px">{{projectsAll.currency}}</span>
+                                                                </mat-list-item>
+                                                                <mat-list-item fxLayoutAlign="center center"
+                                                                    style="color:grey" role="listitem">
+                                                                    {{'Project Budget' | translate}}</mat-list-item>
+                                                            </mat-list>
+                                                        </mat-card-header>
+                                                    </mat-card>
+                                                </div>
+                                                <button mat-button></button>
+                                                <div style="margin-top:3.5%" fxLayoutAlign="start center"
+                                                    class="example-container">
+                                                    <mat-card class="example-card">
+                                                        <mat-card-header>
+                                                            <mat-list role="list">
+                                                                <mat-list-item class="pb-20" role="listitem">
+                                                                    <span
+                                                                        style="font-size:30px;color:#0a2474">{{projectsAll.fundGoal | number : '1.2-2'}}</span>&nbsp;
+                                                                    <span
+                                                                        style="font-size:10px">{{projectsAll.currency}}</span>
+                                                                </mat-list-item>
+                                                                <mat-list-item fxLayoutAlign="center center"
+                                                                    style="color:grey" role="listitem">
+                                                                    {{'Fund Goal' | translate}}</mat-list-item>
+                                                            </mat-list>
+                                                        </mat-card-header>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="30">
+                                                <mat-card>
+                                                    <div style="height:100%;">
+                                                        <ngx-charts-pie-chart class="pie-chart-container" *fuseIfOnDom
+                                                            [scheme]="widget6.scheme" [results]="projectData"
+                                                            [legend]="widget6.showLegend"
+                                                            [explodeSlices]="widget6.explodeSlices"
+                                                            [doughnut]="widget6.doughnut" [gradient]="gradient"
+                                                            [view]="view" (select)="widget6.onSelect($event)">
+                                                        </ngx-charts-pie-chart>
+                                                    </div>
+                                                </mat-card>
+                                                <div style="border-top-style: solid;
+                                                        border-top-width: thin;">
+                                                    <mat-card>
+                                                        <div fxLayout="row">
+                                                            <div fxFlex="50">
+                                                                <div
+                                                                    matTooltip="{{projectsAll.fundRaised | number : '1.2-2'}} {{projectsAll.currency}}">
+                                                                    {{projectsAll.fundRaised | number : '1.2-2'}}
+                                                                    {{projectsAll.currency}}</div>
+                                                                <div class="username secondary-text"
+                                                                    matTooltip="{{'Fund Raised' | translate}}">
+                                                                    {{'Fund Raised' | translate}}</div>
+                                                            </div>
+                                                            <div style="border-left-style: solid;
+                                                                        border-left-width: thin;" fxFlex="50">
+                                                                <div style="margin-left:10%"
+                                                                    matTooltip="{{balance | number : '1.2-2'}} {{projectsAll.currency}}">
+                                                                    {{balance | number : '1.2-2'}} {{projectsAll.currency}}
+                                                                </div>
+                                                                <div style="margin-left:10%" class="username secondary-text"
+                                                                    matTooltip="{{'Balance' | translate}}">
+                                                                    {{'Balance' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+                                            <div fxFlexOffset="1" fxFlex="38">
+                                                <agm-map [latitude]="lat" [longitude]="lng">
+                                                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                                </agm-map>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div> -->
+            <br>
+            <div id="destination2" #destinationRef2>
+                <!-- <div>
+                    <h1><u>Milestones:</u></h1>
+                </div>
+                <br /> -->
+                <!-- <h2><span class="tab-title-underline">Milestones</span></h2> -->
+                <div>
+                    <div class="tab-title-underline" fxFlex="30">
+                        <h1><span>Milestones:</span></h1>
+                    </div>
+                </div>
+                <br />
+                <div *ngIf="viewActivities == 0 && donated == 0">
+                        <span
+                            class="name">{{ 'Only donors can track milestones and activities. Become a donor' | translate }}
+                        </span>
+                    </div>
+                <div *ngIf="donated == 1">
+                <div fxLayoutAlign="start end" style="width:25%" class="example-container">
+                    &nbsp;
+                    <mat-card>
+                        <p>
+                            <b>{{'Available Funds' | translate}}: {{fundNotAllocated}} {{currency}}</b>
+                        </p>
+                    </mat-card>
+
+                </div>
+                <br />
+                <div *ngIf="viewActivities == 0" class="mat-elevation-z1">
+                    <mat-table class="orders-table" #table [dataSource]="milestone" matSort fusePerfectScrollbar>
+
+                        <ng-container matColumnDef="milestone">
+                            <mat-header-cell *matHeaderCellDef style="display:flex !important;">
+                                {{'Milestone' | translate}}</mat-header-cell>
+                            <mat-cell *matCellDef="let data">
+                                <p class="text-truncate" matTooltip="{{data.Record.milestoneName}}"
+                                    matTooltipPosition="above">{{data.Record.milestoneName}}</p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="startDate">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
+                                style="display:flex !important">{{'Start Date' | translate}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                                <p class="text-truncate">
+                                    {{data.Record.startDate | date:'dd-MM-yyyy'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="endDate">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
+                                style="display:flex !important">{{'End Date' | translate}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                                <p class="text-truncate">
+                                    {{data.Record.endDate | date:'dd-MM-yyyy'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef>
+                                {{'Status' | translate}}</mat-header-cell>
+                            <mat-cell *matCellDef="let data">
+                                <p class="text-truncate" matTooltip="{{data.Record.status}}" matTooltipPosition="above">
+                                    <span [translate]="data.translate">{{data.Record.status}}</span>
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="operation">
+                            <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                        ">{{'Operation' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Milestone"
+                                    matTooltip="{{'Create Milestone' | translate}}" matTooltipPosition="above"
+                                    mat-icon-button (click)="addNewMilestone()">
+                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                        role="img" aria-hidden="true">add_box</mat-icon>
+                                </button>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let data;let i = index">
+                                <button id="{{data.Record.milestoneId}}" matTooltip="{{'View Activities' | translate}}"
+                                    matTooltipPosition="above" mat-icon-button
+                                    (click)="viewActivitiesDetails(data.Record.milestoneId,data.Record)">
+                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                </button>
+                                <button *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Milestone"
+                                    mat-icon-button (click)="forEditingMilestone(data.Record.milestoneId)">
+                                    <mat-icon
+                                        class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted"
+                                        role="img" aria-hidden="true" matTooltip="{{'Edit Milestone'|translate}}"
+                                        matTooltipPosition="above">create</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let order; columns: displayedColumns;" class="order">
+                        </mat-row>
+                    </mat-table>
+                </div>
+
+                <!-- Donor milestones -->
+                <!-- <div *ngIf="viewActivities == 0 && donated == 0">
+                    <span
+                        class="name">{{ 'Only donors can track milestones and activities. Become a donor' | translate }}
+                    </span>
+                </div> -->
+                <div class="content-card mat-white-bg" *ngIf="viewActivities == 1">
+                        <mat-table class="orders-table" #table [dataSource]="activities" multiTemplateDataRows class="mat-elevation-z8">
+
+                                <ng-container matColumnDef="activity">
+                                    <mat-header-cell *matHeaderCellDef style="display:flex !important;">
+                                        {{'Activity' | translate}}</mat-header-cell>
+                                    <mat-cell *matCellDef="let data">
+                                        <p class="text-truncate" matTooltip="{{data.Record.activityName}}"
+                                            matTooltipPosition="above">{{data.Record.activityName}}</p>
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="startDate">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
+                                            style="display:flex !important">
+                                            <span style="font-weight: bold;font-size:13px">{{'Start Date' | translate}}</span>
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                                            <p class="text-truncate">
+                                                {{data.Record.startDate | date:'dd-MM-yyyy'}}
+                                            </p>
+                                        </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="endDate">
+                                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md
+                                                style="display:flex !important">
+                                                <span style="font-weight: bold;font-size:13px">{{'End Date' | translate}}</span>
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                                                <p class="text-truncate">
+                                                    {{data.Record.endDate | date:'dd-MM-yyyy'}}
+                                                </p>
+                                            </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="funds">
+                                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md style="display:flex !important;
+                                                                ">
+                                                    <span style="font-weight: bold;font-size:13px">{{'Funds' | translate}}</span>
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let data" fxHide fxShow.gt-md>
+                                                    <p class="text-truncate"
+                                                        matTooltip="{{data.Record.activityBudget | number : '1.2-2'}} {{currency}}"
+                                                        matTooltipPosition="above">
+                                                        {{data.Record.activityBudget | number : '1.2-2'}} {{currency}}
+                                                    </p>
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status">
+                                                    <mat-header-cell *matHeaderCellDef>
+                                                        <span style="font-weight: bold;font-size:13px">{{'Status' | translate}}</span>
+                                                    </mat-header-cell>
+                                                    <mat-cell *matCellDef="let data">
+                                                        <p class="text-truncate" matTooltip="{{data.Record.status}}" matTooltipPosition="above">
+                                                            <span [translate]="data.translate">{{data.Record.status}}</span>
+                                                        </p>
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="Remarks">
+                                                        <mat-header-cell *matHeaderCellDef>
+                                                            <span style="font-weight: bold;font-size:13px">{{'Remarks' | translate}}</span>
+                                                        </mat-header-cell>
+                                                        <mat-cell *matCellDef="let data">
+                                                            <p *ngIf="data.Record.remarks;else noRemarks" class="text-truncate"
+                                                                matTooltip="{{data.Record.remarks}}" matTooltipPosition="above">
+                                                                <span [translate]="data.translate">{{data.Record.remarks}}</span>
+                                                            </p>
+                                                            <ng-template #noRemarks>
+                                                                <p class="text-truncate" matTooltip="{{'No Remarks Added' | translate}}"
+                                                                    matTooltipPosition="above">{{'No Remarks Added' | translate}}</p>
+                                                            </ng-template>
+                                                        </mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="operation">
+                                                            <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                                                            ">
+                                                                <span style="font-weight: bold;font-size:13px">{{'Operation' | translate}}</span>
+                                                            </mat-header-cell>
+                                                            <mat-cell *matCellDef="let data; let i = dataIndex;">
+                                                                <button mat-icon-button matTooltip="{{'View Expense' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewProof(data.Record)"
+                                                                    *ngIf="data.Record.status==='Request Fund'">
+                                                                    <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Expense' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewProof(data.Record)"
+                                                                    *ngIf="data.Record.status==='Request FundFund Released'">
+                                                                    <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Expense' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewProof(data.Record)"
+                                                                    *ngIf="data.Record.status==='Proof Submitted'">
+                                                                    <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Expense' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="data.Record.status==='Fund Allocated'">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                
+                                                                <button mat-icon-button matTooltip="{{'Release Fund' | translate}}"
+                                                                    matTooltipPosition="above" (click)="releaseFund(data.Record)"
+                                                                    *ngIf="data.Record.status==='Request Fund' && userRules!= undefined && userRules!= '' && userRules.release_Fund">
+                                                                    <mat-icon class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">check</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="data.Record.status==='Validation Successful'">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="data.Record.status==='Activity Closed'">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="(data.Record.status.startsWith('Partial Validation Successful') && role ==='ngo') || (data.Record.status.startsWith('Partial Validation Successful') && role ==='donor')">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="(data.status==='Validation failed' && role ==='ngo') || (data.status==='Validation failed' && role ==='donor')">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="(data.Record.status.startsWith('Partial Validation Successful') && role ==='foundation') || (data.status==='Validation failed' && role ==='ngo')">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="data.status==='Validation Successful' && role ==='ngo'">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="data.status==='Validation Successful' && role ==='foundation'">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'View Proof' | translate}}"
+                                                                    matTooltipPosition="above" (click)="viewExpenses(data.Record)"
+                                                                    *ngIf="data.status==='Validation failed' && role ==='foundation'">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">remove_red_eye</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'Approve Activity'|translate}}"
+                                                                    matTooltipPosition="above" (click)="validationApproved(data.Record)"
+                                                                    *ngIf="(data.Record.status==='Proof Submitted' || data.Record.status.startsWith('Partial Validation')) && !data.Record.status.endsWith(username)  && (data.Record.validatorId.startsWith(username) || data.Record.validatorId.endsWith(username)) && userRules!= undefined && userRules!= '' && userRules.validate_Proof">
+                                                                    <mat-icon id="approvalButtonForValidator"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        check</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'Reject Activity' | translate}}"
+                                                                    matTooltipPosition="above" (click)="validationRejected(data.Record)"
+                                                                    *ngIf="(data.Record.status==='Proof Submitted' || data.Record.status.startsWith('Partial Validation')) && !data.Record.status.endsWith(username) && (data.Record.validatorId.startsWith(username) || data.Record.validatorId.endsWith(username)) && userRules!= undefined && userRules!= '' && userRules.validate_Proof">
+                                                                    <mat-icon id="rejectButtonForValidator"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        cancel</mat-icon>
+                                                                </button>
+                                                                <button matTooltip="{{'Send For Approval' | translate}}" matTooltipPosition="above"
+                                                                    mat-icon-button type="button"
+                                                                    *ngIf="data.Record.status == 'Activity Created' && userRules!= undefined && userRules!= '' && userRules.send_For_Approval"
+                                                                    (click)="sendForApproval(data.Record)" id="approvalButtonForFoundation">
+                                                                    <mat-icon id="approvalButtonForFoundation"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        check</mat-icon>
+                                                                </button>
+                                
+                                                                <button matTooltip="{{'Send For Approval' | translate}}" matTooltipPosition="above"
+                                                                    mat-icon-button type="button"
+                                                                    *ngIf="data.Record.status == 'Activity Rework' && userRules!= undefined && userRules!= '' && userRules.send_For_Approval"
+                                                                    (click)="sendForApproval(data.Record)" id="approvalButtonForFoundation">
+                                                                    <mat-icon id="approvalButtonForFoundation"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        check</mat-icon>
+                                                                </button>
+                                
+                                                                <button matTooltip="{{'Send For Approval' | translate}}" matTooltipPosition="above"
+                                                                    mat-icon-button type="button"
+                                                                    *ngIf="data.Record.status == 'Activity Updated' && userRules!= undefined && userRules!= '' && userRules.send_For_Approval"
+                                                                    (click)="sendForApproval(data.Record)" id="approvalButtonForFoundation">
+                                                                    <mat-icon id="approvalButtonForFoundation"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        check</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'Approve Activity' | translate}}"
+                                                                    matTooltipPosition="above" (click)="approveActivity(data.Record,true)"
+                                                                    *ngIf="data.Record.status === 'Budgeted' && userRules!= undefined && userRules!= '' && userRules.approve_Reject">
+                                                                    <mat-icon id="approvalButtonForValidator"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        check</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'Reject Activity' | translate}}"
+                                                                    matTooltipPosition="above" (click)="approveActivity(data.Record,false)"
+                                                                    *ngIf="data.Record.status === 'Budgeted' && userRules!= undefined && userRules!= '' && userRules.approve_Reject">
+                                                                    <mat-icon id="rejectButtonForValidator"
+                                                                        class="secondary-text s-20 mat-icon material-icons" role="img"
+                                                                        aria-hidden="true">
+                                                                        cancel</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'Close Activity' | translate}}"
+                                                                    *ngIf="(data.Record.status==='Validation Successful' || data.Record.status.startsWith('Partial Validation Successful') || (data.Record.status == 'Proof Submitted' && data.Record.validatorId == '-')) && userRules!= undefined && userRules!= '' && userRules.activity_Closed"
+                                                                    matTooltipPosition="above" (click)="closeActivity(data.Record,i)">
+                                                                    <mat-icon _ngcontent-c56="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">cancel_presentation</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button matTooltip="{{'Allocate Funds' | translate}}"
+                                                                    matTooltipPosition="above" (click)="allocateFunds(data.Record)"
+                                                                    *ngIf="projectStatusForPublish == 'true' && fundAllocationType == 1 && data.Record.status == 'Activity Approved'&& fundNotAllocated >= data.Record.activityBudget && userRules!= undefined && userRules!= '' && userRules.allocate_Fund">
+                                                                    <mat-icon _ngcontent-c39=""
+                                                                        class="secondary-text s-20 mat-icon material-icons mat-icon-no-color" role="img"
+                                                                        aria-hidden="true">input</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button (click)="forUpdatingActivity(data.Record)">
+                                                                    <mat-icon
+                                                                        class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted"
+                                                                        *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Activity"
+                                                                        role="img" aria-hidden="true" matTooltip="{{'Edit Activity'|translate}}"
+                                                                        matTooltipPosition="above">create</mat-icon>
+                                                                </button>
+                                                                <img *ngIf="compareDates(data.endDate) && data.status != 'Validation Successful'  && !data.Record.status.startsWith('Partial Validation Successful') && data.status != 'Activity Closed' && projectStatusForPublish == 'true'"
+                                                                    style="width:10%;height:10%"
+                                                                    src="../../../../../../assets/images/error_dots/redDot.png">
+                                                                <img *ngIf="data.status == 'Activity Closed'" style="width:16%;height:16%"
+                                                                    src="../../../../../../assets/images/error_dots/greenDot.jpg">
+                                                            </mat-cell>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="exit">
+                                                            <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                                                            ">
+                                                                <button matTooltip="{{'View Milestones' | translate}}" matTooltipPosition="above"
+                                                                    mat-icon-button (click)="backToMilestones()">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">arrow_back</mat-icon>
+                                                                </button> &nbsp;&nbsp;
+                                                                <button *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Activity"
+                                                                    matTooltip="{{'Create Activity' | translate}}" matTooltipPosition="above"
+                                                                    mat-icon-button (click)="addNewActivity()">
+                                                                    <mat-icon _ngcontent-c38="" class="secondary-text s-20 mat-icon material-icons"
+                                                                        role="img" aria-hidden="true">add_box</mat-icon>
+                                                                </button>
+                                                            </mat-header-cell>
+                                                            <mat-cell *matCellDef="let data">
+                                                            </mat-cell>
+                                                        </ng-container>
+                                                        
+                                                        <ng-container matColumnDef="expandedDetail">
+                                                                <mat-cell *matCellDef="let element">
+                                                                        <div fxFlex="50">
+                                                                                <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                <div>
+                                                                                    <b>Activity Id:</b>
+                                                                                    <span> {{element.Record.activityId}} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                <div>
+                                                                                    <b>Start Date:</b>
+                                                                                    <span> {{element.Record.startDate}} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                <div>
+                                                                                    <b>Validators:</b>
+                                                                                    <span> {{element.Record.validatorId}} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                    <div>
+                                                                                        <b>Technical Validation Criteria:</b>
+                                                                                        <span> {{element.Record.technicalCriteria}} </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            <br/>
+                                                                        </div>
+                                                                        <div fxFlex="50">
+                                                                                <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                <div>
+                                                                                    <b>Activity Name:</b>
+                                                                                    <span> {{element.Record.activityName}} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                <div>
+                                                                                    <b>End Date:</b>
+                                                                                    <span> {{element.Record.endDate}} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                <div>
+                                                                                    <b>Activity Budget:</b>
+                                                                                    <span> {{element.Record.activityBudget}} </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                                                    <div>
+                                                                                        <b>Financial Validation Criteria:</b>
+                                                                                        <span> {{element.Record.financialCriteria}} </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            <br/>
+                                                                        </div>
+                                                                </mat-cell>
+                                                              </ng-container>
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        
+                                <mat-row *matRowDef="let element; columns: displayedColumns;"
+                                (click)="expandedElement = expandedElement === element ? null : element" (click)="getActivity(element.activityId)">
+                                </mat-row>
+                                
+                                <mat-row *matRowDef="let element; columns: ['expandedDetail']" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
+                            </mat-table></div>
+                </div>
+                <br />
+            <br />
+
+            <div id="destination3" #destinationRef3>
+                <div>
+                    <div class="tab-title-underline" fxFlex="30">
+                        <h1><span>Photos and Videos:</span></h1>
+                    </div>
+                </div>
+                <br />
+                <div class="period-title">
+                    <!-- <span class="name">{{ 'Photos' | translate }}</span> -->
+                </div>
+                <br />
+                <div fxLayout="row wrap" fxLayoutAlign="start start">
+                    <div *ngFor="let data of imageCollection; let i = index" class="img_wrp pr-8 pb-8">
+                        <img id="photos" (click)="showDialogue(data.imageName)"
+                            style=" width: 168px;height: 128px;display: block"
+                            src="{{imageUrl}}/{{projectId}}/{{data.imageName}}" />
+
+                        <!-- <img class="close" (click)="deleteImage(data)" src="../../../../../../assets/images/logos/closeIcon.png"
+                /> -->
+                    </div>
+                    <div class="video">
+                        <img style=" width: 168px;height: 128px;display: block" (click)="fileInput.click()"
+                            src="../../../../../../assets/images/logos/camera.png" />
+                        <input hidden type="file" id="photos" (change)="uploadImageFile($event)" #fileInput>
+                    </div>
+                </div>
+
+                <br />
+                <div class="period-title">
+                    <span class="name">{{ 'Videos' | translate }}</span>
+                </div>
+                <br />
+                <div fxLayout="row wrap" fxLayoutAlign="start start">
+                    <div *ngFor="let data of videoCollection" class="img_wrp pr-8">
+                        <video style=" width: 168px;height: 128px;display: block" controls (click)="toggleVideo()"
+                            #videoPlayer>
+                            <source src="{{imageUrl}}/{{projectId}}/{{data.imageName}}" type="video/mp4" /> Browser not
+                            supported
+                        </video>
+                        <img class="close" (click)="deleteVideo(data)"
+                            src="../../../../../../assets/images/logos/closeIcon.png" />
+                    </div>
+                    <div>
+                        <img style=" width: 168px;height: 128px;display: block" (click)="fileVideoInput.click()"
+                            src="../../../../../../assets/images/logos/videoCam.png" />
+                        <!-- <div style="border: 3px solid rgba(0, 0, 0, 0.12)" fxLayoutAlign="center center">
+                        <mat-icon class="secondary-text s-34 mat-icon material-icons" id="img" role="img" aria-hidden="true">add_a_photo</mat-icon>
+                    </div> -->
+
+                        <input hidden type="file" id="photos" (change)="uploadVideoFile($event)" #fileVideoInput>
+                    </div>
+                </div>
+                <br />
+                <div class="period-title">
+                    <span class="name">{{ 'Project Supporters' | translate }}</span>
+                </div>
+                <br />
+                <div fxLayout="row wrap" fxLayoutAlign="start start">
+                        <div class="video" class="img_wrp pr-8 pb-8">
+                                <!-- <img style="border: 1px solid;border-color:#2D323E;width: 168px;height: 128px;display: block" (click)="projectSupportersInput.click()"
+                                    src="/assets/images/orgLogos/default.png" />
+                                <input hidden type="file" id="photos" (change)="uploadImageFile($event)" #fileInput> -->
+                                <img style="width: 168px;height: 128px;display: block" (click)="projectSupportersInput.click()"
+                                src="/assets/images/orgLogos/default.png" />
+                            <input hidden type="file" id="photos" (change)="uploadImageFile($event)" #fileInput>
+                            </div>
+                    <div *ngFor="let data of projectSupporters; let i = index" class="img_wrp pr-8 pb-8">
+                        <!-- <img id="photos" (click)="showDialogue(data.imageName)"
+                            style=" width: 168px;height: 128px;display: block"
+                            src="{{imageUrl}}/{{projectId}}/{{data.imageName}}" /> -->
+                        <img id="photos" matTooltip="{{data.fileName}}" matTooltipPosition="above"
+                            src="{{urlPort}}{{data.filePath}}" style=" width: 168px;height: 128px;display: block"
+                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+
+                        <!-- <img class="close" (click)="deleteImage(data)" src="../../../../../../assets/images/logos/closeIcon.png"
+                    /> -->
+                    </div>
+                    <div class="video">
+                        <img style=" width: 168px;height: 128px;display: block" (click)="projectSupportersInput.click()"
+                            src="../../../../../../assets/images/logos/camera.png" />
+                        <input hidden type="file" id="photos" (change)="uploadImageFile($event)" #fileInput>
+                    </div>
+                    <input hidden type="file" (change)="uploadProjectSupporters($event)" #projectSupportersInput/>
+                </div>
+                <div>
+                    <br />
+                    <div class="period-title">
+                        <span class="name">{{ 'Map' | translate }}</span>
+                    </div>
+                    <br>
+                    <div class="mat-white-bg">
+                        <agm-map [latitude]="lat" [longitude]="lng">
+                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        </agm-map>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <br />
+            <div id="destination4" #destinationRef4>
+                    <div>
+                        <div class="tab-title-underline" fxFlex="30">
+                            <h1><span>Docs:</span></h1>
+                        </div>
+                    </div>
+                    <br />
+                    <mat-table class="orders-table" #table [dataSource]="displayDocsItems" matSort fusePerfectScrollbar>
+    
+                        <ng-container matColumnDef="Documents">
+                            <mat-header-cell *matHeaderCellDef style="display:flex !important;">
+                                {{'Documents' | translate}}</mat-header-cell>
+                            <mat-cell *matCellDef="let data">
+                                <p class="text-truncate" matTooltip="{{data.docs}}" matTooltipPosition="above">{{data.docs}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="file">
+                            <mat-header-cell *matHeaderCellDef>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let data">
+                                <mat-icon _ngcontent-c20="" matTooltipPosition="above"
+                                    class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">
+                                    picture_as_pdf</mat-icon>
+                                <!-- <p class="text-truncate" matTooltip="{{data.Record.status}}" matTooltipPosition="above">
+                                            <span [translate]="data.translate">{{data.Record.status}}</span>
+                                        </p> -->
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="icons">
+                            <mat-header-cell *matHeaderCellDef style="display:flex !important;
+                                                ">
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let data;let i = index">
+                                <input hidden type="file" (change)="editProjectDocuments($event)" #projectDocEventInput />
+                                <button *ngIf="data.docs == 'Project Documents'" type="button"
+                                    (click)="projectDocEventInput.click()" aria-label="Add file"
+                                    matTooltip="{{'Edit Project Document'|translate}}">
+                                    <mat-icon _ngcontent-c56="" class="secondary-text s-28 mat-icon material-icons"
+                                        role="img" aria-hidden="true">edit</mat-icon>
+                                </button>
+                                <button *ngIf="data.docs == 'Past Events'" id="aboutEditPastEvents" type="button"
+                                    matTooltip="{{'Edit Past Events' | translate}}" matTooltipPosition="above"
+                                    (click)="gotoProjectUploads('pastEvents')">
+                                    <mat-icon _ngcontent-c56="" class="secondary-text s-28 mat-icon material-icons"
+                                        role="img" aria-hidden="true">edit</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayDocs; sticky:true"></mat-header-row>
+    
+                        <mat-row *matRowDef="let order; columns: displayDocs;" class="order">
+                        </mat-row>
+                    </mat-table>
+                </div>
+                <br />
+            <div id="destination5" #destinationRef5>
+                <div>
+                    <div class="tab-title-underline" fxFlex="30">
+                        <h1><span>To-Do:</span></h1>
+                    </div>
+                </div>
+                <mat-table *ngIf="projectStatusForPublish == 'false'" class="orders-table" #table
+                    [dataSource]="todoData" matSort (matSortChange)="sortData($event)" fusePerfectScrollbar>
+                    <!-- activity Column -->
+                    <ng-container matColumnDef="activity">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{ 'Activity' | translate }}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <div id="forActivityName">
+                                <h4>{{data.activityName | translate}}</h4>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- status Column -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{ 'Status' | translate }}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <div id="forActivityStatus">
+                                <h4>{{data.currentStatus | translate}}</h4>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Operation Column -->
+                    <ng-container matColumnDef="operation">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{ 'Operation' | translate }}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <div fxLayout="column">
+                                <div class="pt-16" fxLayout="row" fxLayoutAlign="center center">
+                                    <button
+                                        *ngIf="activityApprovedStatus == 0 && approveStatusForPublish == 'false' && userRules!= undefined && userRules!= '' && userRules.approve_Project"
+                                        mat-icon-button matTooltip="{{'Approve Project' | translate}}"
+                                        matTooltipPosition="above" (click)="approveProject()">
+                                        <mat-icon id="approvalButtonForValidator"
+                                            class="secondary-text s-20 mat-icon material-icons" role="img"
+                                            aria-hidden="true">check</mat-icon>
+                                    </button>
+                                    <button
+                                        *ngIf="approveStatusForPublish == 'true' && projectStatusForPublish == 'false' && userRules!= undefined && userRules!= '' && userRules.publish_Project"
+                                        (click)="publishProject()" mat-raised-button
+                                        matTooltip="{{'Publish Project' | translate}}" matTooltipPosition="above"
+                                        type="button">
+                                        <mat-icon id="publishProject"
+                                            class="secondary-text s-20 mat-icon material-icons" role="img"
+                                            aria-hidden="true">check</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumnsToDo; sticky:true"></mat-header-row>
+                    <mat-row *matRowDef="let product; columns: displayedColumnsToDo;">
+                    </mat-row>
+                    <br />
+                    <br />
+                </mat-table>
+                <mat-table *ngIf="projectStatusForPublish == 'true'" class="orders-table" #table
+                    [dataSource]="activitiesData" matSort fusePerfectScrollbar>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="activity">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{'Activity' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <p class="text-truncate" matTooltip="{{data.Record.activityName}}"
+                                matTooltipPosition="above">{{data.Record.activityName | translate}}</p>
+                        </mat-cell>
+                    </ng-container>
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{'Tasks Completed' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <p class="text-truncate" matTooltip="{{data.Record.status | translate}}"
+                                matTooltipPosition="above">
+                                {{data.Record.status | translate}}
+                            </p>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="operation">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{'Tasks Pending' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let data">
+                            <p *ngIf="data.Record.status == 'Fund Allocated'" class="text-truncate"
+                                matTooltip="{{'Funds need to be requested for this activity.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Funds need to be requested for this activity.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status.startsWith('Partial Validation Successful')"
+                                class="text-truncate"
+                                matTooltip="{{'Both validators have to validate the activity.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Both validators have to validate the activity.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Validation Successful' || data.Record.status == 'Validation failed'"
+                                class="text-truncate"
+                                matTooltip="{{'Validation is done so activity is completed.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Validation is done so activity is completed.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Validation failed'" class="text-truncate"
+                                matTooltip="{{'Invalid proof need to provide valid proof.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Invalid proof need to provide valid proof.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Request Fund'" class="text-truncate"
+                                matTooltip="{{'Funds need to be released for this activity.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Funds need to be released for this activity.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Proof Submitted'" class="text-truncate"
+                                matTooltip="{{'Validator has to validate the activity.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Validator has to validate the activity.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Request FundFund Released'" class="text-truncate"
+                                matTooltip="{{'Proof need to be submitted for this activity.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Proof need to be submitted for this activity.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Activity Created' || data.Record.status == 'Activity Updated'"
+                                class="text-truncate"
+                                matTooltip="{{'Activity needs to send for approval.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Activity needs to send for approval.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Activity Approved'" class="text-truncate"
+                                matTooltip="{{'Funds need to be allocated for this activity.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Funds need to be allocated for this activity.' | translate}}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Budgeted'" class="text-truncate"
+                                matTooltip="{{'Activity needs to be approved.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Activity needs to be approved.' | translate}
+                            </p>
+                            <p *ngIf="data.Record.status == 'Activity Closed'" class="text-truncate" matTooltip="{{'Activity Closed.' | translate}}"
+                                matTooltipPosition="above">
+                                {{'Activity Closed.' | translate}}
+                            </p>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumnsToDo; sticky:true"></mat-header-row>
+
+                    <mat-row *matRowDef="let order; columns: displayedColumnsToDo;" class="order">
+                    </mat-row>
+                    <br />
+                    <br />
+                </mat-table>
+                <br />
+                <br />
+            </div>
+
+            <div *ngIf="userRules != undefined && userRules!= '' && userRules.crm_Notification && isPublished">
+                <div id="destination6" #destinationRef6>
+                    <div>
+                        <div class="tab-title-underline" fxFlex="30">
+                            <h1><span>CRM:</span></h1>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+                <div fxLayoutAlign="row">
+                    <div fxFlex="20">
+                        <mat-card class="cursorPointer" (click)="allDonar()">
+                            <div fxLayoutAlign="center start">
+                                <h2>Donor List</h2>
+                            </div>
+                        </mat-card>
+                    </div>
+                    <div fxFlex="20" fxFlexOffset="5">
+                        <mat-card class="cursorPointer" (click)="communication()">
+                            <div fxLayoutAlign="center start">
+                                <h2>Communication</h2>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+                <!-- <div class="timeline-sidebar">
+                    <div class="profile-box latest-activity" fxLayout="column" fxFlex.gt-sm="41" fxFlex.gt-md="41">
+                        <header class="mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="title">{{'CRM Activity' | translate}}</div>
+                        </header>
+                        <div class="content card" fxLayout="row wrap">
+                            <div fxLayout="row" fxLayoutAlign="center center">
+                                <button (click)="allDonar()" mat-raised-button type="submit">
+                                    <a>{{'Donor List' | translate}}</a>
+                                </button>
+                            </div>
+                            <br />
+                            <div fxLayout="row" fxLayoutAlign="center center">
+                                <button (click)="communication()" mat-raised-button type="submit">
+                                    <a>{{'Communication' | translate}}</a>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div> -->
+            </div>
+            <br>
+            <div *ngIf="approved && userRules != undefined && userRules!= '' && userRules.publish_Project">
+                <br />
+                <div id="destination7" #destinationRef7>
+                    <div>
+                        <div class="tab-title-underline" fxFlex="30">
+                            <h1><span>Visibility:</span></h1>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div class="timeline-sidebar">
+                    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+                    <div fxLayout="column" fxFlex.gt-sm="80" fxFlex.gt-md="80">
+                        <!-- <header class="mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="title">{{'Visibility' | translate}}</div>
+                        </header> -->
+                        <div fxLayout="row wrap">
+                            <div fxLayout="row" fxLayoutAlign="center center">
+                                <!-- <button (click)="communication()" mat-raised-button type="submit">
+                                      <a>{{'Communication' | translate}}</a>
+                                  </button> -->
+                                <form name="form" [formGroup]="form">
+                                    <mat-radio-group aria-label="Select an option" formControlName="visibility">
+                                        <mat-radio-button *ngFor="let i of radioStatus" (click)="checkVisibility(i)"
+                                            [value]="i">
+                                            <span>{{i | translate}}</span> &nbsp;
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <!-- <button mat-raised-button [disabled]="!form.valid" type="submit" color="accent-900-bg" >
+                                    Save
+                                  </button> -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                </div>
+            </div>
+            <br />
+            <div id="destination8" #destinationRef8>
+
+                <div class="timeline-content" fxLayout="column" fxFlexAlign="center" fxFlex="100">
+                    <br />
+                    <div>
+                        <div class="tab-title-underline" fxFlex="30">
+                            <h1><span>Timeline:</span></h1>
+                        </div>
+                    </div>
+
+                    <!-- timeline shubham -->
+                    <div class="timeline">
+                        <ul>
+                            <li *ngFor="let post of timeLine; let ti index ">
+                                <div class="content card container">
+                                    <h3>
+                                        <div class="tooltip" style="color: #02579b;"><a href="https://comgo.io/en/"
+                                                target="_blank" style="color: #02579b;">{{post.txnId | slice:0:38}} </a>
+                                        </div>
+
+                                        <div>
+                                            <p style="color: #5c5453;">{{post.Status}}</p>
+                                        </div> <br>
+
+                                        <span style="font-size: 14px;"> {{post.timeStamp | date: 'dd  MMM, yyyy'}}
+                                        </span>
+                                    </h3>
+
+                                </div>
+                                <div class="time card">
+                                    <div class="info" style="font-family: roboto!important;">
+                                        <span style="font-weight: bold;">{{'Fund Raised'| translate}} : </span>
+                                        <span>{{post.fundRaised | currency:post.currency}}</span>
+                                    </div>
+                                    <br>
+                                    <div class="info" style="font-family: roboto!important;">
+                                        <span style="font-weight: bold;"> {{'Fund Goal'| translate}} :</span>
+                                        <span>{{post.fundGoal | currency:post.currency}}</span>
+                                    </div>
+                                    <br>
+                                    <div class="info" style="font-family: roboto!important;">
+                                        <span style="font-weight: bold;"> {{'Project Budget'| translate}} :</span>
+                                        <span> {{post.projectBudget | currency:post.currency}}</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <div style="clear:both;"></div>
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="timeline-content" fxLayout="column" fxFlexAlign="center" fxFlex="100">
+                        <br />
+                        <br />
+                        <br />
+                    <div>
+                                <h1><u>Timeline:</u></h1>
+                            </div>
+                            <br/>
+                    <header class="timeline-item mat-accent-900-bg mb-8" fxLayoutAlign="center center">
+                        <h1>{{ 'Journey' | translate }}</h1>
+                    </header>
+                    <div class="profile-box info-box general timeline-item" fxLayout="column"
+                        *ngFor="let post of timeLine;let ti = index">
+                        <div *ngIf="timeLine.length == ti+1" id="timelineEnd"></div>
+                        <header fxLayout="row" fxLayoutAlign="space-between start">
+                            <div class="user" fxLayout="row" fxLayoutAlign="start center">
+                                <button mat-icon-button class="mat-primary-400-bg" style="padding:0px 0 8px 2px">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">timeline</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-primary-400-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Project Updated'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">done_all</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-green-500-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Project Published'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">insert_drive_file</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-indigo-400-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Milestone Created'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">golf_course</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-cyan-400-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Milestone Updated'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">playlist_add_check</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-green-500-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Milestone Deleted'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">delete_sweep</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-orange-400-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Activity Created'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">assessment</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-orange-400-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Activity Updated'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">assignment_returned</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-orange-400-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Activity Deleted'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">delete_forever</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-accent-900-bg" style="padding:0px 0 8px 2px"
+                                    *ngIf="post.currentStatus==='Fund Requested'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted" role="img"
+                                        aria-hidden="true" matTooltipPosition="above">monetization_on</mat-icon>
+                                </button>
+                                <button mat-icon-button class="mat-amber-400-bg"
+                                    style="padding:0px 0 8px 2px;vertical-align:none"
+                                    *ngIf="post.currentStatus==='Fund Released'">
+                                    <mat-icon class="secondary-text mat-icon material-icons ng-star-inserted"
+                                        style="vertical-align:none" role="img" aria-hidden="true"
+                                        matTooltipPosition="above">check</mat-icon>
+                                </button>
+    
+                                <div fxLayout="column" class="ml-8">
+                                    <div class="title">
+                                        <span style="color:#0040ff" class="username">{{post.username}}</span>
+                                        <span> {{post.txnId}}</span>
+                                    </div>
+                                    <div style="color:grey">{{post.timeStamp}}</div>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="content">
+                            <div class="info-line">
+                                <div class="info">
+                                    <span class="title">Operation Performed: </span>{{post.Status}}</div>
+                            </div>
+                            <br />
+                            <div class="info">
+                                {{'Fund Raised'| translate}} : {{post.fundRaised | number : '1.2-2'}} {{currency}}
+                            </div>
+                            <br />
+                            <div class="info">
+                                {{'Fund Goal'| translate}} : {{post.fundGoal | number : '1.2-2'}} {{currency}}
+                            </div>
+                            <br />
+                            <div class="info">
+                                {{'Project Budget'| translate}} : {{post.projectBudget | number : '1.2-2'}} {{currency}}
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+    
+                </div> -->
+            </div>
+            <br />
+            
+            <br />
+            <br />
+            <br />
+            <hr>
+            <footer class="pageBackground">
+                <br />
+                <br />
+                <p style="text-align: center;">Copyright © 2018</p>
+                <br />
+                <br />
+            </footer>
+        </div>
+    </div>
+</div>
+<br />
+<br />

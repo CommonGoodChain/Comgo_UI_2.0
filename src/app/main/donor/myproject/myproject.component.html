@@ -1,0 +1,117 @@
+<div id="cards" class="page-layout simple fullwidth">
+  <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <div class="content">
+    <div class="cards">
+      <div class="card" *ngFor='let data of otherProject'>
+        <div class="card-preview customHeight">
+          <div class="fuse-card variable-width ml-28">
+            <div fxLayout="row" class="pt-12 pl-12 pr-16 pb-12">
+              <div fxFlex="15">
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Environmental' | translate}}" *ngIf="data.projectType=='Environmental'">
+                  <mat-icon>local_florist</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Educational' | translate}}" *ngIf="data.projectType=='Educational'">
+                  <mat-icon>school</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Health Care' | translate}}" *ngIf="data.projectType=='Health Care'">
+                  <mat-icon>local_hospital</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Agricultural' | translate}}" *ngIf="data.projectType=='Agricultural'">
+                  <mat-icon>nature_people</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Homeless' | translate}}" *ngIf="data.projectType=='Homeless'">
+                  <mat-icon>sentiment_very_dissatisfied</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Sports' | translate}}" *ngIf="data.projectType=='Sports'">
+                  <mat-icon>pool</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Arts and Culture' | translate}}" *ngIf="data.projectType=='Arts and Culture'">
+                  <mat-icon>palette</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Research' | translate}}" *ngIf="data.projectType=='Research'">
+                  <mat-icon>search</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Children' | translate}}" *ngIf="data.projectType=='Children'">
+                  <mat-icon>child_care</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Human Rights' | translate}}" *ngIf="data.projectType=='Human Rights'">
+                  <mat-icon>nature_people</mat-icon>
+                </button>
+                 <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Employment' | translate}}" *ngIf="data.projectType=='Employment'">
+                  <mat-icon>nature_people</mat-icon>
+                </button> 
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Microfinance' | translate}}" *ngIf="data.projectType=='Microfinance'">
+                  <mat-icon>nature_people</mat-icon>
+                </button> 
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Entrepreneurship' | translate}}" *ngIf="data.projectType=='Entrepreneurship'">
+                  <mat-icon>nature_people</mat-icon>
+                </button> 
+                <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Equal Gender' | translate}}" *ngIf="data.projectType=='Equal Gender'">
+                  <mat-icon>nature_people</mat-icon>
+                </button>
+              <button mat-icon-button aria-label="more" class="primary-200-bg" matTooltip="{{'Project type' | translate}}:{{'Infrastructure' | translate}}" *ngIf="data.projectType=='Infrastructure'">
+                <mat-icon>nature_people</mat-icon>
+              </button>
+              </div>
+              <div fxFlex="65" class="pl-8 mr-16 pb-4 h2" id="projectName" aria-label="more">
+                <span class="text-truncate" matTooltip="{{data.projectName}}" (click)="audit(data)">{{data.projectName}}</span>
+                <span class="pt-8 h5 text-truncate"> {{'By' | translate}} : {{data.owner}}
+                </span>
+              </div>
+              <div fxFlex="10">
+                <div *ngIf="data.percentage < 100 && data.fundGoal != 0;else cantDonate">
+                <div class="pb-4" fxLayoutAlign="center start">
+                  <button id="projectsDonation" mat-icon-button aria-label="add to favorites" (click)="towardsDonation(data)" class="red-500-fg" matTooltip="{{'Donate' | translate}}">
+                    <mat-icon class=" red-500-fg secondary-text s-40 mat-icon material-icons" role="img" aria-hidden="true" matTooltip="{{'Donate' | translate}}">favorite</mat-icon>
+                  </button>
+                </div>
+                <div class="secondary-text" fxLayoutAlign="center start">{{'Donate' | translate}}</div>
+                </div>
+                <ng-template #cantDonate>
+                  <div class="pb-4" fxLayoutAlign="center start">
+                    <button id="projectsDonation" mat-icon-button aria-label="add to favorites" class="red-500-fg" matTooltip="Donation limit exceeded" disabled>
+                      <mat-icon class="secondary-text s-40 mat-icon material-icons" role="img" aria-hidden="true" matTooltip="Donation limit exceeded">favorite</mat-icon>
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+
+            </div>
+            <div class="w-280 h-130">
+                <div *ngIf="bgImageUrl!==''" matTooltip="{{'View Audit' | translate}}" matTooltipPosition="above" (click)="audit(data)" style="height:130px;width:280px"
+                [ngStyle]="{background: 'url('+data.bgImageUrl+') center center / cover no-repeat '}">
+              </div>
+              <!-- for default Image -->
+              <div *ngIf="bgImageUrl==''" matTooltip="{{'View Audit' | translate}}" matTooltipPosition="above" (click)="audit(data)" [ngStyle]="{background: 'url('+data.defaultImageUrl+') center center / cover no-repeat '}">
+               
+              </div>
+            </div>
+
+            <div class="price  mat-accent-bg p-8" fxLayout="row" fxLayoutAlign="center start">
+              <div fxLayout="row" fxLayoutAlign="center end">
+                <div class="h2 value" matTooltip="Project Budget">{{data.projectBudget | number : '1.2-2'}} &nbsp;
+                  <span style="font-size:10px">{{data.currency}}</span>
+                </div>
+              </div>
+            </div>
+            <mat-progress-bar class="probgressbar mat-red" mode="determinate" value="{{data.percentage}}" matTooltip="{{data.percentage | number : '1.2-2'}}%"></mat-progress-bar>
+            <div>
+              <div class="pl-20" fxFlex.gt-sm="50">
+                <h3 style="color:#0040ff" matTooltip="{{'Fund Raised' | translate}}" class="username">{{data.fundRaised | number : '1.2-2'}} {{ data.currency}}</h3>
+              </div>
+              <div fxFlex.gt-sm="50" class="pr-20" fxLayoutAlign="end end">
+                <h3 style="color:#0040ff" matTooltip="{{'Balance' | translate}}" class="username">{{data.txnBalance | number : '1.2-2'}} {{ data.currency}}</h3>
+              </div>
+            </div>
+            <div id="SDG">
+              <img class="pl-8 p-2" *ngFor="let sdgData of data.SDG" matTooltip="{{sdgData.SDGType | translate}}" src={{sdgUrl}}{{sdgData.SDGType}}{{imageExtenstion}}
+                width="12%" height="12%" [@animate]="{value:'*',params:{delay:'50ms',scale:'10.0'}}">
+            </div>
+            <br/>
+            <div id="SDG">
+              <span class="text-truncate pl-8 p-2" style="color:#0040ff" matTooltip="{{data.description}}">{{'Description' | translate}} : {{data.description}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

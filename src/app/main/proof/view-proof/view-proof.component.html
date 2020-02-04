@@ -1,0 +1,136 @@
+<div id="products" class="page-layout carded fullwidth">
+    <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-900-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+            <!-- APP TITLE -->
+            <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                <button id="viewproofBackward" mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/expenses/expenses/viewexpenses'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    {{'View Proof'|translate}}
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- SEARCH -->
+            <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon class="secondary-text">search</mat-icon>
+                </label>
+                <mat-form-field fxFlex="40">
+                    <input id="viewproofSearch" matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'Search' | translate}}">
+                </mat-form-field>
+                <mat-form-field fxFlex="40" fxFlexOffset="5">
+                    <mat-select placeholder="{{'Doc Type' | translate}}" [(ngModel)]="defaultCategory" (selectionChange)="documentCategory($event)">
+                        <mat-option *ngFor="let data of getDocTypes" [value]=data.DocType> {{data.DocType | translate}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- / SEARCH -->
+            <button type="button" (click)="startTour()">
+                <mat-icon _ngcontent-c41="" class="secondary-text s-25 mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">help</mat-icon>
+            </button>
+        </div>
+
+
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg" *ngIf="dataOfProof.length == 0">
+            <div style="margin-top:10%">
+                <div fxLayoutAlign="center start">
+                    <span class="icon-name secondary-text mt-8">{{'No Data Found' | translate}}</span>
+                </div>
+                <div fxLayoutAlign="center center">
+                    <mat-icon _ngcontent-c56="" class="secondary-text s-48 mat-icon material-icons" role="img" aria-hidden="true">warning</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="dataOfProof.length !== 0">
+            <div class="mat-elevation-z8">
+                <mat-table class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                    fusePerfectScrollbar>
+            <!-- /<mat-table class="products-table" #table [dataSource]="dataSource" matSort fusePerfectScrollbar> -->
+
+                <!-- Expense Item Column -->
+                <ng-container matColumnDef="Proof Type">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Proof Type'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <p class="text-truncate" matTooltip="{{data.proofType}}" matTooltipPosition="above">{{data.proofType}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Description Column -->
+                <ng-container matColumnDef="Document Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Document Name'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <a class=" text-truncate" href="{{urlPort}}/uploadDoc/{{projectId}}/{{milestoneId}}/{{data.documentName}}" matTooltip="{{data.documentName}}"
+                            matTooltipPosition="above" target="_blank">
+                            {{data.documentName}}
+                        </a>
+                    </mat-cell>
+                </ng-container>
+                <!-- Invoice Date Column -->
+                <ng-container matColumnDef="Doc Type">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Doc Type'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <span class=" text-truncate" matTooltip="{{data.docType}}" matTooltipPosition="above">
+                            {{data.docType}}
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Remarks">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Remarks'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <span class=" text-truncate" matTooltip="{{data.remarks}}" matTooltipPosition="above">
+                            {{data.remarks}}
+                        </span>
+                        <button mat-icon-button (click)="forUpdatingProof(data)">
+                            <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted" *ngIf="userRules!= undefined && userRules!= '' && userRules.edit_Activity" role="img" aria-hidden="true" matTooltip="{{'Edit Activity'|translate}}"
+                                matTooltipPosition="above">create</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Operation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Operation'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let data">
+                        <button mat-icon-button (click)="forUpdatingProof(data)">
+                            <mat-icon class="secondary-text mat-icon ng-tns-c77-138 material-icons ng-star-inserted"
+                                matTooltipPosition="above">create</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let product; columns: displayedColumns;">
+                </mat-row>
+
+            </mat-table>
+            <mat-paginator #MatPaginator [length]="length" [pageIndex]="0" [pageSize]="5"></mat-paginator>
+            <!-- <mat-paginator #paginator [length]="dataSource.filteredData.length" [pagedata]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator> -->
+
+        </div>
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+    <hr>
+    <footer>
+            <br/>
+            <br/>
+            <p style="text-align: center;">Copyright © 2020</p>
+            <br/>
+          <br/>
+          </footer>
+</div>

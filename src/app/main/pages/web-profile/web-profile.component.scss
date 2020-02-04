@@ -1,0 +1,148 @@
+@import "src/@fuse/scss/fuse";
+
+#profile {
+
+    .header {
+        height: 320px;
+        min-height: 320px;
+        max-height: 320px;
+        // background: url('/assets/images/backgrounds/img1.jpg') no-repeat 0 45%;
+        background-size: cover;
+        // border-bottom: 1px solid;
+
+        .profile-image {
+            margin-right: 24px;
+
+            @include media-breakpoint('sm') {
+                margin: 0 0 16px 0;
+            }
+        }
+
+        .name {
+            font-size: 34px;
+
+
+            @include media-breakpoint('sm') {
+                margin-bottom: 32px;
+            }
+        }
+#ngoName{
+    font-size: 18px;
+
+
+    @include media-breakpoint('sm') {
+        margin-bottom: 10px;
+    }
+}
+        .actions {
+
+            button {
+                text-transform: none;
+                padding: 0 16px;
+                height: 32px;
+                line-height: 32px;
+                margin: 0 0 0 8px;
+            }
+        }
+    }
+
+    .content {
+        flex: 1;
+
+        mat-tab-group {
+            height: 100%;
+
+            .mat-tab-body-wrapper {
+                flex-grow: 1;
+            }
+        }
+    }
+    .container .btn {
+        position: fixed;
+        top: 52%;
+        left: 95%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color:transparent;
+        // color: white;
+        font-size: 16px;
+        padding: 12px 24px;
+        // border: solid white;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: center;
+        
+    }
+    .projname {
+        position: fixed;
+        top: 40%;
+        left:20%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        // background-color: #555;
+        color: white;
+        font-size: 42px;
+        // padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: center;
+        
+    }
+    #img{
+        color:lightgray;
+    }
+}
+.profileImage {
+    width: 80px;
+    min-width: 40px;
+    height: 80px;
+    line-height: 40px;
+    margin: 0 8px 0 0;
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: center;
+    color: #FFFFFF;
+
+    &.square {
+        border-radius: 0;
+    }
+
+    &.small {
+        width: 20px;
+        min-width: 20px;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    &.big {
+        width: 72px;
+        min-width: 72px;
+        height: 72px;
+        line-height: 72px;
+    }
+
+    &.huge {
+        width: 96px;
+        min-width: 96px;
+        height: 96px;
+        line-height: 96px;
+    }
+}
+#ellipses{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width:200px;
+}
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.name {
+    font-size: 20px;
+    // margin-left: 35%;
+    margin-top: 15%;
+  }

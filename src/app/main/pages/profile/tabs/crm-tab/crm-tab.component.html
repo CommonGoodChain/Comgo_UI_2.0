@@ -1,0 +1,26 @@
+<div class="timeline-sidebar p-24">
+  <div class="profile-box latest-activity" fxLayout="column" fxFlex.gt-sm="41" fxFlex.gt-md="41">
+      <header class="mat-accent-900-bg" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="title">{{'CRM Activity' | translate}}</div>
+      </header>
+      <div class="content card" fxLayout="row wrap">
+          <div fxLayout="row" fxLayoutAlign="center center">
+              <button (click)="allDonar()" mat-raised-button type="submit">
+                  <a>{{'Donor List' | translate}}</a>
+              </button>
+          </div>
+          <br />
+          <!-- <div fxLayout="row" fxLayoutAlign="center center">
+              <button (click)="projectStatus()" mat-raised-button type="submit">
+                  <a>{{'Project Status' | translate}}</a>
+              </button>
+          </div>
+          <br /> -->
+          <div fxLayout="row" fxLayoutAlign="center center">
+              <button (click)="communication()" mat-raised-button type="submit">
+                  <a>{{'Communication' | translate}}</a>
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

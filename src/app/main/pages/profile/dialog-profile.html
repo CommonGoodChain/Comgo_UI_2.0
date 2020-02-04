@@ -1,0 +1,13 @@
+<!-- for upload image-->
+
+<h2 mat-dialog-content fxLayoutAlign="center center">Are you sure want to Upload the Image</h2>
+<div mat-dialog-actions class="container file-uploader">
+  <button mat-raised-button color="warn" mat-dialog-close (click)="onClick()">{{'Cancel' | translate}}</button>
+  <input hidden type="file" id="photos"  (change)="uploadFile($event)" #fileInput/>&nbsp;&nbsp;&nbsp;
+  <button mat-raised-button color="accent" (click)="fileInput.click()" aria-label="Add file" matTooltip="Upload Proof">
+    {{'Yes' | translate}}
+  </button>
+<!-- </div> -->
+</div>
+
+
