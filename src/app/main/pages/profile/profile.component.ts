@@ -3,17 +3,17 @@ import { Http, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSort } from '@angular/material';
 import * as $ from 'jquery';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { ViewChild } from '@angular/core';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { ProfileService } from './profile.service';
 import { takeUntil } from 'rxjs/operators';
@@ -173,13 +173,13 @@ export class ProfileComponent {
       private meta: Meta,
         private http: Http,
         private _profileService: ProfileService,
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         public dialog: MatDialog,
         private httpClient: HttpClient,
         private router: Router,
         private _matSnackBar: MatSnackBar,
         private _translateService: TranslateService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
         private titleService: Title 
     ) {
       this.userName = sessionStorage.getItem("username")
@@ -226,7 +226,7 @@ export class ProfileComponent {
         }
     ];
       this.navigation = navigation;
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     this.milestone = this.milestoneData.slice()
     this._unsubscribeAll = new Subject();
     }
@@ -268,7 +268,7 @@ export class ProfileComponent {
         this.selectedLanguage = _.find(this.languages, { 'id': this._translateService.currentLang });
         this.userType = sessionStorage.getItem("userType")
         // Subscribe to the config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((settings) => {
                 this.horizontalNavbar = settings.layout.navbar.position === 'top';
@@ -287,7 +287,7 @@ export class ProfileComponent {
         this.routeBack  = sessionStorage.getItem('backRoute');
         this.imageCollectionData = [];
         this.videoCollection = [];
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true
@@ -2110,7 +2110,7 @@ export class ProfileComponent {
       if(el.scrollTop >=  this.sticky){
         console.log("Inside If")
         this.showUpperNav = true;
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
           layout: {
               footer: {
                   hidden: true
@@ -2128,7 +2128,7 @@ export class ProfileComponent {
       } else {
         console.log("Inside else")
         this.showUpperNav = false;
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
           layout: {
               footer: {
                   hidden: true

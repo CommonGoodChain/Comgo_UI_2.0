@@ -5,7 +5,7 @@ import { WebProfileComponent } from './webProfile.component'
 import {DatePipe} from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule,MatListModule, MatCardModule,MatDialogModule,MatProgressBarModule, MatDividerModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatStepperModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,MatTooltipModule } from '@angular/material';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 import { FusionChartsModule } from 'angular-fusioncharts'
 import { HttpModule } from '@angular/http';
 import { AgmCoreModule } from '@agm/core';
@@ -36,7 +36,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FintTheme);
     MatIconModule,
     MatTabsModule,
     MatDividerModule,
-    FuseSharedModule,
+    comgoSharedModule,
     MatDividerModule,
     MatChipsModule,
     MatDatepickerModule,

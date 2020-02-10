@@ -4,15 +4,15 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import * as _ from 'lodash';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
 import { navigation } from '../../../navigation/navigation';
 import { Router } from '@angular/router';
 import { config } from 'config';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../i18n/en';
 import { locale as spanish } from '../../i18n/tr';
 var introJS = require('intro.js')
@@ -45,19 +45,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {comgoConfigService} _comgoConfigService
+     * @param {comgoSidebarService} _comgoSidebarService
      * @param {TranslateService} _translateService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _fuseSidebarService: FuseSidebarService,
+        private _comgoConfigService: comgoConfigService,
+        private _comgoSidebarService: comgoSidebarService,
         private _translateService: TranslateService,
         private http: Http,
     private httpClient : HttpClient,
 
         private router: Router,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
         this.userName = sessionStorage.getItem("username")
        if(this.userName != ''){
@@ -108,7 +108,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.selectedLanguage = _.find(this.languages, { 'id': this._translateService.currentLang });
         this.userType = sessionStorage.getItem("userType")
         // Subscribe to the config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((settings) => {
                 this.horizontalNavbar = settings.layout.navbar.position === 'top';
@@ -172,7 +172,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      * @param key
      */
     toggleSidebarOpen(key): void {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
+        this._comgoSidebarService.getSidebar(key).toggleOpen();
     }
 
     /**

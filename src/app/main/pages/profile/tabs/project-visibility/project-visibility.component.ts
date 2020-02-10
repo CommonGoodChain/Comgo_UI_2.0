@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatRadioButton,MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { environment } from '../../../../../../environments/environment';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,7 +16,7 @@ import { DialogElementsExampleDialog } from '../../../../dialog/dialog.component
   selector: 'app-project-visibility',
   templateUrl: './project-visibility.component.html',
   styleUrls: ['./project-visibility.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class ProjectVisibilityComponent implements OnInit {
   form: FormGroup;
@@ -42,10 +42,10 @@ horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: M
     private httpCLient :HttpClient,
     private _matSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
     private _translateService: TranslateService
     ) { 
-     this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+     this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     // this.product = new Product();
 }
 

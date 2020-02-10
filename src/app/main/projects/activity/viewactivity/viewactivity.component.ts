@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator,MatSort } from '@angular/material';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 import { Sort, MatTableDataSource } from '@angular/material';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component'
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ var introJS = require('intro.js')
   selector: 'app-viewactivity',
   templateUrl: './viewactivity.component.html',
   styleUrls: ['./viewactivity.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class ViewactivityComponent implements OnInit {
   dataSource;
@@ -58,11 +58,11 @@ export class ViewactivityComponent implements OnInit {
     private httpClient: HttpClient,
     private _matSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
     private _translateService: TranslateService
   ) {
     this.dataOfActivityByMilestoneId = this.activityData.slice()
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
   }
 
   /**

@@ -2,14 +2,14 @@ import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@ang
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoNavigationService } from '@comgo/components/navigation/navigation.service';
+import { comgoPerfectScrollbarDirective } from '@comgo/directives/comgo-perfect-scrollbar/comgo-perfect-scrollbar.directive';
+import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
 // import { config } from '../../../../../../config';
 import { environment } from 'environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
 import { Http,Headers } from '@angular/http';
@@ -23,8 +23,8 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
     encapsulation: ViewEncapsulation.None
 })
 export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
-    fuseConfig: any;
-    fusePerfectScrollbarUpdateTimeout: any;
+    comgoConfig: any;
+    comgoPerfectScrollbarUpdateTimeout: any;
     navigation: any;
     role;
     orgName;
@@ -39,32 +39,32 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     logoPath;
 
     // Private
-    private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
+    private _comgoPerfectScrollbar: comgoPerfectScrollbarDirective;
     private _unsubscribeAll: Subject<any>;
     loading1= false;
 
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseNavigationService} _fuseNavigationService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {comgoConfigService} _comgoConfigService
+     * @param {comgoNavigationService} _comgoNavigationService
+     * @param {comgoSidebarService} _comgoSidebarService
      * @param {Router} _router
      */
     horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: MatSnackBarVerticalPosition = 'top';
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private _matSnackBar: MatSnackBar,
         private http: Http,
         private router: Router,
-        private _fuseNavigationService: FuseNavigationService,
-        private _fuseSidebarService: FuseSidebarService,
+        private _comgoNavigationService: comgoNavigationService,
+        private _comgoSidebarService: comgoSidebarService,
         private _router: Router,
         private _translateService: TranslateService,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
         // Set the private defaults
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
         this._unsubscribeAll = new Subject();
     }
 
@@ -73,20 +73,20 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     // Directive
-    @ViewChild(FusePerfectScrollbarDirective)
-    set directive(theDirective: FusePerfectScrollbarDirective) {
+    @ViewChild(comgoPerfectScrollbarDirective)
+    set directive(theDirective: comgoPerfectScrollbarDirective) {
         if (!theDirective) {
             return;
         }
 
-        this._fusePerfectScrollbar = theDirective;
+        this._comgoPerfectScrollbar = theDirective;
 
         // Update the scrollbar on collapsable item toggle
-        this._fuseNavigationService.onItemCollapseToggled
+        this._comgoNavigationService.onItemCollapseToggled
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this.fusePerfectScrollbarUpdateTimeout = setTimeout(() => {
-                    this._fusePerfectScrollbar.update();
+                this.comgoPerfectScrollbarUpdateTimeout = setTimeout(() => {
+                    this._comgoPerfectScrollbar.update();
                 }, 310);
             });
 
@@ -105,7 +105,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
                             activeItemOffsetParentTop = activeNavItem.offsetParent.offsetTop,
                             scrollDistance = activeItemOffsetTop - activeItemOffsetParentTop - (48 * 3) - 168;
 
-                        this._fusePerfectScrollbar.scrollToTop(scrollDistance);
+                        this._comgoPerfectScrollbar.scrollToTop(scrollDistance);
                     }
                 });
             }
@@ -131,27 +131,27 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe(() => {
-                if (this._fuseSidebarService.getSidebar('navbar')) {
-                    this._fuseSidebarService.getSidebar('navbar').close();
+                if (this._comgoSidebarService.getSidebar('navbar')) {
+                    this._comgoSidebarService.getSidebar('navbar').close();
                 }
             }
             );
 
         // Subscribe to the config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                this.fuseConfig = config;
+                this.comgoConfig = config;
             });
 
         // Get current navigation
-        this._fuseNavigationService.onNavigationChanged
+        this._comgoNavigationService.onNavigationChanged
             .pipe(
                 filter(value => value !== null),
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe(() => {
-                this.navigation = this._fuseNavigationService.getCurrentNavigation();
+                this.navigation = this._comgoNavigationService.getCurrentNavigation();
             });
     }
 
@@ -219,8 +219,8 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
      * On destroy
      */
     ngOnDestroy(): void {
-        if (this.fusePerfectScrollbarUpdateTimeout) {
-            clearTimeout(this.fusePerfectScrollbarUpdateTimeout);
+        if (this.comgoPerfectScrollbarUpdateTimeout) {
+            clearTimeout(this.comgoPerfectScrollbarUpdateTimeout);
         }
 
         // Unsubscribe from all subscriptions
@@ -236,13 +236,13 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
      * Toggle sidebar opened status
      */
     toggleSidebarOpened(): void {
-        this._fuseSidebarService.getSidebar('navbar').toggleOpen();
+        this._comgoSidebarService.getSidebar('navbar').toggleOpen();
     }
 
     /**
      * Toggle sidebar folded status
      */
     toggleSidebarFolded(): void {
-        this._fuseSidebarService.getSidebar('navbar').toggleFold();
+        this._comgoSidebarService.getSidebar('navbar').toggleFold();
     }
 }

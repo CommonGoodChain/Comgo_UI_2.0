@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { MatPaginator, MatSort } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { environment } from 'environments/environment';
@@ -11,16 +11,16 @@ import { MatTableDataSource } from '@angular/material';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core'
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 var introJS = require('intro.js')
 @Component({
   selector: 'app-viewallproject',
   templateUrl: './viewallproject.component.html',
   styleUrls: ['./viewallproject.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class viewallprojectComponent implements OnInit {
   dataSource;
@@ -38,7 +38,7 @@ export class viewallprojectComponent implements OnInit {
   organizationName;
   foundationCompany;
   lang;
-  rulesOfUser;
+  rulesOcomgor;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   urlPort = environment.urlPort;
@@ -48,9 +48,9 @@ export class viewallprojectComponent implements OnInit {
   public projectsAll;
   public loading1 = false;
 
-  constructor(private _fuseConfigService: FuseConfigService,private _translateService: TranslateService,private route:ActivatedRoute, private http: Http, private httpClient: HttpClient, private _matSnackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private _fuseTranslationLoaderService: FuseTranslationLoaderService) {
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
-    this._fuseConfigService.config = {
+  constructor(private _comgoConfigService: comgoConfigService,private _translateService: TranslateService,private route:ActivatedRoute, private http: Http, private httpClient: HttpClient, private _matSnackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private _comgoTranslationLoaderService: comgoTranslationLoaderService) {
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoConfigService.config = {
       layout: {
           footer: {
               hidden: true
@@ -89,7 +89,7 @@ export class viewallprojectComponent implements OnInit {
           return Observable.throw(err)
       })
       .subscribe((res: Response) => {
-        this.rulesOfUser = res["Rules"]
+        this.rulesOcomgor = res["Rules"]
           for(var i=0;i<res["Rules"].length;i++){
             if(routesPathOrg == res["Rules"][i].orgName){
               var rulesArr = []

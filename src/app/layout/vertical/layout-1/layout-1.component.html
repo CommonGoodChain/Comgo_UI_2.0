@@ -2,7 +2,7 @@
 <div id="main">
 
     <!-- TOOLBAR: Above -->
-    <ng-container *ngIf="fuseConfig.layout.toolbar.position === 'above'">
+    <ng-container *ngIf="comgoConfig.layout.toolbar.position === 'above'">
         <ng-container *ngTemplateOutlet="toolbar"></ng-container>
     </ng-container>
     <!-- / TOOLBAR: Above -->
@@ -17,11 +17,11 @@
 
         <div class="container">
 
-            <div class="container" fusePerfectScrollbar
-                 [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
+            <div class="container" comgoPerfectScrollbar
+                 [comgoPerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
 
                 <!-- TOOLBAR: Below static -->
-                <ng-container *ngIf="fuseConfig.layout.toolbar.position === 'below-static'">
+                <ng-container *ngIf="comgoConfig.layout.toolbar.position === 'below-static'">
                     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
                 </ng-container>
                 <!-- / TOOLBAR: Below static -->
@@ -33,7 +33,7 @@
             </div>
 
             <!-- FOOTER: Below fixed -->
-            <!-- <ng-container *ngIf="fuseConfig.layout.footer.position === 'below-fixed'">
+            <!-- <ng-container *ngIf="comgoConfig.layout.footer.position === 'below-fixed'">
                 <ng-container *ngTemplateOutlet="footer"></ng-container>
             </ng-container> -->
             <!-- / FOOTER: Below fixed -->
@@ -49,26 +49,26 @@
 
 <!-- TOOLBAR -->
 <ng-template #toolbar>
-    <toolbar *ngIf="!fuseConfig.layout.toolbar.hidden"
-             [ngClass]="[fuseConfig.layout.toolbar.position, fuseConfig.layout.toolbar.background]"></toolbar>
+    <toolbar *ngIf="!comgoConfig.layout.toolbar.hidden"
+             [ngClass]="[comgoConfig.layout.toolbar.position, comgoConfig.layout.toolbar.background]"></toolbar>
 </ng-template>
 <!-- / TOOLBAR -->
 
 <!-- FOOTER -->
 <!-- <ng-template #footer>
-    <footer *ngIf="!fuseConfig.layout.footer.hidden"
-            [ngClass]="[fuseConfig.layout.footer.position, fuseConfig.layout.footer.background]"></footer>
+    <footer *ngIf="!comgoConfig.layout.footer.hidden"
+            [ngClass]="[comgoConfig.layout.footer.position, comgoConfig.layout.footer.background]"></footer>
 </ng-template> -->
 <!-- / FOOTER -->
 
 <!-- LEFT NAVBAR -->
 <ng-template #leftNavbar>
-    <fuse-sidebar name="navbar" class="navbar-fuse-sidebar"
-                  [folded]="fuseConfig.layout.navbar.folded"
+    <comgo-sidebar name="navbar" class="navbar-comgo-sidebar"
+                  [folded]="comgoConfig.layout.navbar.folded"
                   lockedOpen="gt-md"
-                  *ngIf="!fuseConfig.layout.navbar.hidden">
-        <navbar [variant]="fuseConfig.layout.navbar.variant"
-                class="left-navbar" [ngClass]="fuseConfig.layout.navbar.background"></navbar>
-    </fuse-sidebar>
+                  *ngIf="!comgoConfig.layout.navbar.hidden">
+        <navbar [variant]="comgoConfig.layout.navbar.variant"
+                class="left-navbar" [ngClass]="comgoConfig.layout.navbar.background"></navbar>
+    </comgo-sidebar>
 </ng-template>
 <!-- / LEFT NAVBAR -->

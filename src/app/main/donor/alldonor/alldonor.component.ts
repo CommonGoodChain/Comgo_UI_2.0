@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { MatPaginator,MatSort } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { environment } from 'environments/environment';
 import { MatTableDataSource } from '@angular/material';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 
@@ -17,7 +17,7 @@ import { locale as spanish } from '../../../layout/i18n/tr';
   selector: 'app-alldonor',
   templateUrl: './alldonor.component.html',
   styleUrls: ['./alldonor.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class AlldonorComponent implements OnInit {
   displayedColumns
@@ -48,9 +48,9 @@ export class AlldonorComponent implements OnInit {
     private router: Router,
     private _matSnackBar: MatSnackBar,
     private _translateService: TranslateService,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService) {
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService) {
     this.donorList = this.donorData.slice()
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
   }
   ngOnInit() {
     this.projectBudget = sessionStorage.getItem("projectProjectBudgetTillActivity")

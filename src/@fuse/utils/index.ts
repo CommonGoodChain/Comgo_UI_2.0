@@ -1,4 +1,4 @@
-export class FuseUtils
+export class comgoUtils
 {
     /**
      * Filter array by string

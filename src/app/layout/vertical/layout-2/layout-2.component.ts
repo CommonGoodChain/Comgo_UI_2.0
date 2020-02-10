@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 import { navigation } from '../../../navigation/navigation';
 
 @Component({
@@ -14,7 +14,7 @@ import { navigation } from '../../../navigation/navigation';
 export class VerticalLayout2Component implements OnInit, OnDestroy
 {
     navbar = sessionStorage.getItem("navbar")
-    fuseConfig: any;
+    comgoConfig: any;
     navigation: any;
 
     // Private
@@ -23,10 +23,10 @@ export class VerticalLayout2Component implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
+     * @param {comgoConfigService} _comgoConfigService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService
+        private _comgoConfigService: comgoConfigService
     )
     {
         // Set the defaults
@@ -46,10 +46,10 @@ export class VerticalLayout2Component implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                this.fuseConfig = config;
+                this.comgoConfig = config;
             });
     }
 

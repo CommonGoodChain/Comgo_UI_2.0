@@ -5,8 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { comgoSharedModule } from '@comgo/shared.module';
+import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatStepperModule,MatDialogModule,MatDatepickerModule,MatCheckboxModule,MatNativeDateModule,MatTooltipModule} from '@angular/material';
 import { HttpModule } from "@angular/http";
@@ -29,7 +29,7 @@ const routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    FuseSharedModule,
+    comgoSharedModule,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -46,8 +46,8 @@ const routes = [
     MatTooltipModule,
     NgxChartsModule,
     MatDialogModule,
-    FuseSharedModule,
-    FuseWidgetModule,
+    comgoSharedModule,
+    comgoWidgetModule,
     TranslateModule,
     MatToolbarModule,
     MatStepperModule,

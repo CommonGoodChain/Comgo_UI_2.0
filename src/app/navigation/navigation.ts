@@ -1,6 +1,6 @@
-import { FuseNavigation } from '@fuse/types';
+import { comgoNavigation } from '@comgo/types';
 
-export const navigation: FuseNavigation[] = [
+export const navigation: comgoNavigation[] = [
 
 
     {
@@ -23,7 +23,7 @@ export const navigation: FuseNavigation[] = [
 ];
 
 
-// export const navigation: FuseNavigation[] = [
+// export const navigation: comgoNavigation[] = [
 
 
 //     {

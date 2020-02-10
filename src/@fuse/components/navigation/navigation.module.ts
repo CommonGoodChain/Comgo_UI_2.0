@@ -5,12 +5,12 @@ import { MatIconModule, MatRippleModule } from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { FuseNavigationComponent } from './navigation.component';
-import { FuseNavVerticalItemComponent } from './vertical/item/item.component';
-import { FuseNavVerticalCollapsableComponent } from './vertical/collapsable/collapsable.component';
-import { FuseNavVerticalGroupComponent } from './vertical/group/group.component';
-import { FuseNavHorizontalItemComponent } from './horizontal/item/item.component';
-import { FuseNavHorizontalCollapsableComponent } from './horizontal/collapsable/collapsable.component';
+import { comgoNavigationComponent } from './navigation.component';
+import { comgoNavVerticalItemComponent } from './vertical/item/item.component';
+import { comgoNavVerticalCollapsableComponent } from './vertical/collapsable/collapsable.component';
+import { comgoNavVerticalGroupComponent } from './vertical/group/group.component';
+import { comgoNavHorizontalItemComponent } from './horizontal/item/item.component';
+import { comgoNavHorizontalCollapsableComponent } from './horizontal/collapsable/collapsable.component';
 import { HttpModule } from '@angular/http'
 @NgModule({
     imports     : [
@@ -24,17 +24,17 @@ import { HttpModule } from '@angular/http'
         TranslateModule.forChild()
     ],
     exports     : [
-        FuseNavigationComponent
+        comgoNavigationComponent
     ],
     declarations: [
-        FuseNavigationComponent,
-        FuseNavVerticalGroupComponent,
-        FuseNavVerticalItemComponent,
-        FuseNavVerticalCollapsableComponent,
-        FuseNavHorizontalItemComponent,
-        FuseNavHorizontalCollapsableComponent
+        comgoNavigationComponent,
+        comgoNavVerticalGroupComponent,
+        comgoNavVerticalItemComponent,
+        comgoNavVerticalCollapsableComponent,
+        comgoNavHorizontalItemComponent,
+        comgoNavHorizontalCollapsableComponent
     ]
 })
-export class FuseNavigationModule
+export class comgoNavigationModule
 {
 }

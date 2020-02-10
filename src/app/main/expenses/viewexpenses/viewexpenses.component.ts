@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator,MatSort } from '@angular/material';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { environment } from '../../../../environments/environment';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component'
@@ -9,19 +9,19 @@ import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Sort, MatTableDataSource } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 var introJS = require('intro.js')
 
 @Component({
     selector: 'app-viewexpenses',
     templateUrl: './viewexpenses.component.html',
     styleUrls: ['./viewexpenses.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class ViewexpensesComponent implements OnInit {
     status;
@@ -53,17 +53,17 @@ export class ViewexpensesComponent implements OnInit {
     userRules;
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private router: Router,
         private httpClient: HttpClient,
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
         private _translateService: TranslateService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
         this.dataOfExpenses = this.expenseData.slice()
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true

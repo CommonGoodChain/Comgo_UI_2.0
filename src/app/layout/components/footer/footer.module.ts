@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatIconModule, MatToolbarModule } from '@angular/material';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { FooterComponent } from './footer.component';
 
@@ -17,7 +17,7 @@ import { FooterComponent } from './footer.component';
         MatIconModule,
         MatToolbarModule,
 
-        FuseSharedModule
+        comgoSharedModule
     ],
     exports     : [
         FooterComponent

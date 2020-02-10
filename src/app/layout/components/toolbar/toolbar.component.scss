@@ -1,4 +1,4 @@
-@import "src/@fuse/scss/fuse";
+@import "src/@comgo/scss/comgo";
 
 :host {
     position: relative;
@@ -26,7 +26,7 @@
     }
 
     .user-button,
-    fuse-search-bar,
+    comgo-search-bar,
     .language-button,
     .chat-panel-toggle-button,
     .quick-panel-toggle-button {

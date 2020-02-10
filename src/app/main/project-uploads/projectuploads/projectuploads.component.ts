@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Router } from '@angular/router';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Response,Http,Headers } from '@angular/http';
@@ -10,12 +10,12 @@ import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { TranslateService }from '@ngx-translate/core';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 @Component({
   selector: 'app-projectuploads',
   templateUrl: './projectuploads.component.html',
   styleUrls: ['./projectuploads.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class ProjectuploadsComponent implements OnInit {
   dataSource
@@ -41,7 +41,7 @@ export class ProjectuploadsComponent implements OnInit {
    */
   horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
-    private _fuseConfigService: FuseConfigService,
+    private _comgoConfigService: comgoConfigService,
     private _matSnackBar: MatSnackBar,
     private router: Router,
     public dialog: MatDialog,
@@ -49,7 +49,7 @@ export class ProjectuploadsComponent implements OnInit {
     private http: Http,
     private _translateService:TranslateService
   ) {
-    this._fuseConfigService.config = {
+    this._comgoConfigService.config = {
       layout: {
           footer: {
               hidden: true

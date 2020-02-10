@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 import { CommonModule } from '@angular/common';
 import { ForgotPassword3Component } from './forgot-password3.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,7 +22,7 @@ const routes = [
     MatFormFieldModule,
     MatInputModule,
 
-    FuseSharedModule,
+    comgoSharedModule,
     TranslateModule
   ],
   declarations: [ForgotPassword3Component]

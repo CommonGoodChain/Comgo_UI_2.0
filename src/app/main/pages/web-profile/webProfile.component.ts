@@ -2,22 +2,22 @@ import { Component } from '@angular/core';
 import {  Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'profile',
     templateUrl: './web-profile.component.html',
     styleUrls: ['./web-profile.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 
 export class WebProfileComponent {
@@ -60,7 +60,7 @@ export class WebProfileComponent {
      * Constructor
      */
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private router: Router,
         private http: Http,
         private _http: HttpClient,
@@ -68,10 +68,10 @@ export class WebProfileComponent {
         private routerData: ActivatedRoute,
         public dialog: MatDialog,
         private _translateService: TranslateService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true
@@ -87,7 +87,7 @@ export class WebProfileComponent {
                 }
             }
         }
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     }
     ngOnInit() {
         this.routerData.queryParams.subscribe(params => {

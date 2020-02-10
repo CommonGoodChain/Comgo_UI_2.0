@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { ProfileService } from '../../profile.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { environment } from 'environments/environment';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
@@ -19,7 +19,7 @@ import { locale as spanish } from '../../../../../layout/i18n/tr';
     selector: 'profile-timeline',
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class ProfileTimelineComponent implements OnInit {
     displayedColumns = ['Activity', 'Validator', 'Status'];
@@ -61,10 +61,10 @@ export class ProfileTimelineComponent implements OnInit {
         private httpClient: HttpClient,
         private http: Http,
         private _matSnackBar: MatSnackBar,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
         private _translateService: TranslateService
     ) {
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }

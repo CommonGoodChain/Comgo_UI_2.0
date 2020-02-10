@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 
-import { FuseNavigationModule } from '@fuse/components';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoNavigationModule } from '@comgo/components';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { NavbarVerticalStyle1Component } from './style-1.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,8 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
         MatButtonModule,
         MatIconModule,
         TranslateModule,
-        FuseSharedModule,
-        FuseNavigationModule
+        comgoSharedModule,
+        comgoNavigationModule
     ],
     exports     : [
         NavbarVerticalStyle1Component

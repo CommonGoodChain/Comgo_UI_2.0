@@ -9,11 +9,11 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 import { NgxMatSelectSearchModule } from 'app/main/mat-select-search/ngx-mat-select-search.module';
-import { FuseModule } from '@fuse/fuse.module';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
+import { comgoModule } from '@comgo/comgo.module';
+import { comgoSharedModule } from '@comgo/shared.module';
+import { comgoSidebarModule, comgoThemeOptionsModule } from '@comgo/components';
 import { LoadingModule } from 'ngx-loading';
-import { fuseConfig } from 'app/fuse-config';
+import { comgoConfig } from 'app/comgo-config';
 
 import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
@@ -139,11 +139,11 @@ const appRoutes: Routes = [
         MatButtonModule,
         MatIconModule,
         MatTabsModule ,
-        FuseModule.forRoot(fuseConfig),
-        FuseSharedModule,
-        FuseSidebarModule,
+        comgoModule.forRoot(comgoConfig),
+        comgoSharedModule,
+        comgoSidebarModule,
         MatSnackBarModule,
-        FuseThemeOptionsModule,
+        comgoThemeOptionsModule,
         MatToolbarModule,
         MatTooltipModule,
         MatSidenavModule,

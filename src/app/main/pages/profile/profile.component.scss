@@ -1,4 +1,4 @@
-@import "src/@fuse/scss/fuse";
+@import "src/@comgo/scss/comgo";
 :host {
     .dates{
         height:85%;
@@ -115,7 +115,7 @@
     }
 
     .user-button,
-    fuse-search-bar,
+    comgo-search-bar,
     .language-button,
     .chat-panel-toggle-button,
     .quick-panel-toggle-button {

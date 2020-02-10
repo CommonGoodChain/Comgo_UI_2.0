@@ -7,11 +7,11 @@ import {
   MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
   MatCheckboxModule
 } from '@angular/material';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
 import { HttpModule } from '@angular/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
@@ -38,7 +38,7 @@ const routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    FuseSharedModule,
+    comgoSharedModule,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -58,8 +58,8 @@ const routes = [
     TranslateModule,
     NgxChartsModule,
     MatDialogModule,
-    FuseSharedModule,
-    FuseWidgetModule,
+    comgoSharedModule,
+    comgoWidgetModule,
 
     MatToolbarModule,
     MatStepperModule,

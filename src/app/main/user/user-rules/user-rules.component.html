@@ -5,7 +5,7 @@
             <!-- / TOP BACKGROUND -->
         
             <!-- CENTER -->
-            <div class="order-details center" fusePerfectScrollbar>    
+            <div class="order-details center" comgoPerfectScrollbar>    
                         <div class="header mat-accent-900-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
                <div class="logo" fxLayout="row" fxLayoutAlign="start center">
                 <button id="viewExpensesBackward" mat-icon-button class="mr-0 mr-sm-16" (click)="backSpace()">
@@ -29,7 +29,7 @@
             </div>
                                 <form name="form" [formGroup]="form">
                                     <div class="content-card mat-white-bg">
-                        <mat-table class="orders-table" #table [dataSource]="dataSource" matSort  [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                        <mat-table class="orders-table" #table [dataSource]="dataSource" matSort  [@animateStagger]="{value:'50'}" comgoPerfectScrollbar>
                                 <ng-container matColumnDef="rules">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Rules'|translate}}</mat-header-cell>
                                     <mat-cell *matCellDef="let data">

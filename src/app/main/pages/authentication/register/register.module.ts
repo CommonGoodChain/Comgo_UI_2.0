@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 
@@ -27,7 +27,7 @@ const routes = [
         MatFormFieldModule,
         MatInputModule,
 
-        FuseSharedModule,
+        comgoSharedModule,
         TranslateModule
     ]
 })

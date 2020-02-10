@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -8,18 +8,18 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import * as $ from 'jquery';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 
 @Component({
   selector: 'app-addactivity',
   templateUrl: './addactivity.component.html',
   styleUrls: ['./addactivity.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class AddactivityComponent implements OnInit {
   form: FormGroup;
@@ -43,16 +43,16 @@ export class AddactivityComponent implements OnInit {
   public minDate;
 
   constructor(private _formBuilder: FormBuilder,
-    private _fuseConfigService: FuseConfigService,
+    private _comgoConfigService: comgoConfigService,
     private _matSnackBar: MatSnackBar,
     private routerData: ActivatedRoute,
     private router: Router,
     private httpClient : HttpClient,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
     private _translateService: TranslateService,
     public dialog: MatDialog) {
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
-    this._fuseConfigService.config = {
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoConfigService.config = {
       layout: {
           footer: {
               hidden: true

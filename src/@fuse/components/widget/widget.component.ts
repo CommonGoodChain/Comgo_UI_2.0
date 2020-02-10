@@ -1,20 +1,20 @@
 import { AfterContentInit, Component, ContentChildren, ElementRef, HostBinding, QueryList, Renderer2, ViewEncapsulation } from '@angular/core';
-import { FuseWidgetToggleDirective } from './widget-toggle.directive';
+import { comgoWidgetToggleDirective } from './widget-toggle.directive';
 
 @Component({
-    selector     : 'fuse-widget',
+    selector     : 'comgo-widget',
     templateUrl  : './widget.component.html',
     styleUrls    : ['./widget.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class FuseWidgetComponent implements AfterContentInit
+export class comgoWidgetComponent implements AfterContentInit
 {
     @HostBinding('class.flipped')
     flipped = false;
 
-    @ContentChildren(FuseWidgetToggleDirective, {descendants: true})
-    toggleButtons: QueryList<FuseWidgetToggleDirective>;
+    @ContentChildren(comgoWidgetToggleDirective, {descendants: true})
+    toggleButtons: QueryList<comgoWidgetToggleDirective>;
 
     /**
      * Constructor

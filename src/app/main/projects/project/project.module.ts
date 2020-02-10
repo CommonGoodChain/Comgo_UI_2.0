@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule,Router,Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
 import { MatButtonModule,MatDialogModule, MatCheckboxModule,MatChipsModule, MatDatepickerModule,MatFormFieldModule, MatIconModule, MatInputModule, MatStepperModule ,MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,MatTooltipModule } from '@angular/material';
 import { viewallprojectComponent } from './viewallproject/viewallproject.component';
 import { AddprojectComponent } from './addproject/addproject.component';
@@ -52,7 +52,7 @@ const routes:Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    FuseSharedModule,
+    comgoSharedModule,
     HttpModule,
     MatIconModule,
     MatButtonModule,
@@ -69,7 +69,7 @@ const routes:Routes = [
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
-    FuseWidgetModule,
+    comgoWidgetModule,
     AgmCoreModule,
     NgxChartsModule,
     MatDatepickerModule,

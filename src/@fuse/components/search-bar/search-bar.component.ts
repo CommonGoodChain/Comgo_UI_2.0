@@ -2,21 +2,21 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from '../../services/config.service';
-import { FuseTranslationLoaderService } from '../../services/translation-loader.service';
+import { comgoConfigService } from '../../services/config.service';
+import { comgoTranslationLoaderService } from '../../services/translation-loader.service';
 import { locale as english } from 'app/layout/i18n/tr';
 import { locale as spanish } from 'app/layout/i18n/tr';
 import {TranslateService}from "@ngx-translate/core"
 
 @Component({
-    selector   : 'fuse-search-bar',
+    selector   : 'comgo-search-bar',
     templateUrl: './search-bar.component.html',
     styleUrls  : ['./search-bar.component.scss']
 })
-export class FuseSearchBarComponent implements OnInit, OnDestroy
+export class comgoSearchBarComponent implements OnInit, OnDestroy
 {
     collapsed: boolean;
-    fuseConfig: any;
+    comgoConfig: any;
 
     @Output()
     input: EventEmitter<any>;
@@ -27,17 +27,17 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
+     * @param {comgoConfigService} _comgoConfigService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _comgoConfigService: comgoConfigService,
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
         private _translateService:TranslateService
     )
     {
         // Set the defaults
         this.input = new EventEmitter();
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
         this.collapsed = true;
 
         // Set the private defaults
@@ -54,11 +54,11 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (config) => {
-                    this.fuseConfig = config;
+                    this.comgoConfig = config;
                 }
             );
     }

@@ -1,2 +1,2 @@
-export * from './fuse-config';
-export * from './fuse-navigation';
+export * from './comgo-config';
+export * from './comgo-navigation';

@@ -29,7 +29,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNavbar">
                         <div class="logo ml-16">
-                            <img class="logo-icon" src="assets/images/logos/fuse.png">
+                            <img class="logo-icon" src="assets/images/logos/comgo.png">
                         </div>
                     </div>
                 </div>
@@ -381,7 +381,7 @@
                                             <div fxFlex="30">
                                                 <mat-card>
                                                     <div style="height:100%;">
-                                                        <ngx-charts-pie-chart class="pie-chart-container" *fuseIfOnDom
+                                                        <ngx-charts-pie-chart class="pie-chart-container" *comgoIfOnDom
                                                             [scheme]="widget6.scheme" [results]="projectData"
                                                             [legend]="widget6.showLegend"
                                                             [explodeSlices]="widget6.explodeSlices"
@@ -468,7 +468,7 @@
                 </div>
                 <br />
                 <div *ngIf="viewActivities == 0" class="mat-elevation-z1">
-                    <mat-table class="orders-table" #table [dataSource]="milestone" matSort fusePerfectScrollbar>
+                    <mat-table class="orders-table" #table [dataSource]="milestone" matSort comgoPerfectScrollbar>
 
                         <ng-container matColumnDef="milestone">
                             <mat-header-cell *matHeaderCellDef style="display:flex !important;">
@@ -996,7 +996,7 @@
                         </div>
                     </div>
                     <br />
-                    <mat-table class="orders-table" #table [dataSource]="displayDocsItems" matSort fusePerfectScrollbar>
+                    <mat-table class="orders-table" #table [dataSource]="displayDocsItems" matSort comgoPerfectScrollbar>
     
                         <ng-container matColumnDef="Documents">
                             <mat-header-cell *matHeaderCellDef style="display:flex !important;">
@@ -1052,7 +1052,7 @@
                     </div>
                 </div>
                 <mat-table *ngIf="projectStatusForPublish == 'false'" class="orders-table" #table
-                    [dataSource]="todoData" matSort (matSortChange)="sortData($event)" fusePerfectScrollbar>
+                    [dataSource]="todoData" matSort (matSortChange)="sortData($event)" comgoPerfectScrollbar>
                     <!-- activity Column -->
                     <ng-container matColumnDef="activity">
                         <mat-header-cell *matHeaderCellDef>
@@ -1110,7 +1110,7 @@
                     <br />
                 </mat-table>
                 <mat-table *ngIf="projectStatusForPublish == 'true'" class="orders-table" #table
-                    [dataSource]="activitiesData" matSort fusePerfectScrollbar>
+                    [dataSource]="activitiesData" matSort comgoPerfectScrollbar>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="activity">

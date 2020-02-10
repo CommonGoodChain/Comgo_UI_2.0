@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatRippleModule } from '@angular/material';
 
-import { FusePipesModule } from '../../pipes/pipes.module';
+import { comgoPipesModule } from '../../pipes/pipes.module';
 
-import { FuseMaterialColorPickerComponent } from './material-color-picker.component';
+import { comgoMaterialColorPickerComponent } from './material-color-picker.component';
 
 @NgModule({
     declarations: [
-        FuseMaterialColorPickerComponent
+        comgoMaterialColorPickerComponent
     ],
     imports: [
         CommonModule,
@@ -21,12 +21,12 @@ import { FuseMaterialColorPickerComponent } from './material-color-picker.compon
         MatMenuModule,
         MatRippleModule,
 
-        FusePipesModule
+        comgoPipesModule
     ],
     exports: [
-        FuseMaterialColorPickerComponent
+        comgoMaterialColorPickerComponent
     ],
 })
-export class FuseMaterialColorPickerModule
+export class comgoMaterialColorPickerModule
 {
 }

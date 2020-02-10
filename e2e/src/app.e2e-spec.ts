@@ -1,14 +1,14 @@
-import { Fuse2Page } from './app.po';
+import { comgo2Page } from './app.po';
 
-describe('Fuse2 App', () => {
-    let page: Fuse2Page;
+describe('comgo2 App', () => {
+    let page: comgo2Page;
 
     beforeEach(() => {
-        page = new Fuse2Page();
+        page = new comgo2Page();
     });
 
     it('should display welcome message', () => {
         page.navigateTo();
-        expect(page.getParagraphText()).toEqual('Welcome to Fuse2!');
+        expect(page.getParagraphText()).toEqual('Welcome to comgo2!');
     });
 });

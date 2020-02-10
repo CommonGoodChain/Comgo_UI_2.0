@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
+import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
+import { comgoPerfectScrollbarDirective } from '@comgo/directives/comgo-perfect-scrollbar/comgo-perfect-scrollbar.directive';
 import { ChatPanelService } from './chat-panel.service';
 
 @Component({
@@ -35,11 +35,11 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
         this._replyInput = content;
     }
 
-    @ViewChildren(FusePerfectScrollbarDirective)
-    private _fusePerfectScrollbarDirectives: QueryList<FusePerfectScrollbarDirective>;
+    @ViewChildren(comgoPerfectScrollbarDirective)
+    private _comgoPerfectScrollbarDirectives: QueryList<comgoPerfectScrollbarDirective>;
 
     // Private
-    private _chatViewScrollbar: FusePerfectScrollbarDirective;
+    private _chatViewScrollbar: comgoPerfectScrollbarDirective;
     private _replyForm: NgForm;
     private _replyInput: ElementRef;
     private _unsubscribeAll: Subject<any>;
@@ -49,12 +49,12 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
      *
      * @param {ChatPanelService} _chatPanelService
      * @param {HttpClient} _httpClient
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {comgoSidebarService} _comgoSidebarService
      */
     constructor(
         private _chatPanelService: ChatPanelService,
         private _httpClient: HttpClient,
-        private _fuseSidebarService: FuseSidebarService
+        private _comgoSidebarService: comgoSidebarService
     )
     {
         // Set the defaults
@@ -82,7 +82,7 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
         });
 
         // Subscribe to the foldedChanged observable
-        this._fuseSidebarService.getSidebar('chatPanel').foldedChanged
+        this._comgoSidebarService.getSidebar('chatPanel').foldedChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((folded) => {
                 this.sidebarFolded = folded;
@@ -94,7 +94,7 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
      */
     ngAfterViewInit(): void
     {
-        this._chatViewScrollbar = this._fusePerfectScrollbarDirectives.find((directive) => {
+        this._chatViewScrollbar = this._comgoPerfectScrollbarDirectives.find((directive) => {
             return directive.elementRef.nativeElement.id === 'messages';
         });
     }
@@ -147,7 +147,7 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
      */
     foldSidebarTemporarily(): void
     {
-        this._fuseSidebarService.getSidebar('chatPanel').foldTemporarily();
+        this._comgoSidebarService.getSidebar('chatPanel').foldTemporarily();
     }
 
     /**
@@ -155,7 +155,7 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
      */
     unfoldSidebarTemporarily(): void
     {
-        this._fuseSidebarService.getSidebar('chatPanel').unfoldTemporarily();
+        this._comgoSidebarService.getSidebar('chatPanel').unfoldTemporarily();
     }
 
     /**
@@ -163,7 +163,7 @@ export class ChatPanelComponent implements OnInit, AfterViewInit, OnDestroy
      */
     toggleSidebarOpen(): void
     {
-        this._fuseSidebarService.getSidebar('chatPanel').toggleOpen();
+        this._comgoSidebarService.getSidebar('chatPanel').toggleOpen();
     }
 
     /**

@@ -3,20 +3,20 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { fuseAnimations } from '../../animations';
-import { FuseConfigService } from '../../services/config.service';
-import { FuseNavigationService } from '../navigation/navigation.service';
-import { FuseSidebarService } from '../sidebar/sidebar.service';
+import { comgoAnimations } from '../../animations';
+import { comgoConfigService } from '../../services/config.service';
+import { comgoNavigationService } from '../navigation/navigation.service';
+import { comgoSidebarService } from '../sidebar/sidebar.service';
 
 @Component({
-    selector   : 'fuse-theme-options',
+    selector   : 'comgo-theme-options',
     templateUrl: './theme-options.component.html',
     styleUrls  : ['./theme-options.component.scss'],
-    animations : fuseAnimations
+    animations : comgoAnimations
 })
-export class FuseThemeOptionsComponent implements OnInit, OnDestroy
+export class comgoThemeOptionsComponent implements OnInit, OnDestroy
 {
-    fuseConfig: any;
+    comgoConfig: any;
     form: FormGroup;
 
     @HostBinding('class.bar-closed')
@@ -29,16 +29,16 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {FormBuilder} _formBuilder
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseNavigationService} _fuseNavigationService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {comgoConfigService} _comgoConfigService
+     * @param {comgoNavigationService} _comgoNavigationService
+     * @param {comgoSidebarService} _comgoSidebarService
      * @param {Renderer2} _renderer
      */
     constructor(
         private _formBuilder: FormBuilder,
-        private _fuseConfigService: FuseConfigService,
-        private _fuseNavigationService: FuseNavigationService,
-        private _fuseSidebarService: FuseSidebarService,
+        private _comgoConfigService: comgoConfigService,
+        private _comgoNavigationService: comgoNavigationService,
+        private _comgoSidebarService: comgoSidebarService,
         private _renderer: Renderer2
     )
     {
@@ -90,12 +90,12 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
         });
 
         // Subscribe to the config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
 
                 // Update the stored config
-                this.fuseConfig = config;
+                this.comgoConfig = config;
 
                 // Set the config form values without emitting an event
                 // so that we don't end up with an infinite loop
@@ -119,7 +119,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
             .subscribe((config) => {
 
                 // Update the config
-                this._fuseConfigService.config = config;
+                this._comgoConfigService.config = config;
             });
 
         // Add customize nav item that opens the bar programmatically
@@ -141,7 +141,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
             ]
         };
 
-        this._fuseNavigationService.addNavigationItem(customFunctionNavItem, 'end');
+        this._comgoNavigationService.addNavigationItem(customFunctionNavItem, 'end');
     }
 
     /**
@@ -154,7 +154,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
 
         // Remove the custom function menu
-        this._fuseNavigationService.removeNavigationItem('custom-function');
+        this._comgoNavigationService.removeNavigationItem('custom-function');
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-fuse-dark-700-bg',
+                            background: 'mat-comgo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'left',
@@ -191,7 +191,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'below-static'
                         },
                         footer : {
-                            background: 'mat-fuse-dark-900-bg',
+                            background: 'mat-comgo-dark-900-bg',
                             hidden    : false,
                             position  : 'below-static'
                         }
@@ -208,7 +208,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-fuse-dark-700-bg',
+                            background: 'mat-comgo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'left',
@@ -220,7 +220,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'below'
                         },
                         footer : {
-                            background: 'mat-fuse-dark-900-bg',
+                            background: 'mat-comgo-dark-900-bg',
                             hidden    : false,
                             position  : 'below'
                         }
@@ -237,7 +237,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-fuse-dark-700-bg',
+                            background: 'mat-comgo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'left',
@@ -249,7 +249,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'above-static'
                         },
                         footer : {
-                            background: 'mat-fuse-dark-900-bg',
+                            background: 'mat-comgo-dark-900-bg',
                             hidden    : false,
                             position  : 'above-static'
                         }
@@ -266,7 +266,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-fuse-dark-700-bg',
+                            background: 'mat-comgo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'top',
@@ -278,7 +278,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'above'
                         },
                         footer : {
-                            background: 'mat-fuse-dark-900-bg',
+                            background: 'mat-comgo-dark-900-bg',
                             hidden    : false,
                             position  : 'above-fixed'
                         }
@@ -301,7 +301,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
      */
     toggleSidebarOpen(key): void
     {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
+        this._comgoSidebarService.getSidebar(key).toggleOpen();
     }
 
 }

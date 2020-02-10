@@ -10,7 +10,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import * as crypto from 'crypto';
 import { appConst } from 'config';
 import { stringify } from 'config';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../layout/i18n/en';
 import { locale as spanish } from '../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,8 +21,8 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor( private router: Router, 
         private _matSnackBar: MatSnackBar,
         private _translateService:TranslateService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService) {
-            this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService) {
+            this._comgoTranslationLoaderService.loadTranslations(english, spanish);
          }
 
 

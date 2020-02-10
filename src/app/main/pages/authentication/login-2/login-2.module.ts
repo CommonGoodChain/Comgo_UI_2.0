@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,MatIconModule, MatMenuModule, MatToolbarModule,MatTooltipModule} from '@angular/material';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 import { Login2Component } from 'app/main/pages/authentication/login-2/login-2.component';
 import { LoadingModule } from 'ngx-loading';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ const routes = [
         MatFormFieldModule,
         MatInputModule,
         LoadingModule,
-        FuseSharedModule,
+        comgoSharedModule,
         MatIconModule,
         MatMenuModule, 
         MatToolbarModule,

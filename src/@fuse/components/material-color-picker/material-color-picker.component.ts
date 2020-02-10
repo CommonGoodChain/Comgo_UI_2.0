@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 
-import { fuseAnimations } from '../../animations';
+import { comgoAnimations } from '../../animations';
 import { MatColors } from '../../mat-colors';
 
 @Component({
-    selector     : 'fuse-material-color-picker',
+    selector     : 'comgo-material-color-picker',
     templateUrl  : './material-color-picker.component.html',
     styleUrls    : ['./material-color-picker.component.scss'],
-    animations   : fuseAnimations,
+    animations   : comgoAnimations,
     encapsulation: ViewEncapsulation.None
 })
-export class FuseMaterialColorPickerComponent implements OnChanges
+export class comgoMaterialColorPickerComponent implements OnChanges
 {
     colors: any;
     hues: string[];

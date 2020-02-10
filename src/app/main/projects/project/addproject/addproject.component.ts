@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Observable } from 'rxjs/Rx';
 import { Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,16 +11,16 @@ import { MouseEvent } from '@agm/core';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 
 @Component({
   selector: 'app-addproject',
   templateUrl: './addproject.component.html',
   styleUrls: ['./addproject.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class AddprojectComponent implements OnInit {
   sdgUrl;
@@ -91,7 +91,7 @@ export class AddprojectComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
-    private _fuseConfigService: FuseConfigService,
+    private _comgoConfigService: comgoConfigService,
     private _formBuilder: FormBuilder,
     private _matSnackBar: MatSnackBar,
     private router: Router,
@@ -100,10 +100,10 @@ export class AddprojectComponent implements OnInit {
     private http: Http,
     public dialog: MatDialog,
     private _translateService: TranslateService,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService
 
-  ) { this._fuseTranslationLoaderService.loadTranslations(english, spanish); 
-    this._fuseConfigService.config = {
+  ) { this._comgoTranslationLoaderService.loadTranslations(english, spanish); 
+    this._comgoConfigService.config = {
       layout: {
           footer: {
               hidden: true

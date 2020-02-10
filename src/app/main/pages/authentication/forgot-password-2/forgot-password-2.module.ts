@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { LoadingModule } from 'ngx-loading';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ForgotPassword2Component } from 'app/main/pages/authentication/forgot-password-2/forgot-password-2.component';
@@ -26,7 +26,7 @@ const routes = [
         MatInputModule,
         TranslateModule,
         LoadingModule,
-        FuseSharedModule,
+        comgoSharedModule,
     ]
 })
 export class ForgotPassword2Module

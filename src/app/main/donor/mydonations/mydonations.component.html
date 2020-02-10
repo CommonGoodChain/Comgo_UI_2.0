@@ -44,7 +44,7 @@
       <!-- <div *ngIf="donorList.length !== 0" class="content-card mat-white-bg"> -->
            <div *ngIf="donationInfo.length !== 0" class="mat-elevation-z8">
           <mat-table class="orders-table" #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" [@animateStagger]="{value:'50'}"
-              fusePerfectScrollbar>
+              comgoPerfectScrollbar>
               <ng-container matColumnDef="donorName">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Donor Name</mat-header-cell>
                   <mat-cell *matCellDef="let data">

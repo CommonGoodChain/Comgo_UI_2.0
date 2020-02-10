@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { MatPaginator,MatSort } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { environment } from 'environments/environment';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { MatTableDataSource } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,7 @@ var introJS = require('intro.js')
   selector: 'app-publishproject',
   templateUrl: './publishproject.component.html',
   styleUrls: ['./publishproject.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class PublishprojectComponent implements OnInit {
   displayedColumns = ['projectType', 'projectName', 'SDG','projectBudget', 'fundGoal', 'fundRaised', 'status', 'operation'];
@@ -56,9 +56,9 @@ export class PublishprojectComponent implements OnInit {
     public dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
     private _translateService:TranslateService,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService
  ) { this.projectData = this.projects.slice();
-  this._fuseTranslationLoaderService.loadTranslations(english, spanish); }
+  this._comgoTranslationLoaderService.loadTranslations(english, spanish); }
 
   ngOnInit() {
     this.profileSubmit = sessionStorage.getItem("profileSubmit")

@@ -1,19 +1,19 @@
-import { FuseConfig } from '@fuse/types';
+import { comgoConfig } from '@comgo/types';
 
 /**
- * Default Fuse Configuration
+ * Default comgo Configuration
  *
  * You can edit these options to change the default options. All these options also can be changed per component
  * basis. See `app/main/pages/authentication/login/login.component.ts` constructor method to learn more
  * about changing these options per component basis.
  */
 
-export const fuseConfig: FuseConfig = {
+export const comgoConfig: comgoConfig = {
     layout          : {
         style    : 'vertical-layout-1',
         width    : 'fullwidth',
         navbar   : {
-            background: 'mat-fuse-dark-700-bg',
+            background: 'mat-comgo-dark-700-bg',
             folded    : false,
             hidden    : false,
             position  : 'left',
@@ -25,7 +25,7 @@ export const fuseConfig: FuseConfig = {
             position  : 'below-static'
         },
         footer   : {
-            background: 'mat-fuse-dark-900-bg',
+            background: 'mat-comgo-dark-900-bg',
             hidden    : false,
             position  : 'below-fixed'
         },

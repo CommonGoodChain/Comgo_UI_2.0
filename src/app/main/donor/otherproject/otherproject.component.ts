@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Observable } from 'rxjs/Rx';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Http } from '@angular/http';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 import * as $ from 'jquery';
 // import { exoRoutes } from '../../donor/donor.module'
 
@@ -19,7 +19,7 @@ import * as $ from 'jquery';
   selector: 'app-otherproject',
   templateUrl: './otherproject.component.html',
   styleUrls: ['./otherproject.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class OtherprojectComponent implements OnInit {
   project;
@@ -38,7 +38,7 @@ export class OtherprojectComponent implements OnInit {
   validatorId;
   routeParams;
   otherProject:any;
-  rulesOfUser;
+  rulesOcomgor;
   defaultImg = environment.defaultImage
   urlPort = environment.urlPort;
   imageUrl = environment.imageUrl;
@@ -72,22 +72,22 @@ export class OtherprojectComponent implements OnInit {
     */
   constructor(
     private _matSnackBar: MatSnackBar,
-    private _fuseConfigService: FuseConfigService,
+    private _comgoConfigService: comgoConfigService,
     public dialog: MatDialog,
     private router: Router,
     private route:ActivatedRoute,
     private http: Http,
     private httpClient: HttpClient,
     private _translateService: TranslateService,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService
 
   ) {
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     this.currentCategory = 'All';
     this.currentOrgs = 'All';
     this.searchTerm = '';
     this.currentSDGType = '';
-    this._fuseConfigService.config = {
+    this._comgoConfigService.config = {
       layout: {
           footer: {
               hidden: true
@@ -126,7 +126,7 @@ export class OtherprojectComponent implements OnInit {
           return Observable.throw(err)
       })
       .subscribe((res: Response) => {
-        this.rulesOfUser = res["Rules"]
+        this.rulesOcomgor = res["Rules"]
           for(var i=0;i<res["Rules"].length;i++){
             if(routesPathOrg == res["Rules"][i].orgName){
               var rulesArr = []

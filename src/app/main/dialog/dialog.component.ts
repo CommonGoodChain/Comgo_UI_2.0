@@ -1,13 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import * as $ from 'jquery'
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http,Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { environment } from 'environments/environment';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../layout/i18n/en';
 import { locale as spanish } from '../../layout/i18n/tr';
@@ -15,7 +15,7 @@ import { locale as spanish } from '../../layout/i18n/tr';
 @Component({
   selector: 'dialog-elements-example-dialog',
   templateUrl: 'dialog.component.html',
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class DialogElementsExampleDialog {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -32,7 +32,7 @@ export class DialogElementsExampleDialog {
   value;
   constructor(
     public dialogRef: MatDialogRef<DialogElementsExampleDialog>,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
     private _translateService: TranslateService,
     private http: Http,
     private httpClient: HttpClient,
@@ -53,7 +53,7 @@ export class DialogElementsExampleDialog {
         }); 
     });
       this.lang = sessionStorage.getItem("lang");
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     if (this.lang == 'en' || this.lang == null) {
       this.sdgUrl = "assets/SDG/";
       this.imageExtenstion = ".png";

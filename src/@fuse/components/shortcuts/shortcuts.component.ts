@@ -4,15 +4,15 @@ import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseMatchMediaService } from '../../services/match-media.service';
-import { FuseNavigationService } from '../navigation/navigation.service';
+import { comgoMatchMediaService } from '../../services/match-media.service';
+import { comgoNavigationService } from '../navigation/navigation.service';
 
 @Component({
-    selector   : 'fuse-shortcuts',
+    selector   : 'comgo-shortcuts',
     templateUrl: './shortcuts.component.html',
     styleUrls  : ['./shortcuts.component.scss']
 })
-export class FuseShortcutsComponent implements OnInit, OnDestroy
+export class comgoShortcutsComponent implements OnInit, OnDestroy
 {
     shortcutItems: any[];
     navigationItems: any[];
@@ -37,14 +37,14 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy
      *
      * @param {Renderer2} _renderer
      * @param {CookieService} _cookieService
-     * @param {FuseMatchMediaService} _fuseMatchMediaService
-     * @param {FuseNavigationService} _fuseNavigationService
+     * @param {comgoMatchMediaService} _comgoMatchMediaService
+     * @param {comgoNavigationService} _comgoNavigationService
      * @param {ObservableMedia} _observableMedia
      */
     constructor(
         private _cookieService: CookieService,
-        private _fuseMatchMediaService: FuseMatchMediaService,
-        private _fuseNavigationService: FuseNavigationService,
+        private _comgoMatchMediaService: comgoMatchMediaService,
+        private _comgoNavigationService: comgoNavigationService,
         private _observableMedia: ObservableMedia,
         private _renderer: Renderer2
     )
@@ -68,13 +68,13 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Get the navigation items and flatten them
-        this.filteredNavigationItems = this.navigationItems = this._fuseNavigationService.getFlatNavigation(this.navigation);
+        this.filteredNavigationItems = this.navigationItems = this._comgoNavigationService.getFlatNavigation(this.navigation);
 
-        const cookieExists = this._cookieService.check('FUSE2.shortcuts');
+        const cookieExists = this._cookieService.check('comgo2.shortcuts');
 
         if ( cookieExists )
         {
-            this.shortcutItems = JSON.parse(this._cookieService.get('FUSE2.shortcuts'));
+            this.shortcutItems = JSON.parse(this._cookieService.get('comgo2.shortcuts'));
         }
         else
         {
@@ -107,7 +107,7 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy
             ];
         }
 
-        this._fuseMatchMediaService.onMediaChange
+        this._comgoMatchMediaService.onMediaChange
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 if ( this._observableMedia.isActive('gt-sm') )
@@ -172,7 +172,7 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy
                 this.shortcutItems.splice(i, 1);
 
                 // Save to the cookies
-                this._cookieService.set('FUSE2.shortcuts', JSON.stringify(this.shortcutItems));
+                this._cookieService.set('comgo2.shortcuts', JSON.stringify(this.shortcutItems));
 
                 return;
             }
@@ -181,7 +181,7 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy
         this.shortcutItems.push(itemToToggle);
 
         // Save to the cookies
-        this._cookieService.set('FUSE2.shortcuts', JSON.stringify(this.shortcutItems));
+        this._cookieService.set('comgo2.shortcuts', JSON.stringify(this.shortcutItems));
     }
 
     /**

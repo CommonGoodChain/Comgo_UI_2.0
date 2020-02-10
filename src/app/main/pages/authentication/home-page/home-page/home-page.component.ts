@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class HomePageComponent implements OnInit {
     form: FormGroup;
     formErrors: any;
     loginForm: FormGroup;
 
-  constructor( private _fuseConfigService: FuseConfigService, private _formBuilder: FormBuilder,private router: Router) {
-    this._fuseConfigService.config = {
+  constructor( private _comgoConfigService: comgoConfigService, private _formBuilder: FormBuilder,private router: Router) {
+    this._comgoConfigService.config = {
       layout: {
           navbar: {
               hidden: true

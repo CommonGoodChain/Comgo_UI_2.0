@@ -5,12 +5,12 @@ import { HttpClient,} from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Router,ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Observable } from 'rxjs/Rx';
 import * as $ from 'jquery'
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../../dialog/dialog.component';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-info',
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class InfoComponent implements OnInit {
   role;
@@ -62,9 +62,9 @@ export class InfoComponent implements OnInit {
     private _matSnackBar: MatSnackBar,
     public dialog: MatDialog,
     private _translateService: TranslateService,
-    private _fuseTranslationLoaderService: FuseTranslationLoaderService
+    private _comgoTranslationLoaderService: comgoTranslationLoaderService
   ) {
-    this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
   }
   ngOnInit() {
     this.routeBack = sessionStorage.getItem('backRoute')

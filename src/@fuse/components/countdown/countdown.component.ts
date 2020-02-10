@@ -4,11 +4,11 @@ import { map, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
 @Component({
-    selector   : 'fuse-countdown',
+    selector   : 'comgo-countdown',
     templateUrl: './countdown.component.html',
     styleUrls  : ['./countdown.component.scss']
 })
-export class FuseCountdownComponent implements OnInit, OnDestroy
+export class comgoCountdownComponent implements OnInit, OnDestroy
 {
     // Event date
     @Input('eventDate')

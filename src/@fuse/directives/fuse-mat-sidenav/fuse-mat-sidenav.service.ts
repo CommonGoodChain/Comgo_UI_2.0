@@ -4,7 +4,7 @@ import { MatSidenav } from '@angular/material';
 @Injectable({
     providedIn: 'root'
 })
-export class FuseMatSidenavHelperService
+export class comgoMatSidenavHelperService
 {
     sidenavInstances: MatSidenav[];
 

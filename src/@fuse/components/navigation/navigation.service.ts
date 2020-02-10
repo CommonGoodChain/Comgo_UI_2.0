@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { FuseNavigationItem } from '../../types';
+import { comgoNavigationItem } from '../../types';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FuseNavigationService
+export class comgoNavigationService
 {
     onItemCollapsed: Subject<any>;
     onItemCollapseToggled: Subject<any>;
@@ -143,7 +143,7 @@ export class FuseNavigationService
      * @param flatNavigation
      * @returns {any[]}
      */
-    getFlatNavigation(navigation, flatNavigation: FuseNavigationItem[] = []): any
+    getFlatNavigation(navigation, flatNavigation: comgoNavigationItem[] = []): any
     {
         for ( const item of navigation )
         {

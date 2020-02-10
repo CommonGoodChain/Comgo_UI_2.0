@@ -1,11 +1,11 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
-    selector   : 'fuse-nav-horizontal-item',
+    selector   : 'comgo-nav-horizontal-item',
     templateUrl: './item.component.html',
     styleUrls  : ['./item.component.scss']
 })
-export class FuseNavHorizontalItemComponent
+export class comgoNavHorizontalItemComponent
 {
     @HostBinding('class')
     classes = 'nav-item';

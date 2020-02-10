@@ -1,25 +1,25 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { FUSE_CONFIG } from './services/config.service';
+import { comgo_CONFIG } from './services/config.service';
 
 @NgModule()
-export class FuseModule
+export class comgoModule
 {
-    constructor(@Optional() @SkipSelf() parentModule: FuseModule)
+    constructor(@Optional() @SkipSelf() parentModule: comgoModule)
     {
         if ( parentModule )
         {
-            throw new Error('FuseModule is already loaded. Import it in the AppModule only!');
+            throw new Error('comgoModule is already loaded. Import it in the AppModule only!');
         }
     }
 
     static forRoot(config): ModuleWithProviders
     {
         return {
-            ngModule : FuseModule,
+            ngModule : comgoModule,
             providers: [
                 {
-                    provide : FUSE_CONFIG,
+                    provide : comgo_CONFIG,
                     useValue: config
                 }
             ]

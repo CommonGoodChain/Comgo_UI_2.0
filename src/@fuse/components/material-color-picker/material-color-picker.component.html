@@ -7,7 +7,7 @@
     <mat-icon>palette</mat-icon>
 </button>
 
-<mat-menu #colorMenu="matMenu" class="fuse-material-color-picker-menu">
+<mat-menu #colorMenu="matMenu" class="comgo-material-color-picker-menu">
 
     <header [ngClass]="selectedColor?.class || 'mat-accent-900-bg'" class="mat-elevation-z4"
             fxLayout="row" fxLayoutAlign="space-between center">
@@ -39,7 +39,7 @@
 
         <div class="view" *ngSwitchCase="'palettes'">
 
-            <div fxLayout="row wrap" fxLayoutAlign="start start" class="colors" fusePerfectScrollbar>
+            <div fxLayout="row wrap" fxLayoutAlign="start start" class="colors" comgoPerfectScrollbar>
                 <div class="color"
                      [ngClass]="'mat-'+color.key+'-bg'"
                      *ngFor="let color of (colors | keys)"
@@ -53,7 +53,7 @@
         </div>
 
         <div class="view" *ngSwitchCase="'hues'" >
-            <div fxLayout="row wrap" fxLayoutAlign="start start" class="colors" fusePerfectScrollbar>
+            <div fxLayout="row wrap" fxLayoutAlign="start start" class="colors" comgoPerfectScrollbar>
                 <div class="color" *ngFor="let hue of hues"
                      [fxHide]="selectedPalette === 'white' && hue !== '500'|| selectedPalette === 'black' && hue !== '500'"
                      [ngClass]="'mat-'+selectedPalette+'-'+hue+'-bg'"

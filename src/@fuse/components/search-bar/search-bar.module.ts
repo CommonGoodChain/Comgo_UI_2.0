@@ -4,12 +4,12 @@ import { RouterModule } from '@angular/router';
 
 import { MatButtonModule, MatIconModule } from '@angular/material';
 
-import { FuseSearchBarComponent } from './search-bar.component';
+import { comgoSearchBarComponent } from './search-bar.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
-        FuseSearchBarComponent
+        comgoSearchBarComponent
     ],
     imports     : [
         CommonModule,
@@ -20,9 +20,9 @@ import { TranslateModule } from '@ngx-translate/core';
         TranslateModule
     ],
     exports     : [
-        FuseSearchBarComponent
+        comgoSearchBarComponent
     ]
 })
-export class FuseSearchBarModule
+export class comgoSearchBarModule
 {
 }

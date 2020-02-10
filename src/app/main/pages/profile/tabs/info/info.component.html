@@ -5,7 +5,7 @@
     <div class="center">
         <!-- CONTENT CARD -->
         <!-- <div class="content-card mat-white-bg" *ngIf="role === 'validator'">
-            <mat-table *ngIf="publishedStatus === true" class="orders-table" #table [dataSource]="validatorActivities" matSort fusePerfectScrollbar>
+            <mat-table *ngIf="publishedStatus === true" class="orders-table" #table [dataSource]="validatorActivities" matSort comgoPerfectScrollbar>
 
                 <ng-container matColumnDef="activity">
                     <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg">{{'Activity' | translate}}</mat-header-cell>
@@ -58,7 +58,7 @@
         </div> -->
         
         <div class="content-card mat-white-bg">
-            <mat-table  *ngIf="projectStatusForPublish == 'false'" class="orders-table" #table [dataSource]="todoData" matSort (matSortChange)="sortData($event)" fusePerfectScrollbar>
+            <mat-table  *ngIf="projectStatusForPublish == 'false'" class="orders-table" #table [dataSource]="todoData" matSort (matSortChange)="sortData($event)" comgoPerfectScrollbar>
                 <!-- activity Column -->
                 <ng-container matColumnDef="activity">
                     <mat-header-cell *matHeaderCellDef mat-sort-header="activity" class="mat-accent-900-bg">{{ 'Activity' | translate }}</mat-header-cell>
@@ -101,7 +101,7 @@
                 <mat-row *matRowDef="let product; columns: displayedColumns;">
                 </mat-row>
             </mat-table>
-            <mat-table *ngIf="projectStatusForPublish == 'true'" class="orders-table" #table [dataSource]="activities" matSort fusePerfectScrollbar>
+            <mat-table *ngIf="projectStatusForPublish == 'true'" class="orders-table" #table [dataSource]="activities" matSort comgoPerfectScrollbar>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="activity">

@@ -2,14 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoAnimations } from '@comgo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import { TranslateService } from "@ngx-translate/core";
@@ -17,7 +17,7 @@ import { TranslateService } from "@ngx-translate/core";
     selector: 'reset-password-2',
     templateUrl: './reset-password-2.component.html',
     styleUrls: ['./reset-password-2.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class ResetPassword2Component implements OnInit, OnDestroy {
     resetPasswordForm: FormGroup;
@@ -36,17 +36,17 @@ export class ResetPassword2Component implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
         private router: Router,
         private http: Http,
         private _translateService: TranslateService,
         private _matSnackBar: MatSnackBar,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
-        this._fuseConfigService.config = {
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true

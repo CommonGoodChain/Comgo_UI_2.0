@@ -7,8 +7,8 @@ import {
   MatIconModule, MatPaginatorModule,
   MatSnackBarModule, MatSortModule, MatTableModule
 } from '@angular/material';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { comgoSharedModule } from '@comgo/shared.module';
+import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
 import { HttpModule } from '@angular/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
@@ -34,8 +34,8 @@ const routes = [
    MatFormFieldModule,
    MatInputModule,
     MatTableModule,
-    FuseSharedModule,
-    FuseWidgetModule,
+    comgoSharedModule,
+    comgoWidgetModule,
     HttpModule,
     MatToolbarModule,
     TranslateModule,

@@ -3,20 +3,20 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { FuseNavigationItem } from '../../../../types';
-import { fuseAnimations } from '../../../../animations';
-import { FuseNavigationService } from '../../navigation.service';
+import { comgoNavigationItem } from '../../../../types';
+import { comgoAnimations } from '../../../../animations';
+import { comgoNavigationService } from '../../navigation.service';
 
 @Component({
-    selector   : 'fuse-nav-vertical-collapsable',
+    selector   : 'comgo-nav-vertical-collapsable',
     templateUrl: './collapsable.component.html',
     styleUrls  : ['./collapsable.component.scss'],
-    animations : fuseAnimations
+    animations : comgoAnimations
 })
-export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
+export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
 {
     @Input()
-    item: FuseNavigationItem;
+    item: comgoNavigationItem;
 
     @HostBinding('class')
     classes = 'nav-collapsable nav-item';
@@ -30,11 +30,11 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {FuseNavigationService} _fuseNavigationService
+     * @param {comgoNavigationService} _comgoNavigationService
      * @param {Router} _router
      */
     constructor(
-        private _fuseNavigationService: FuseNavigationService,
+        private _comgoNavigationService: comgoNavigationService,
         private _router: Router
     )
     {
@@ -72,7 +72,7 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
             });
 
         // Listen for collapsing of any navigation item
-        this._fuseNavigationService.onItemCollapsed
+        this._comgoNavigationService.onItemCollapsed
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (clickedItem) => {
@@ -139,8 +139,8 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
         this.isOpen = !this.isOpen;
 
         // Navigation collapse toggled...
-        this._fuseNavigationService.onItemCollapsed.next(this.item);
-        this._fuseNavigationService.onItemCollapseToggled.next();
+        this._comgoNavigationService.onItemCollapsed.next(this.item);
+        this._comgoNavigationService.onItemCollapseToggled.next();
     }
 
     /**
@@ -154,7 +154,7 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
         }
 
         this.isOpen = true;
-        this._fuseNavigationService.onItemCollapseToggled.next();
+        this._comgoNavigationService.onItemCollapseToggled.next();
     }
 
     /**
@@ -168,7 +168,7 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
         }
 
         this.isOpen = false;
-        this._fuseNavigationService.onItemCollapseToggled.next();
+        this._comgoNavigationService.onItemCollapseToggled.next();
     }
 
     /**

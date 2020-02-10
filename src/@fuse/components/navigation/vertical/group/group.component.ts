@@ -1,19 +1,19 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
-import { FuseNavigationItem } from '../../../../types';
+import { comgoNavigationItem } from '../../../../types';
 
 @Component({
-    selector   : 'fuse-nav-vertical-group',
+    selector   : 'comgo-nav-vertical-group',
     templateUrl: './group.component.html',
     styleUrls  : ['./group.component.scss']
 })
-export class FuseNavVerticalGroupComponent
+export class comgoNavVerticalGroupComponent
 {
     @HostBinding('class')
     classes = 'nav-group nav-item';
 
     @Input()
-    item: FuseNavigationItem;
+    item: comgoNavigationItem;
 
     /**
      * Constructor

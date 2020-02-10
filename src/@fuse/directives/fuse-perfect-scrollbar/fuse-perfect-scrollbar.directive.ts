@@ -6,12 +6,12 @@ import { filter, takeUntil } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as _ from 'lodash';
 
-import { FuseConfigService } from '../../services/config.service';
+import { comgoConfigService } from '../../services/config.service';
 
 @Directive({
-    selector: '[fusePerfectScrollbar]'
+    selector: '[comgoPerfectScrollbar]'
 })
-export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
+export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
 {
     isInitialized: boolean;
     isMobile: boolean;
@@ -27,13 +27,13 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
      * Constructor
      *
      * @param {ElementRef} elementRef
-     * @param {FuseConfigService} _fuseConfigService
+     * @param {comgoConfigService} _comgoConfigService
      * @param {Platform} _platform
      * @param {Router} _router
      */
     constructor(
         public elementRef: ElementRef,
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private _platform: Platform,
         private _router: Router
     )
@@ -61,13 +61,13 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
      * @param value
      */
     @Input()
-    set fusePerfectScrollbarOptions(value)
+    set comgoPerfectScrollbarOptions(value)
     {
         // Merge the options
         this._options = _.merge({}, this._options, value);
     }
 
-    get fusePerfectScrollbarOptions(): any
+    get comgoPerfectScrollbarOptions(): any
     {
         // Return the options
         return this._options;
@@ -78,7 +78,7 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
      *
      * @param {boolean | ""} value
      */
-    @Input('fusePerfectScrollbar')
+    @Input('comgoPerfectScrollbar')
     set enabled(value: boolean | '')
     {
         // If nothing is provided with the directive (empty string),
@@ -126,7 +126,7 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
     ngAfterViewInit(): void
     {
         // Check if scrollbars enabled or not from the main config
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (settings) => {
@@ -135,7 +135,7 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
             );
 
         // Scroll to the top on every route change
-        if ( this.fusePerfectScrollbarOptions.updateOnRouteChange )
+        if ( this.comgoPerfectScrollbarOptions.updateOnRouteChange )
         {
             this._router.events
                 .pipe(
@@ -198,7 +198,7 @@ export class FusePerfectScrollbarDirective implements AfterViewInit, OnDestroy
 
         // Initialize the perfect-scrollbar
         this.ps = new PerfectScrollbar(this.elementRef.nativeElement, {
-            ...this.fusePerfectScrollbarOptions
+            ...this.comgoPerfectScrollbarOptions
         });
     }
 

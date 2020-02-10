@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { Subject } from 'rxjs';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
@@ -10,23 +10,23 @@ import { environment } from '../../../../environments/environment';
 import { Sort } from '@angular/material';
 import { MatSnackBar, MatTableDataSource, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component'
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 var introJS = require('intro.js')
 
 @Component({
   selector: 'app-pending-users',
   templateUrl: './pending-users.component.html',
   styleUrls: ['./pending-users.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class PendingUsersComponent implements OnInit {
     urlPort = environment.urlPort;
     foundation = environment.foundation;
-    dataOfUsers: Array<any> = [];
+    dataOcomgors: Array<any> = [];
     role;
     userType;
     dataSource;
@@ -56,22 +56,22 @@ export class PendingUsersComponent implements OnInit {
    */
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private router: Router,
         private http: Http,
         private httpClient: HttpClient,
         private httpCLient: HttpClient,
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
         private _translateService: TranslateService
     ) {
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
         // this.product = new Product();
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true
@@ -155,8 +155,8 @@ export class PendingUsersComponent implements OnInit {
                     this.sessionSnackBar(err["_body"]);
                     this.router.navigate(['/pages/auth/login-2']);
                 }
-                this.dataOfUsers = [];
-                this.dataSource = new MatTableDataSource(this.dataOfUsers);
+                this.dataOcomgors = [];
+                this.dataSource = new MatTableDataSource(this.dataOcomgors);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
                 return Observable.throw(err)
@@ -166,8 +166,8 @@ export class PendingUsersComponent implements OnInit {
                 // this.router.navigate(['/components/collections'])
                 var users = [];
                 this.userDetails = res;
-                this.dataOfUsers = this.userDetails;
-                this.dataSource = new MatTableDataSource(this.dataOfUsers);
+                this.dataOcomgors = this.userDetails;
+                this.dataSource = new MatTableDataSource(this.dataOcomgors);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
             })
@@ -213,10 +213,10 @@ export class PendingUsersComponent implements OnInit {
     sortData(sort: Sort) {
         const data = this.userDetails.slice();
         if (!sort.active || sort.direction == '') {
-            this.dataOfUsers = data;
+            this.dataOcomgors = data;
             return;
         }
-        this.dataOfUsers = data.sort((a, b) => {
+        this.dataOcomgors = data.sort((a, b) => {
             var isAsc = sort.direction == 'asc';
             switch (sort.active) {
                 case 'firstName': return compare(a.firstName, b.firstName, isAsc);

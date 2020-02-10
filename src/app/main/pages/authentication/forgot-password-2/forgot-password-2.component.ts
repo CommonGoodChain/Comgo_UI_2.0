@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoAnimations } from '@comgo/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
@@ -17,7 +17,7 @@ import { locale as spanish } from '../../../../layout/i18n/tr';
     selector: 'forgot-password-2',
     templateUrl: './forgot-password-2.component.html',
     styleUrls: ['./forgot-password-2.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class ForgotPassword2Component implements OnInit {
     forgotPasswordForm: FormGroup;
@@ -28,11 +28,11 @@ export class ForgotPassword2Component implements OnInit {
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
+     * @param {comgoConfigService} _comgoConfigService
      * @param {FormBuilder} _formBuilder
      */
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private _formBuilder: FormBuilder,
         private httpClient: HttpClient,
         private routerData: ActivatedRoute,
@@ -40,11 +40,11 @@ export class ForgotPassword2Component implements OnInit {
         private http: Http,
         private _matSnackBar: MatSnackBar,
         private _translateService: TranslateService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoConfigService } from '@comgo/services/config.service';
 import {  ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator,MatSort } from '@angular/material';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoAnimations } from '@comgo/animations';
 import { environment } from '../../../../../../environments/environment';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../../dialog/dialog.component'
@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Sort, MatTableDataSource } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Http, Headers } from '@angular/http';
 import { locale as english } from '../../../../../layout/i18n/en';
@@ -21,7 +21,7 @@ var introJS = require('intro.js')
   selector: 'app-your-workspace',
   templateUrl: './your-workspace.component.html',
   styleUrls: ['./your-workspace.component.scss'],
-  animations: fuseAnimations
+  animations: comgoAnimations
 })
 export class YourWorkspaceComponent implements OnInit {
   dataSource;
@@ -44,18 +44,18 @@ export class YourWorkspaceComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private _fuseConfigService: FuseConfigService,
+      private _comgoConfigService: comgoConfigService,
       private httpClient: HttpClient,
       private http: Http,
       private route: ActivatedRoute,
       private _matSnackBar: MatSnackBar,
       public dialog: MatDialog,
       private _translateService: TranslateService,
-      private _fuseTranslationLoaderService: FuseTranslationLoaderService
+      private _comgoTranslationLoaderService: comgoTranslationLoaderService
   ) {
-      this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+      this._comgoTranslationLoaderService.loadTranslations(english, spanish);
       this.userOrganizations = this.expenseData.slice()
-      this._fuseConfigService.config = {
+      this._comgoConfigService.config = {
         layout: {
             navbar: {
                 hidden: true

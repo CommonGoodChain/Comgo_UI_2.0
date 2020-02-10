@@ -1,4 +1,4 @@
-@import "src/@fuse/scss/fuse";
+@import "src/@comgo/scss/comgo";
 
 chat-panel {
     display: flex;
@@ -402,7 +402,7 @@ chat-panel {
     }
 }
 
-fuse-sidebar {
+comgo-sidebar {
 
     &.chat-panel {
         width: 360px;

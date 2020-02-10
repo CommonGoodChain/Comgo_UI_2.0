@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule,MatTooltipModule} from '@angular/material';
 
-import { FuseSearchBarModule, FuseShortcutsModule } from '@fuse/components';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSearchBarModule, comgoShortcutsModule } from '@comgo/components';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { ToolbarComponent } from './toolbar.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,9 +19,9 @@ import { TranslateModule } from '@ngx-translate/core';
         MatTooltipModule,
         MatToolbarModule,
 
-        FuseSharedModule,
-        FuseSearchBarModule,
-        FuseShortcutsModule,
+        comgoSharedModule,
+        comgoSearchBarModule,
+        comgoShortcutsModule,
         TranslateModule
     ],
     exports     : [

@@ -4,8 +4,8 @@ import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoAnimations } from '@comgo/animations';
 import * as $ from 'jquery';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -14,13 +14,13 @@ import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 @Component({
     selector: 'register-2',
     templateUrl: './register-2.component.html',
     styleUrls: ['./register-2.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class Register2Component implements OnInit {
     registerForm: FormGroup;
@@ -49,14 +49,14 @@ export class Register2Component implements OnInit {
 
     constructor(
         private httpClient: HttpClient,
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
         private router: Router,
         private http: Http,
         private _matSnackBar: MatSnackBar,
         private _translateService: TranslateService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
         this.formErrors = {
             company: {},
@@ -71,7 +71,7 @@ export class Register2Component implements OnInit {
         };
 
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true
@@ -101,7 +101,7 @@ export class Register2Component implements OnInit {
             }
         ];
 
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();

@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { FuseUtils } from '@fuse/utils';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { comgoUtils } from '@comgo/utils';
+import { comgoConfigService } from '@comgo/services/config.service';
 // import { FaqService } from 'app/main/pages/faq/faq.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class FAQComponent
      * @param {FaqService} _faqService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         // private _faqService: FaqService
     )
     {
@@ -37,7 +37,7 @@ export class FAQComponent
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true
@@ -102,7 +102,7 @@ export class FAQComponent
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                this.faqsFiltered = FuseUtils.filterArrayByString(this.faqs, searchText);
+                this.faqsFiltered = comgoUtils.filterArrayByString(this.faqs, searchText);
             });
     }
 

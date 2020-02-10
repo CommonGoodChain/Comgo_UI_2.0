@@ -5,11 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoNavigationService } from '@comgo/components/navigation/navigation.service';
+import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
+import { comgoSplashScreenService } from '@comgo/services/splash-screen.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 
 import { navigation } from './navigation/navigation';
 import { locale as navigationEnglish } from './navigation/i18n/en';
@@ -25,7 +25,7 @@ import {HostListener,Directive,HostBinding,Input} from '@angular/core';
 })
 export class AppComponent implements OnInit, OnDestroy
 {
-    fuseConfig: any;
+    comgoConfig: any;
     navigation: any;
     token;
     // Private
@@ -35,21 +35,21 @@ export class AppComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {DOCUMENT} document
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseNavigationService} _fuseNavigationService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {FuseSplashScreenService} _fuseSplashScreenService
-     * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
+     * @param {comgoConfigService} _comgoConfigService
+     * @param {comgoNavigationService} _comgoNavigationService
+     * @param {comgoSidebarService} _comgoSidebarService
+     * @param {comgoSplashScreenService} _comgoSplashScreenService
+     * @param {comgoTranslationLoaderService} _comgoTranslationLoaderService
      * @param {Platform} _platform
      * @param {TranslateService} _translateService
      */
     constructor(
         @Inject(DOCUMENT) private document: any,
-        private _fuseConfigService: FuseConfigService,
-        private _fuseNavigationService: FuseNavigationService,
-        private _fuseSidebarService: FuseSidebarService,
-        private _fuseSplashScreenService: FuseSplashScreenService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _comgoConfigService: comgoConfigService,
+        private _comgoNavigationService: comgoNavigationService,
+        private _comgoSidebarService: comgoSidebarService,
+        private _comgoSplashScreenService: comgoSplashScreenService,
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform
     )
@@ -58,10 +58,10 @@ export class AppComponent implements OnInit, OnDestroy
         this.navigation = navigation;
 
         // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
+        this._comgoNavigationService.register('main', this.navigation);
 
         // Set the main navigation as our current navigation
-        this._fuseNavigationService.setCurrentNavigation('main');
+        this._comgoNavigationService.setCurrentNavigation('main');
 
         // Add languages
         this._translateService.addLangs(['en', 'tr']);
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy
         this._translateService.setDefaultLang('en');
 
         // Set the navigation translations
-        this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
+        this._comgoTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
 
         // Use a language
         this._translateService.use('en');
@@ -96,12 +96,12 @@ export class AppComponent implements OnInit, OnDestroy
     {
         this.token = sessionStorage.getItem('token')
         // Subscribe to config changes
-        this._fuseConfigService.config
+        this._comgoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                this.fuseConfig = config;
+                this.comgoConfig = config;
 
-                if ( this.fuseConfig.layout.width === 'boxed' )
+                if ( this.comgoConfig.layout.width === 'boxed' )
                 {
                     this.document.body.classList.add('boxed');
                 }
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit, OnDestroy
      */
     toggleSidebarOpen(key): void
     {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
+        this._comgoSidebarService.getSidebar(key).toggleOpen();
     }
 
     @HostListener('document:keypress', ['$event'])

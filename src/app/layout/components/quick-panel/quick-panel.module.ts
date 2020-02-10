@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatDividerModule, MatListModule, MatSlideToggleModule } from '@angular/material';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { QuickPanelComponent } from './quick-panel.component';
 
@@ -14,7 +14,7 @@ import { QuickPanelComponent } from './quick-panel.component';
         MatListModule,
         MatSlideToggleModule,
 
-        FuseSharedModule,
+        comgoSharedModule,
     ],
     exports: [
         QuickPanelComponent

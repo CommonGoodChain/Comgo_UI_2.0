@@ -4,15 +4,15 @@ import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { environment } from 'environments/environment';
-import { FuseNavigationService } from './navigation.service';
+import { comgoNavigationService } from './navigation.service';
 
 @Component({
-    selector: 'fuse-navigation',
+    selector: 'comgo-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FuseNavigationComponent implements OnInit {
+export class comgoNavigationComponent implements OnInit {
     navigate;
     profile;
     username;
@@ -38,7 +38,7 @@ export class FuseNavigationComponent implements OnInit {
      * Constructor
      */
     constructor(
-        private _fuseNavigationService: FuseNavigationService,
+        private _comgoNavigationService: comgoNavigationService,
         private http: Http,
         private httpClient: HttpClient
     ) {
@@ -61,13 +61,13 @@ export class FuseNavigationComponent implements OnInit {
         this.orgName = sessionStorage.getItem("organizationName");
         this.regUser = sessionStorage.getItem('regUser')
         // Load the navigation either from the input or from the service
-        this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
+        this.navigation = this.navigation || this._comgoNavigationService.getCurrentNavigation();
 
         // Subscribe to the current navigation changes
-        this._fuseNavigationService.onNavigationChanged
+        this._comgoNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this.navigate = this._fuseNavigationService.getCurrentNavigation();
+                this.navigate = this._comgoNavigationService.getCurrentNavigation();
                 var Organizations = []
                 var children;
                 if (this.allRules != '' && this.allRules != undefined) {

@@ -1,12 +1,12 @@
-// Import Fuse core library
-@import "@fuse/scss/core";
+// Import comgo core library
+@import "@comgo/scss/core";
 
 // -----------------------------------------------------------------------------------------------------
 // @ Multiple material themes example
 // -----------------------------------------------------------------------------------------------------
 
 // Define the Material palettes
-$yellow-theme-primary: mat-palette($mat-fusedark);
+$yellow-theme-primary: mat-palette($mat-comgodark);
 $yellow-theme-accent: mat-palette($mat-yellow, 600, 400, 700);
 $yellow-theme-warn: mat-palette($mat-red);
 
@@ -19,8 +19,8 @@ $yellow-theme: mat-light-theme($yellow-theme-primary, $yellow-theme-accent, $yel
     // Generate the Angular Material theme
     @include angular-material-theme($yellow-theme);
 
-    // Generate the fuse color classes with the new colors...
-    @include generateFuseColorClasses($yellow-theme-primary, $yellow-theme-accent, $yellow-theme-warn);
+    // Generate the comgo color classes with the new colors...
+    @include generatecomgoColorClasses($yellow-theme-primary, $yellow-theme-accent, $yellow-theme-warn);
 }
 
 .pageBackground{

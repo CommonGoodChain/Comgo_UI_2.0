@@ -1,19 +1,19 @@
-<div class="fuse-search-bar" [ngClass]="{'expanded':!collapsed}">
+<div class="comgo-search-bar" [ngClass]="{'expanded':!collapsed}">
 
-    <div class="fuse-search-bar-content" [ngClass]="fuseConfig.layout.toolbar.background">
+    <div class="comgo-search-bar-content" [ngClass]="comgoConfig.layout.toolbar.background">
 
-        <!-- <label for="fuse-search-bar-input">
-            <button mat-icon-button class="fuse-search-bar-expander" aria-label="Expand Search Bar" (click)="expand()"
+        <!-- <label for="comgo-search-bar-input">
+            <button mat-icon-button class="comgo-search-bar-expander" aria-label="Expand Search Bar" (click)="expand()"
                     *ngIf="collapsed">
                 <mat-icon class="s-24 secondary-text">search</mat-icon>
             </button>
            
         </label> -->
 
-        <input id="fuse-search-bar-input" class="ml-24" type="text" placeholder="{{'Search' | translate}}" (input)="search($event)"
+        <input id="comgo-search-bar-input" class="ml-24" type="text" placeholder="{{'Search' | translate}}" (input)="search($event)"
                fxFlex>
 
-        <button mat-icon-button class="fuse-search-bar-collapser" (click)="collapse()"
+        <button mat-icon-button class="comgo-search-bar-collapser" (click)="collapse()"
                 aria-label="Collapse Search Bar">
             <mat-icon class="s-24 secondary-text">close</mat-icon>
         </button>

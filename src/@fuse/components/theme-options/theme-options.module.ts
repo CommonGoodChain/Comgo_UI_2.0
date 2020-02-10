@@ -4,15 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 
-import { FuseDirectivesModule } from '../../directives/directives';
-import { FuseSidebarModule } from '../sidebar/sidebar.module';
-import { FuseMaterialColorPickerModule } from '../material-color-picker/material-color-picker.module';
+import { comgoDirectivesModule } from '../../directives/directives';
+import { comgoSidebarModule } from '../sidebar/sidebar.module';
+import { comgoMaterialColorPickerModule } from '../material-color-picker/material-color-picker.module';
 
-import { FuseThemeOptionsComponent } from './theme-options.component';
+import { comgoThemeOptionsComponent } from './theme-options.component';
 
 @NgModule({
     declarations: [
-        FuseThemeOptionsComponent
+        comgoThemeOptionsComponent
     ],
     imports     : [
         CommonModule,
@@ -30,14 +30,14 @@ import { FuseThemeOptionsComponent } from './theme-options.component';
         MatSelectModule,
         MatSlideToggleModule,
 
-        FuseDirectivesModule,
-        FuseMaterialColorPickerModule,
-        FuseSidebarModule
+        comgoDirectivesModule,
+        comgoMaterialColorPickerModule,
+        comgoSidebarModule
     ],
     exports     : [
-        FuseThemeOptionsComponent
+        comgoThemeOptionsComponent
     ]
 })
-export class FuseThemeOptionsModule
+export class comgoThemeOptionsModule
 {
 }

@@ -3,13 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { MatDividerModule, MatListModule } from '@angular/material';
 
-import { FuseDemoContentComponent } from './demo-content/demo-content.component';
-import { FuseDemoSidebarComponent } from './demo-sidebar/demo-sidebar.component';
+import { comgoDemoContentComponent } from './demo-content/demo-content.component';
+import { comgoDemoSidebarComponent } from './demo-sidebar/demo-sidebar.component';
 
 @NgModule({
     declarations: [
-        FuseDemoContentComponent,
-        FuseDemoSidebarComponent
+        comgoDemoContentComponent,
+        comgoDemoSidebarComponent
     ],
     imports     : [
         RouterModule,
@@ -18,10 +18,10 @@ import { FuseDemoSidebarComponent } from './demo-sidebar/demo-sidebar.component'
         MatListModule
     ],
     exports     : [
-        FuseDemoContentComponent,
-        FuseDemoSidebarComponent
+        comgoDemoContentComponent,
+        comgoDemoSidebarComponent
     ]
 })
-export class FuseDemoModule
+export class comgoDemoModule
 {
 }

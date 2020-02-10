@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoAnimations } from '@comgo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
@@ -10,7 +10,7 @@ import { environment } from '../../../../../environments/environment';
 import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatDialog, MatSnackBarVerticalPosition } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 var introJS = require('intro.js')
@@ -19,7 +19,7 @@ var introJS = require('intro.js')
     selector: 'login-2',
     templateUrl: './login-2.component.html',
     styleUrls: ['./login-2.component.scss'],
-    animations: fuseAnimations
+    animations: comgoAnimations
 })
 export class Login2Component implements OnInit {
     loginForm: FormGroup;
@@ -50,7 +50,7 @@ export class Login2Component implements OnInit {
     public loading1 = false;
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _comgoConfigService: comgoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
         private dialogRef: MatDialog,
@@ -59,10 +59,10 @@ export class Login2Component implements OnInit {
         private _translateService: TranslateService,
         private http: Http,
         private _matSnackBar: MatSnackBar,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService
+        private _comgoTranslationLoaderService: comgoTranslationLoaderService
     ) {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true
@@ -96,7 +96,7 @@ export class Login2Component implements OnInit {
             }
         ];
 
-        this._fuseTranslationLoaderService.loadTranslations(english, spanish);
+        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
     }
 
     ngOnInit(): void {

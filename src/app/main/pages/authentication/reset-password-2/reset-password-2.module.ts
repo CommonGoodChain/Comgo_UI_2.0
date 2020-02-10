@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { ResetPassword2Component } from 'app/main/pages/authentication/reset-password-2/reset-password-2.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ const routes = [
         MatFormFieldModule,
         MatInputModule,
         TranslateModule,
-        FuseSharedModule
+        comgoSharedModule
     ]
 })
 export class ResetPassword2Module

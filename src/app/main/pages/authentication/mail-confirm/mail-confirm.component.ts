@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { comgoConfigService } from '@comgo/services/config.service';
+import { comgoAnimations } from '@comgo/animations';
 
 @Component({
     selector   : 'mail-confirm',
     templateUrl: './mail-confirm.component.html',
     styleUrls  : ['./mail-confirm.component.scss'],
-    animations : fuseAnimations
+    animations : comgoAnimations
 })
 export class MailConfirmComponent
 {
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
+     * @param {comgoConfigService} _comgoConfigService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService
+        private _comgoConfigService: comgoConfigService
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._comgoConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

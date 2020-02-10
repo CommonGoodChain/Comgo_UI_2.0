@@ -5,9 +5,9 @@
 
         <ng-container *ngFor="let item of navigation">
 
-            <fuse-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></fuse-nav-vertical-group>
-            <fuse-nav-vertical-collapsable *ngIf="item.type=='collapse'" [item]="item"></fuse-nav-vertical-collapsable>
-            <fuse-nav-vertical-item *ngIf="item.type=='item'" [item]="item"></fuse-nav-vertical-item>
+            <comgo-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></comgo-nav-vertical-group>
+            <comgo-nav-vertical-collapsable *ngIf="item.type=='collapse'" [item]="item"></comgo-nav-vertical-collapsable>
+            <comgo-nav-vertical-item *ngIf="item.type=='item'" [item]="item"></comgo-nav-vertical-item>
 
         </ng-container>
 
@@ -17,9 +17,9 @@
     <!-- Horizontal Navigation Layout -->
     <ng-container *ngIf="layout === 'horizontal'">
         <ng-container *ngFor="let item of navigation">
-            <fuse-nav-horizontal-collapsable *ngIf="item.type=='group'" [item]="item"></fuse-nav-horizontal-collapsable>
-            <fuse-nav-horizontal-collapsable *ngIf="item.type=='collapse'" [item]="item"></fuse-nav-horizontal-collapsable>
-            <fuse-nav-horizontal-item *ngIf="item.type=='item'" [item]="item"></fuse-nav-horizontal-item>
+            <comgo-nav-horizontal-collapsable *ngIf="item.type=='group'" [item]="item"></comgo-nav-horizontal-collapsable>
+            <comgo-nav-horizontal-collapsable *ngIf="item.type=='collapse'" [item]="item"></comgo-nav-horizontal-collapsable>
+            <comgo-nav-horizontal-item *ngIf="item.type=='item'" [item]="item"></comgo-nav-horizontal-item>
         </ng-container>
     </ng-container>
     <!-- / Horizontal Navigation Layout -->

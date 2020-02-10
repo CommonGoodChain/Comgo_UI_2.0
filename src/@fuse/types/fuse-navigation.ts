@@ -1,4 +1,4 @@
-export interface FuseNavigationItem
+export interface comgoNavigationItem
 {
     id: string;
     title: string;
@@ -18,10 +18,10 @@ export interface FuseNavigationItem
         bg?: string;
         fg?: string;
     };
-    children?: FuseNavigationItem[];
+    children?: comgoNavigationItem[];
 }
 
-export interface FuseNavigation extends FuseNavigationItem
+export interface comgoNavigation extends comgoNavigationItem
 {
-    children?: FuseNavigationItem[];
+    children?: comgoNavigationItem[];
 }

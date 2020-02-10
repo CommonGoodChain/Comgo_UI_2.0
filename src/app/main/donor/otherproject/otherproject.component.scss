@@ -1,4 +1,4 @@
-@import "src/@fuse/scss/fuse";
+@import "src/@comgo/scss/comgo";
 
 :host {
     .example-form {
@@ -136,7 +136,7 @@
                 .card-source {
                     display: none;
                 }
-                .fuse-card:hover {
+                .comgo-card:hover {
                     box-shadow: 0 5px 14px rgba(10, 10, 10, 0.3), 0 0 0 0px rgba(10, 10, 10, 0.1);
                     -webkit-transform: translateY(-5px);
                     transform: translateY(-5px);

@@ -6,7 +6,7 @@ import { ActivityModule } from "./activity/activity.module";
 import { HttpModule } from '@angular/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
 import { MatButtonModule, MatDatepickerModule,MatChipsModule,MatStepperModule ,
    MatFormFieldModule, MatIconModule, MatInputModule,
     MatPaginatorModule, MatRippleModule, MatSelectModule,
@@ -37,7 +37,7 @@ import { LoadingModule } from 'ngx-loading';
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
-    FuseWidgetModule,
+    comgoWidgetModule,
     AgmCoreModule,
     NgxChartsModule,
     MatStepperModule ,

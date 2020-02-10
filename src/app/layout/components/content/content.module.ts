@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { comgoSharedModule } from '@comgo/shared.module';
 
 import { ContentComponent } from './content.component';
 
@@ -11,7 +11,7 @@ import { ContentComponent } from './content.component';
     ],
     imports     : [
         RouterModule,
-        FuseSharedModule,
+        comgoSharedModule,
     ],
     exports: [
         ContentComponent

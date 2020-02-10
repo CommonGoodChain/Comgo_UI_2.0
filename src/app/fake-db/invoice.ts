@@ -2,11 +2,11 @@ export class InvoiceFakeDb
 {
     public static invoice = {
         'from'    : {
-            'title'  : 'Fuse Inc.',
+            'title'  : 'comgo Inc.',
             'address': '2810 Country Club Road Cranford, NJ 07016',
             'phone'  : '+66 123 455 87',
-            'email'  : 'hello@fuseinc.com',
-            'website': 'www.fuseinc.com'
+            'email'  : 'hello@comgoinc.com',
+            'website': 'www.comgoinc.com'
         },
         'client'  : {
             'title'  : 'John Doe',

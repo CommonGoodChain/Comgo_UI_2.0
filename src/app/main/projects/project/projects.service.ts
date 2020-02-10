@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core'
 import { Http } from '@angular/http';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
 import { NavigationEnd } from '@angular/router';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class Projects {
     httpClient: HttpClient
     _matSnackBar: MatSnackBar
     dialog: MatDialog
-    _fuseTranslationLoaderService: FuseTranslationLoaderService
+    _comgoTranslationLoaderService: comgoTranslationLoaderService
     constructor(private router: Router){
         // override the route reuse strategy
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
