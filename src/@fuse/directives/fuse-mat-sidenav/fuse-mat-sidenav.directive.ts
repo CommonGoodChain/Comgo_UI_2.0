@@ -4,18 +4,18 @@ import { ObservableMedia } from '@angular/flex-layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoMatchMediaService } from '../../services/match-media.service';
-import { comgoMatSidenavHelperService } from './comgo-mat-sidenav.service';
+import { ComGoMatchMediaService } from '../../services/match-media.service';
+import { ComGoMatSidenavHelperService } from './ComGo-mat-sidenav.service';
 
 @Directive({
-    selector: '[comgoMatSidenavHelper]'
+    selector: '[ComGoMatSidenavHelper]'
 })
-export class comgoMatSidenavHelperDirective implements OnInit, OnDestroy
+export class ComGoMatSidenavHelperDirective implements OnInit, OnDestroy
 {
     @HostBinding('class.mat-is-locked-open')
     isLockedOpen: boolean;
 
-    @Input('comgoMatSidenavHelper')
+    @Input('ComGoMatSidenavHelper')
     id: string;
 
     @Input('mat-is-locked-open')
@@ -27,14 +27,14 @@ export class comgoMatSidenavHelperDirective implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {comgoMatchMediaService} _comgoMatchMediaService
-     * @param {comgoMatSidenavHelperService} _comgoMatSidenavHelperService
+     * @param {ComGoMatchMediaService} _ComGoMatchMediaService
+     * @param {ComGoMatSidenavHelperService} _ComGoMatSidenavHelperService
      * @param {MatSidenav} _matSidenav
      * @param {ObservableMedia} _observableMedia
      */
     constructor(
-        private _comgoMatchMediaService: comgoMatchMediaService,
-        private _comgoMatSidenavHelperService: comgoMatSidenavHelperService,
+        private _ComGoMatchMediaService: ComGoMatchMediaService,
+        private _ComGoMatSidenavHelperService: ComGoMatSidenavHelperService,
         private _matSidenav: MatSidenav,
         private _observableMedia: ObservableMedia
     )
@@ -56,7 +56,7 @@ export class comgoMatSidenavHelperDirective implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Register the sidenav to the service
-        this._comgoMatSidenavHelperService.setSidenav(this.id, this._matSidenav);
+        this._ComGoMatSidenavHelperService.setSidenav(this.id, this._matSidenav);
 
         if ( this._observableMedia.isActive(this.matIsLockedOpenBreakpoint) )
         {
@@ -71,7 +71,7 @@ export class comgoMatSidenavHelperDirective implements OnInit, OnDestroy
             this._matSidenav.toggle(false);
         }
 
-        this._comgoMatchMediaService.onMediaChange
+        this._ComGoMatchMediaService.onMediaChange
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 if ( this._observableMedia.isActive(this.matIsLockedOpenBreakpoint) )
@@ -101,20 +101,20 @@ export class comgoMatSidenavHelperDirective implements OnInit, OnDestroy
 }
 
 @Directive({
-    selector: '[comgoMatSidenavToggler]'
+    selector: '[ComGoMatSidenavToggler]'
 })
-export class comgoMatSidenavTogglerDirective
+export class ComGoMatSidenavTogglerDirective
 {
-    @Input('comgoMatSidenavToggler')
+    @Input('ComGoMatSidenavToggler')
     id;
 
     /**
      * Constructor
      *
-     * @param {comgoMatSidenavHelperService} _comgoMatSidenavHelperService
+     * @param {ComGoMatSidenavHelperService} _ComGoMatSidenavHelperService
      */
     constructor(
-        private _comgoMatSidenavHelperService: comgoMatSidenavHelperService)
+        private _ComGoMatSidenavHelperService: ComGoMatSidenavHelperService)
     {
     }
 
@@ -128,6 +128,6 @@ export class comgoMatSidenavTogglerDirective
     @HostListener('click')
     onClick()
     {
-        this._comgoMatSidenavHelperService.getSidenav(this.id).toggle();
+        this._ComGoMatSidenavHelperService.getSidenav(this.id).toggle();
     }
 }

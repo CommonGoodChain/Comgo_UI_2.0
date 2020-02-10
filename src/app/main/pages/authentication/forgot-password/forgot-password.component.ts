@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { comgoConfigService } from '@comgo/services/config.service';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ComGoAnimations } from '@ComGo/animations';
 
 @Component({
     selector   : 'forgot-password',
     templateUrl: './forgot-password.component.html',
     styleUrls  : ['./forgot-password.component.scss'],
-    animations : comgoAnimations
+    animations : ComGoAnimations
 })
 export class ForgotPasswordComponent implements OnInit
 {
@@ -17,16 +17,16 @@ export class ForgotPasswordComponent implements OnInit
     /**
      * Constructor
      *
-     * @param {comgoConfigService} _comgoConfigService
+     * @param {ComGoConfigService} _ComGoConfigService
      * @param {FormBuilder} _formBuilder
      */
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder
     )
     {
         // Configure the layout
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router } from '@angular/router';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Response,Http,Headers } from '@angular/http';
@@ -10,12 +10,12 @@ import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { TranslateService }from '@ngx-translate/core';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 @Component({
   selector: 'app-projectuploads',
   templateUrl: './projectuploads.component.html',
   styleUrls: ['./projectuploads.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class ProjectuploadsComponent implements OnInit {
   dataSource
@@ -41,7 +41,7 @@ export class ProjectuploadsComponent implements OnInit {
    */
   horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private _matSnackBar: MatSnackBar,
     private router: Router,
     public dialog: MatDialog,
@@ -49,7 +49,7 @@ export class ProjectuploadsComponent implements OnInit {
     private http: Http,
     private _translateService:TranslateService
   ) {
-    this._comgoConfigService.config = {
+    this._ComGoConfigService.config = {
       layout: {
           footer: {
               hidden: true

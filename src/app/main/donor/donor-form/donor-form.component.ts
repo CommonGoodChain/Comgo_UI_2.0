@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { environment } from '../../../../environments/environment';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ declare let paypal: any;
   selector: 'app-donor-form',
   templateUrl: './donor-form.component.html',
   styleUrls: ['./donor-form.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 
 export class DonorFormComponent implements OnInit {
@@ -66,9 +66,9 @@ export class DonorFormComponent implements OnInit {
     private httpClient: HttpClient,
     public dialog: MatDialog,
     private _translateService: TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
   ) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
   }
 
   /** * @author:Akshay * @description: Open success snak bar */

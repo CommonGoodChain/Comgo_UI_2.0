@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 
 import { LockComponent } from 'app/main/pages/authentication/lock/lock.component';
 
@@ -25,7 +25,7 @@ const routes = [
         MatIconModule,
         MatInputModule,
 
-        comgoSharedModule
+        ComGoSharedModule
     ]
 })
 export class LockModule

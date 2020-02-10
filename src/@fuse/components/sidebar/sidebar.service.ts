@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { comgoSidebarComponent } from './sidebar.component';
+import { ComGoSidebarComponent } from './sidebar.component';
 
 @Injectable({
     providedIn: 'root'
 })
-export class comgoSidebarService
+export class ComGoSidebarService
 {
     // Private
-    private _registry: { [key: string]: comgoSidebarComponent } = {};
+    private _registry: { [key: string]: ComGoSidebarComponent } = {};
 
     /**
      * Constructor
@@ -59,9 +59,9 @@ export class comgoSidebarService
      * Return the sidebar with the given key
      *
      * @param key
-     * @returns {comgoSidebarComponent}
+     * @returns {ComGoSidebarComponent}
      */
-    getSidebar(key): comgoSidebarComponent
+    getSidebar(key): ComGoSidebarComponent
     {
         // Check if the sidebar exists
         if ( !this._registry[key] )

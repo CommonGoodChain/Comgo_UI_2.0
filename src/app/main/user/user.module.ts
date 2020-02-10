@@ -7,11 +7,11 @@ import {
   MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
   MatCheckboxModule,MatExpansionModule
 } from '@angular/material';
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 import { NgxMatSelectSearchModule } from 'app/main/mat-select-search/ngx-mat-select-search.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
+import { ComGoWidgetModule } from '@ComGo/components/widget/widget.module';
 import { HttpModule } from '@angular/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
@@ -79,7 +79,7 @@ component: RegisterComponent
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    comgoSharedModule,
+    ComGoSharedModule,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -100,8 +100,8 @@ component: RegisterComponent
     MatDialogModule,
     MatExpansionModule,
     MatRadioModule,
-    comgoSharedModule,
-    comgoWidgetModule,
+    ComGoSharedModule,
+    ComGoWidgetModule,
 
     MatToolbarModule,
     MatStepperModule,

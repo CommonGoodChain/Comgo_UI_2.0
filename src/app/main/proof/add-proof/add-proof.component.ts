@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http, Headers } from '@angular/http';
@@ -9,18 +9,18 @@ import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { environment } from '../../../../environments/environment';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import * as $ from 'jquery';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 
 @Component({
   selector: 'app-add-proof',
   templateUrl: './add-proof.component.html',
   styleUrls: ['./add-proof.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class AddProofComponent implements OnInit {
   pageType: string;
@@ -85,20 +85,20 @@ export class AddProofComponent implements OnInit {
   constructor(
     // private _ecommerceProductService: EcommerceProductService,
     private _formBuilder: FormBuilder,
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private _location: Location,
     private _matSnackBar: MatSnackBar,
     private routerData: ActivatedRoute,
     private router: Router,
     private httpClient: HttpClient,
     private http: Http,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
     private _translateService: TranslateService,
     public dialog: MatDialog
 
   ) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
-    this._comgoConfigService.config = {
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoConfigService.config = {
       layout: {
           footer: {
               hidden: true

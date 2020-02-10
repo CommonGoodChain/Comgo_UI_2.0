@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { comgoNavigationService } from '@comgo/components/navigation/navigation.service';
-import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
+import { ComGoNavigationService } from '@ComGo/components/navigation/navigation.service';
+import { ComGoSidebarService } from '@ComGo/components/sidebar/sidebar.service';
 
 @Component({
     selector     : 'navbar-horizontal-style-1',
@@ -21,12 +21,12 @@ export class NavbarHorizontalStyle1Component implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {comgoNavigationService} _comgoNavigationService
-     * @param {comgoSidebarService} _comgoSidebarService
+     * @param {ComGoNavigationService} _ComGoNavigationService
+     * @param {ComGoSidebarService} _ComGoSidebarService
      */
     constructor(
-        private _comgoNavigationService: comgoNavigationService,
-        private _comgoSidebarService: comgoSidebarService
+        private _ComGoNavigationService: ComGoNavigationService,
+        private _ComGoSidebarService: ComGoSidebarService
     )
     {
         // Set the private defaults
@@ -43,13 +43,13 @@ export class NavbarHorizontalStyle1Component implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Get current navigation
-        this._comgoNavigationService.onNavigationChanged
+        this._ComGoNavigationService.onNavigationChanged
             .pipe(
                 filter(value => value !== null),
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe(() => {
-                this.navigation = this._comgoNavigationService.getCurrentNavigation();
+                this.navigation = this._ComGoNavigationService.getCurrentNavigation();
             });
     }
 

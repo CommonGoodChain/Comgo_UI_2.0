@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -8,17 +8,17 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component'
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 
 @Component({
   selector: 'app-addmilestone',
   templateUrl: './addmilestone.component.html',
   styleUrls: ['./addmilestone.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 
 
 })
@@ -50,18 +50,18 @@ export class AddmilestoneComponent implements OnInit {
    * @param {MatSnackBar} _matSnackBar
    */
   constructor(
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private _formBuilder: FormBuilder,
     private _matSnackBar: MatSnackBar,
     private routerData: ActivatedRoute,
     private router: Router,
     private httpClient : HttpClient,
     public dialog: MatDialog,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
     private _translateService: TranslateService
   ) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
-    this._comgoConfigService.config = {
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoConfigService.config = {
       layout: {
           footer: {
               hidden: true

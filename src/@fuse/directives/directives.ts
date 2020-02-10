@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 
-import { comgoIfOnDomDirective } from './comgo-if-on-dom/comgo-if-on-dom.directive';
-import { comgoInnerScrollDirective } from './comgo-inner-scroll/comgo-inner-scroll.directive';
-import { comgoPerfectScrollbarDirective } from './comgo-perfect-scrollbar/comgo-perfect-scrollbar.directive';
-import { comgoMatSidenavHelperDirective, comgoMatSidenavTogglerDirective } from './comgo-mat-sidenav/comgo-mat-sidenav.directive';
+import { ComGoIfOnDomDirective } from './ComGo-if-on-dom/ComGo-if-on-dom.directive';
+import { ComGoInnerScrollDirective } from './ComGo-inner-scroll/ComGo-inner-scroll.directive';
+import { ComGoPerfectScrollbarDirective } from './ComGo-perfect-scrollbar/ComGo-perfect-scrollbar.directive';
+import { ComGoMatSidenavHelperDirective, ComGoMatSidenavTogglerDirective } from './ComGo-mat-sidenav/ComGo-mat-sidenav.directive';
 
 @NgModule({
     declarations: [
-        comgoIfOnDomDirective,
-        comgoInnerScrollDirective,
-        comgoMatSidenavHelperDirective,
-        comgoMatSidenavTogglerDirective,
-        comgoPerfectScrollbarDirective
+        ComGoIfOnDomDirective,
+        ComGoInnerScrollDirective,
+        ComGoMatSidenavHelperDirective,
+        ComGoMatSidenavTogglerDirective,
+        ComGoPerfectScrollbarDirective
     ],
     imports     : [],
     exports     : [
-        comgoIfOnDomDirective,
-        comgoInnerScrollDirective,
-        comgoMatSidenavHelperDirective,
-        comgoMatSidenavTogglerDirective,
-        comgoPerfectScrollbarDirective
+        ComGoIfOnDomDirective,
+        ComGoInnerScrollDirective,
+        ComGoMatSidenavHelperDirective,
+        ComGoMatSidenavTogglerDirective,
+        ComGoPerfectScrollbarDirective
     ]
 })
-export class comgoDirectivesModule
+export class ComGoDirectivesModule
 {
 }

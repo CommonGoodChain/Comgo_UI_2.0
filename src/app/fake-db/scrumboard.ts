@@ -6,7 +6,7 @@ export class ScrumboardFakeDb
             'name'    : 'ACME Frontend Application',
             'uri'     : 'acme-frontend-application',
             'settings': {
-                'color'          : 'comgo-dark',
+                'color'          : 'ComGo-dark',
                 'subscribed'     : false,
                 'cardCoverImages': true
             },

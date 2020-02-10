@@ -48,7 +48,7 @@
         </div>
         <!-- <div class="content-card mat-white-bg" *ngIf="milestoneAll.length !== 0"> -->
             <div class="mat-elevation-z8">
-            <mat-table *ngIf="milestoneAll.length !== 0" class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" comgoPerfectScrollbar>
+            <mat-table *ngIf="milestoneAll.length !== 0" class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" ComGoPerfectScrollbar>
                 <ng-container matColumnDef="Milestone">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Milestone' | translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let data">

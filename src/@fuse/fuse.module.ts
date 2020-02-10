@@ -1,25 +1,25 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { comgo_CONFIG } from './services/config.service';
+import { ComGo_CONFIG } from './services/config.service';
 
 @NgModule()
-export class comgoModule
+export class ComGoModule
 {
-    constructor(@Optional() @SkipSelf() parentModule: comgoModule)
+    constructor(@Optional() @SkipSelf() parentModule: ComGoModule)
     {
         if ( parentModule )
         {
-            throw new Error('comgoModule is already loaded. Import it in the AppModule only!');
+            throw new Error('ComGoModule is already loaded. Import it in the AppModule only!');
         }
     }
 
     static forRoot(config): ModuleWithProviders
     {
         return {
-            ngModule : comgoModule,
+            ngModule : ComGoModule,
             providers: [
                 {
-                    provide : comgo_CONFIG,
+                    provide : ComGo_CONFIG,
                     useValue: config
                 }
             ]

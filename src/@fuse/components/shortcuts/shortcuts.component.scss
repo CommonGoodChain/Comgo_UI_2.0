@@ -1,10 +1,10 @@
-@import 'src/@comgo/scss/comgo';
+@import 'src/@ComGo/scss/ComGo';
 
 :host {
 
     @include media-breakpoint-down('sm') {
 
-        #comgo-shortcuts {
+        #ComGo-shortcuts {
 
             &.show-mobile-panel {
                 position: absolute;

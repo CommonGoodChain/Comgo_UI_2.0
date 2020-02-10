@@ -3,14 +3,14 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
-import { comgoConfigService } from '@comgo/services/config.service';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ComGoAnimations } from '@ComGo/animations';
 
 @Component({
     selector   : 'register',
     templateUrl: './register.component.html',
     styleUrls  : ['./register.component.scss'],
-    animations : comgoAnimations
+    animations : ComGoAnimations
 })
 export class RegisterComponent implements OnInit, OnDestroy
 {
@@ -20,12 +20,12 @@ export class RegisterComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder
     )
     {
         // Configure the layout
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

@@ -2,18 +2,18 @@ import { Component, HostBinding, HostListener, Input, OnDestroy, OnInit } from '
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoAnimations } from '../../../../animations';
-import { comgoConfigService } from '../../../../services/config.service';
+import { ComGoAnimations } from '../../../../animations';
+import { ComGoConfigService } from '../../../../services/config.service';
 
 @Component({
-    selector   : 'comgo-nav-horizontal-collapsable',
+    selector   : 'ComGo-nav-horizontal-collapsable',
     templateUrl: './collapsable.component.html',
     styleUrls  : ['./collapsable.component.scss'],
-    animations : comgoAnimations
+    animations : ComGoAnimations
 })
-export class comgoNavHorizontalCollapsableComponent implements OnInit, OnDestroy
+export class ComGoNavHorizontalCollapsableComponent implements OnInit, OnDestroy
 {
-    comgoConfig: any;
+    ComGoConfig: any;
     isOpen = false;
 
     @HostBinding('class')
@@ -26,7 +26,7 @@ export class comgoNavHorizontalCollapsableComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _comgoConfigService: comgoConfigService
+        private _ComGoConfigService: ComGoConfigService
     )
     {
         // Set the private defaults
@@ -43,11 +43,11 @@ export class comgoNavHorizontalCollapsableComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (config) => {
-                    this.comgoConfig = config;
+                    this.ComGoConfig = config;
                 }
             );
     }

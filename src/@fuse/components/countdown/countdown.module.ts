@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 
-import { comgoCountdownComponent } from './countdown.component';
+import { ComGoCountdownComponent } from './countdown.component';
 
 @NgModule({
     declarations: [
-        comgoCountdownComponent
+        ComGoCountdownComponent
     ],
     exports: [
-        comgoCountdownComponent
+        ComGoCountdownComponent
     ],
 })
-export class comgoCountdownModule
+export class ComGoCountdownModule
 {
 }

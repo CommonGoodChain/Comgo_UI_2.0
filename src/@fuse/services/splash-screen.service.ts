@@ -6,7 +6,7 @@ import { NavigationEnd, Router } from '@angular/router';
 @Injectable({
     providedIn: 'root'
 })
-export class comgoSplashScreenService
+export class ComGoSplashScreenService
 {
     splashScreenEl: any;
     player: AnimationPlayer;
@@ -40,7 +40,7 @@ export class comgoSplashScreenService
     private _init(): void
     {
         // Get the splash screen element
-        this.splashScreenEl = this._document.body.querySelector('#comgo-splash-screen');
+        this.splashScreenEl = this._document.body.querySelector('#ComGo-splash-screen');
 
         // If the splash screen element exists...
         if ( this.splashScreenEl )

@@ -13,7 +13,7 @@ fs.readFile(f, 'utf8', function (err,data) {
 });
 // serve":{
 // "options": {
-//   "browserTarget": "comgo:build",
+//   "browserTarget": "ComGo:build",
 //   "ssl": true,
 //   "sslKey": "/home/dell/Desktop/SCMDeploy/ssl.key",
 //   "sslCert": "/home/dell/Desktop/SCMDeploy/ssl.crt"

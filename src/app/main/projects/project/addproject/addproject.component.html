@@ -176,7 +176,7 @@
 
                     </mat-tab>
                     <mat-tab *ngIf="userRules!= undefined && userRules!= '' && userRules.update_Beneficiaries" label="{{'Beneficiaries' | translate}}">
-                        <div class="tab-content" comgoPerfectScrollbar>
+                        <div class="tab-content" ComGoPerfectScrollbar>
                             <h2>{{'Add Beneficiaries' | translate}}</h2>
                         </div>
                         <div formArrayName="beneficiaries" 
@@ -211,7 +211,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="{{'SDG' | translate}}">
-                        <div class="tab-content" comgoPerfectScrollbar>
+                        <div class="tab-content" ComGoPerfectScrollbar>
                             <h2 *ngIf="selectedSDGs.length==0" fxLayoutAlign="center center" style="color:gray">{{'Click on SDG icons to select / deselect the Sustainable Development Goals' | translate}}</h2>
                             <h2 *ngIf="selectedSDGs.length>0">{{'Sustainable Developement Goals' | translate}}</h2>
 
@@ -244,7 +244,7 @@
                     </mat-tab>
                     <mat-tab label="{{'Documents/Images' | translate}}">
                         <div id="photos-videos" class="p-24">
-                            <div class="tab-content p-24" comgoPerfectScrollbar>
+                            <div class="tab-content p-24" ComGoPerfectScrollbar>
                                 <div fxFlex="100">
                                     <div fxLayout="row wrap" fxFlex="50" fxLayoutAlign="start start">
                                         <div *ngIf="imgUploaded==0">
@@ -290,7 +290,7 @@
 
                     </mat-tab>
                     <mat-tab label="Map">
-                        <div class="tab-content" comgoPerfectScrollbar>
+                        <div class="tab-content" ComGoPerfectScrollbar>
                             <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="true" [fullscreenControl]="true" (mapClick)="mapClicked($event)">
 
                                 <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
@@ -475,7 +475,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab *ngIf="userRules!= undefined && userRules!= '' && userRules.add_Beneficiaries" label="{{'Beneficiaries' | translate}}">
-                        <div class="tab-content" comgoPerfectScrollbar>
+                        <div class="tab-content" ComGoPerfectScrollbar>
                             <h2>{{'Add Beneficiaries' | translate}}</h2>
                         </div>
                         <div formArrayName="beneficiaries" 
@@ -510,7 +510,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="{{'SDG' | translate}}">
-                        <div class="tab-content" comgoPerfectScrollbar>
+                        <div class="tab-content" ComGoPerfectScrollbar>
                             <h2 *ngIf="selectedSDGs.length==0" fxLayoutAlign="center center" style="color:gray">{{'Click on SDG icons to select / deselect the Sustainable Development Goals' | translate}}</h2>
                             <h2 *ngIf="selectedSDGs.length>0">{{'Selected Sustainable Developement Goals' | translate}}</h2>
 
@@ -544,7 +544,7 @@
 
                         <div id="photos-videos" class="p-24">
 
-                            <div class="tab-content p-24" comgoPerfectScrollbar>
+                            <div class="tab-content p-24" ComGoPerfectScrollbar>
                                 <div fxFlex="100">
                                     <div fxLayout="row wrap" fxFlex="50" fxLayoutAlign="start start">
                                         <div *ngIf="imgUploaded==0">
@@ -634,7 +634,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Map">
-                        <div class="tab-content" comgoPerfectScrollbar>
+                        <div class="tab-content" ComGoPerfectScrollbar>
                             <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="true" [fullscreenControl]="true" (mapClick)="mapClicked($event)">
 
                                 <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>

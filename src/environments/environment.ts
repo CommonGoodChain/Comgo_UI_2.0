@@ -13,7 +13,7 @@ export const environment = {
     regUrl: angularIp,
     imageUrl: serverIp + "/img/project",
     profileImageUrl: serverIp + "/getProfileImage/",
-    foundation: "ComgoMarketUI",
+    foundation: "ComGoMarketUI",
     createdBy: "kuldeep",
     defaultImage: "this.src=" + serverIp + "/img/project/DefaultImage/default.jpg'",
     forgetPasswordUrl: angularIp + "/pages/auth/forgot-password-3",

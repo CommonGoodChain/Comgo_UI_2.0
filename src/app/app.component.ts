@@ -5,11 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoConfigService } from '@comgo/services/config.service';
-import { comgoNavigationService } from '@comgo/components/navigation/navigation.service';
-import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
-import { comgoSplashScreenService } from '@comgo/services/splash-screen.service';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ComGoNavigationService } from '@ComGo/components/navigation/navigation.service';
+import { ComGoSidebarService } from '@ComGo/components/sidebar/sidebar.service';
+import { ComGoSplashScreenService } from '@ComGo/services/splash-screen.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 
 import { navigation } from './navigation/navigation';
 import { locale as navigationEnglish } from './navigation/i18n/en';
@@ -25,7 +25,7 @@ import {HostListener,Directive,HostBinding,Input} from '@angular/core';
 })
 export class AppComponent implements OnInit, OnDestroy
 {
-    comgoConfig: any;
+    ComGoConfig: any;
     navigation: any;
     token;
     // Private
@@ -35,21 +35,21 @@ export class AppComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {DOCUMENT} document
-     * @param {comgoConfigService} _comgoConfigService
-     * @param {comgoNavigationService} _comgoNavigationService
-     * @param {comgoSidebarService} _comgoSidebarService
-     * @param {comgoSplashScreenService} _comgoSplashScreenService
-     * @param {comgoTranslationLoaderService} _comgoTranslationLoaderService
+     * @param {ComGoConfigService} _ComGoConfigService
+     * @param {ComGoNavigationService} _ComGoNavigationService
+     * @param {ComGoSidebarService} _ComGoSidebarService
+     * @param {ComGoSplashScreenService} _ComGoSplashScreenService
+     * @param {ComGoTranslationLoaderService} _ComGoTranslationLoaderService
      * @param {Platform} _platform
      * @param {TranslateService} _translateService
      */
     constructor(
         @Inject(DOCUMENT) private document: any,
-        private _comgoConfigService: comgoConfigService,
-        private _comgoNavigationService: comgoNavigationService,
-        private _comgoSidebarService: comgoSidebarService,
-        private _comgoSplashScreenService: comgoSplashScreenService,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+        private _ComGoConfigService: ComGoConfigService,
+        private _ComGoNavigationService: ComGoNavigationService,
+        private _ComGoSidebarService: ComGoSidebarService,
+        private _ComGoSplashScreenService: ComGoSplashScreenService,
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform
     )
@@ -58,10 +58,10 @@ export class AppComponent implements OnInit, OnDestroy
         this.navigation = navigation;
 
         // Register the navigation to the service
-        this._comgoNavigationService.register('main', this.navigation);
+        this._ComGoNavigationService.register('main', this.navigation);
 
         // Set the main navigation as our current navigation
-        this._comgoNavigationService.setCurrentNavigation('main');
+        this._ComGoNavigationService.setCurrentNavigation('main');
 
         // Add languages
         this._translateService.addLangs(['en', 'tr']);
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy
         this._translateService.setDefaultLang('en');
 
         // Set the navigation translations
-        this._comgoTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
+        this._ComGoTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
 
         // Use a language
         this._translateService.use('en');
@@ -96,12 +96,12 @@ export class AppComponent implements OnInit, OnDestroy
     {
         this.token = sessionStorage.getItem('token')
         // Subscribe to config changes
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                this.comgoConfig = config;
+                this.ComGoConfig = config;
 
-                if ( this.comgoConfig.layout.width === 'boxed' )
+                if ( this.ComGoConfig.layout.width === 'boxed' )
                 {
                     this.document.body.classList.add('boxed');
                 }
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit, OnDestroy
      */
     toggleSidebarOpen(key): void
     {
-        this._comgoSidebarService.getSidebar(key).toggleOpen();
+        this._ComGoSidebarService.getSidebar(key).toggleOpen();
     }
 
     @HostListener('document:keypress', ['$event'])

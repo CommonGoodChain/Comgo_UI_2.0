@@ -1,8 +1,8 @@
-@import "src/@comgo/scss/comgo";
+@import "src/@ComGo/scss/ComGo";
 
-comgo-sidebar {
+ComGo-sidebar {
 
-    &.navbar-comgo-sidebar {
+    &.navbar-ComGo-sidebar {
         overflow: hidden;
 
         &.folded:not(.unfolded) {

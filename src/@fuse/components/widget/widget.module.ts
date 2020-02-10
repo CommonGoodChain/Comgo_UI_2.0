@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 
-import { comgoWidgetComponent } from './widget.component';
-import { comgoWidgetToggleDirective } from './widget-toggle.directive';
+import { ComGoWidgetComponent } from './widget.component';
+import { ComGoWidgetToggleDirective } from './widget-toggle.directive';
 
 @NgModule({
     declarations: [
-        comgoWidgetComponent,
-        comgoWidgetToggleDirective
+        ComGoWidgetComponent,
+        ComGoWidgetToggleDirective
     ],
     exports     : [
-        comgoWidgetComponent,
-        comgoWidgetToggleDirective
+        ComGoWidgetComponent,
+        ComGoWidgetToggleDirective
     ],
 })
-export class comgoWidgetModule
+export class ComGoWidgetModule
 {
 }

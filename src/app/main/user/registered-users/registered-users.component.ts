@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { Subject } from 'rxjs';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
@@ -10,23 +10,23 @@ import { environment } from '../../../../environments/environment';
 import { Sort } from '@angular/material';
 import { MatSnackBar, MatTableDataSource, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component'
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 var introJS = require('intro.js')
 
 @Component({
   selector: 'app-registered-users',
   templateUrl: './registered-users.component.html',
   styleUrls: ['./registered-users.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class RegisteredUsersComponent implements OnInit {
     urlPort = environment.urlPort;
     foundation = environment.foundation;
-    dataOcomgors: Array<any> = [];
+    dataOComGors: Array<any> = [];
     role;
     userType;
     dataSource;
@@ -56,21 +56,21 @@ export class RegisteredUsersComponent implements OnInit {
    */
 
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private router: Router,
         private http: Http,
         private httpCLient: HttpClient,
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
         private _translateService: TranslateService
     ) {
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
         // this.product = new Product();
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true
@@ -153,8 +153,8 @@ export class RegisteredUsersComponent implements OnInit {
                     this.sessionSnackBar(err["_body"]);
                     this.router.navigate(['/pages/auth/login-2']);
                 }
-                this.dataOcomgors = [];
-                this.dataSource = new MatTableDataSource(this.dataOcomgors);
+                this.dataOComGors = [];
+                this.dataSource = new MatTableDataSource(this.dataOComGors);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
                 return Observable.throw(err)
@@ -164,8 +164,8 @@ export class RegisteredUsersComponent implements OnInit {
                 // this.router.navigate(['/components/collections'])
                 var users = [];
                 this.userDetails = res;
-                this.dataOcomgors = this.userDetails;
-                this.dataSource = new MatTableDataSource(this.dataOcomgors);
+                this.dataOComGors = this.userDetails;
+                this.dataSource = new MatTableDataSource(this.dataOComGors);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
             })
@@ -211,10 +211,10 @@ export class RegisteredUsersComponent implements OnInit {
     sortData(sort: Sort) {
         const data = this.userDetails.slice();
         if (!sort.active || sort.direction == '') {
-            this.dataOcomgors = data;
+            this.dataOComGors = data;
             return;
         }
-        this.dataOcomgors = data.sort((a, b) => {
+        this.dataOComGors = data.sort((a, b) => {
             var isAsc = sort.direction == 'asc';
             switch (sort.active) {
                 case 'firstName': return compare(a.firstName, b.firstName, isAsc);

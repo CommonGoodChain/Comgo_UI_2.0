@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Response, Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { DialogElementsExampleDialog } from '../../../../dialog/dialog.component';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Rx';
 import { saveAs } from 'file-saver';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
 
@@ -18,7 +18,7 @@ import { locale as spanish } from '../../../../../layout/i18n/tr';
     selector: 'profile-photos-videos',
     templateUrl: './photos-videos.component.html',
     styleUrls: ['./photos-videos.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class ProfilePhotosVideosComponent implements OnInit {
     photosVideos: any;
@@ -48,9 +48,9 @@ export class ProfilePhotosVideosComponent implements OnInit {
         public dialog: MatDialog,
         private router: Router,
         private _translateService: TranslateService,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
     ) {
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
 
     }
 

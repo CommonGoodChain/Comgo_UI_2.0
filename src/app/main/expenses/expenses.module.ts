@@ -6,12 +6,12 @@ import {
   MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
   MatCheckboxModule
 } from '@angular/material';
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 import { ViewexpensesComponent } from './viewexpenses/viewexpenses.component';
 import { AddexpenseComponent } from './addexpense/addexpense.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
+import { ComGoWidgetModule } from '@ComGo/components/widget/widget.module';
 import { HttpModule } from '@angular/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
@@ -33,7 +33,7 @@ const routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    comgoSharedModule,
+    ComGoSharedModule,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -51,8 +51,8 @@ const routes = [
     NgxChartsModule,
     MatDialogModule,
     TranslateModule,
-    comgoSharedModule,
-    comgoWidgetModule,
+    ComGoSharedModule,
+    ComGoWidgetModule,
 
     MatToolbarModule,
     MatStepperModule,

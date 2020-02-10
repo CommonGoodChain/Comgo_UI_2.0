@@ -39,7 +39,7 @@ $matPalettes: (
     blue-grey: $mat-blue-grey,
     white: $mat-white,
     black: $mat-black,
-    comgo-dark: $mat-comgodark
+    ComGo-dark: $mat-ComGodark
 );
 
 // Material color hues list
@@ -128,7 +128,7 @@ $matHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A70
 @mixin generateMaterialElementColors($classes, $contrast) {
 
     // If the contrast color is light...
-    $comgoForeground: (
+    $ComGoForeground: (
         base: white,
         text: white,
         hint-text: rgba(white, 0.5),
@@ -138,7 +138,7 @@ $matHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A70
     // If the contrast color is dark...
     @if ($contrast == 'dark') {
 
-        $comgoForeground: (
+        $ComGoForeground: (
             base: black,
             hint-text: rgba(black, 0.38),
             divider: rgba(black, 0.12),
@@ -150,32 +150,32 @@ $matHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A70
 
         // Native Input
         input[type="text"] {
-            color: map_get($comgoForeground, base);
+            color: map_get($ComGoForeground, base);
         }
 
         // Input
         .mat-form-field-label {
-            color: map_get($comgoForeground, hint-text);
+            color: map_get($ComGoForeground, hint-text);
         }
 
         .mat-form-field-underline {
-            background-color: map_get($comgoForeground, divider);
+            background-color: map_get($ComGoForeground, divider);
         }
 
         // Select
         .mat-select-trigger,
         .mat-select-arrow {
-            color: map_get($comgoForeground, hint-text);
+            color: map_get($ComGoForeground, hint-text);
         }
 
         .mat-select-underline {
-            background-color: map_get($comgoForeground, divider);
+            background-color: map_get($ComGoForeground, divider);
         }
 
         .mat-select-disabled .mat-select-value,
         .mat-select-arrow,
         .mat-select-trigger {
-            color: map_get($comgoForeground, hint-text);
+            color: map_get($ComGoForeground, hint-text);
         }
 
         .mat-select-content,
@@ -184,7 +184,7 @@ $matHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A70
         }
 
         .mat-select-value {
-            color: map_get($comgoForeground, text);
+            color: map_get($ComGoForeground, text);
         }
     }
 }
@@ -231,7 +231,7 @@ $matHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A70
     }
 }
 
-@mixin generatecomgoColorClasses($primary, $accent, $warn) {
+@mixin generateComGoColorClasses($primary, $accent, $warn) {
 
     $palettes: (
         primary: $primary,

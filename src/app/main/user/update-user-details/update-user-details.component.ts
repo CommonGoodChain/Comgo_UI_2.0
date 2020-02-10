@@ -3,17 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as $ from 'jquery';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 
@@ -22,7 +22,7 @@ import { locale as spanish } from '../../../layout/i18n/tr';
     selector: 'app-update-user-details',
     templateUrl: './update-user-details.component.html',
     styleUrls: ['./update-user-details.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class UpdateUserDetailsComponent implements OnInit {
 
@@ -69,7 +69,7 @@ export class UpdateUserDetailsComponent implements OnInit {
      * @param {FormBuilder} _formBuilder
      */
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
         private router: Router,
@@ -78,9 +78,9 @@ export class UpdateUserDetailsComponent implements OnInit {
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
         private _translateService: TranslateService,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
     ) {
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
         // Reactive form errors
         this.formErrors = {
             company: {},
@@ -102,7 +102,7 @@ export class UpdateUserDetailsComponent implements OnInit {
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true

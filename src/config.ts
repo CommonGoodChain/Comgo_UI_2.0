@@ -4,7 +4,7 @@ export var config = {
     imageUrl: "https://192.168.5.119:3000/img/project",
     profileImageUrl: "https://192.168.5.119:3000/getProfileImage/",
     regURL: "https://192.168.5.119:3008",
-    foundation: "ComgoMarketUI"
+    foundation: "ComGoMarketUI"
 }
 
 export var appConst = {

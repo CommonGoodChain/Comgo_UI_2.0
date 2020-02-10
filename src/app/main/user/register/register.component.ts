@@ -3,16 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as $ from 'jquery';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { environment } from '../../../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core'
@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core'
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class RegisterComponent implements OnInit {
 
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
      * @param {FormBuilder} _formBuilder
      */
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
         private router: Router,
@@ -75,9 +75,9 @@ export class RegisterComponent implements OnInit {
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
         private _translateService: TranslateService,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
     ) {
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
         // Reactive form errors
         this.formErrors = {
             company: {},

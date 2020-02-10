@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 import { navigation } from '../../../navigation/navigation';
 
 @Component({
@@ -13,7 +13,7 @@ import { navigation } from '../../../navigation/navigation';
 })
 export class HorizontalLayout1Component implements OnInit, OnDestroy
 {
-    comgoConfig: any;
+    ComGoConfig: any;
     navigation: any;
 
     // Private
@@ -22,10 +22,10 @@ export class HorizontalLayout1Component implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {comgoConfigService} _comgoConfigService
+     * @param {ComGoConfigService} _ComGoConfigService
      */
     constructor(
-        private _comgoConfigService: comgoConfigService
+        private _ComGoConfigService: ComGoConfigService
     )
     {
         // Set the defaults
@@ -45,10 +45,10 @@ export class HorizontalLayout1Component implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                this.comgoConfig = config;
+                this.ComGoConfig = config;
             });
     }
 

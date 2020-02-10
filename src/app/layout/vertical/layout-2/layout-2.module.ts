@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { comgoSidebarModule } from '@comgo/components';
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSidebarModule } from '@ComGo/components';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 
 import { ChatPanelModule } from '../../components/chat-panel/chat-panel.module';
 import { ContentModule } from '../../components/content/content.module';
@@ -20,8 +20,8 @@ const token = true
     imports     : [
         RouterModule,
 
-        comgoSharedModule,
-        comgoSidebarModule,
+        ComGoSharedModule,
+        ComGoSidebarModule,
 
         ChatPanelModule,
         ContentModule,

@@ -1,8 +1,8 @@
-@import "src/@comgo/scss/comgo";
+@import "src/@ComGo/scss/ComGo";
 
 :host {
 
-    .comgo-search-bar {
+    .ComGo-search-bar {
         display: flex;
         flex: 0 1 auto;
         min-width: 64px;
@@ -13,14 +13,14 @@
             height: 56px;
         }
 
-        .comgo-search-bar-content {
+        .ComGo-search-bar-content {
             display: flex;
             flex: 1 1 auto;
             align-items: center;
             justify-content: flex-start;
 
-            .comgo-search-bar-expander,
-            .comgo-search-bar-collapser {
+            .ComGo-search-bar-expander,
+            .ComGo-search-bar-collapser {
                 cursor: pointer;
                 padding: 0 20px;
                 margin: 0;
@@ -34,7 +34,7 @@
                 }
             }
 
-            .comgo-search-bar-loader {
+            .ComGo-search-bar-loader {
                 width: 64px !important;
                 height: 64px !important;
                 line-height: 64px !important;
@@ -45,11 +45,11 @@
                 }
             }
 
-            .comgo-search-bar-collapser {
+            .ComGo-search-bar-collapser {
                 display: none;
             }
 
-            #comgo-search-bar-input {
+            #ComGo-search-bar-input {
                 display: none;
                 flex: 1 0 auto;
                 min-height: 64px;
@@ -66,13 +66,13 @@
             left: 0;
             z-index: 10;
 
-            .comgo-search-bar-content {
+            .ComGo-search-bar-content {
 
-                #comgo-search-bar-input {
+                #ComGo-search-bar-input {
                     display: flex;
                 }
 
-                .comgo-search-bar-collapser {
+                .ComGo-search-bar-collapser {
                     display: flex;
                 }
             }
@@ -81,7 +81,7 @@
 
     body {
 
-        &.comgo-search-bar-expanded {
+        &.ComGo-search-bar-expanded {
 
             #toolbar {
                 z-index: 999 !important;

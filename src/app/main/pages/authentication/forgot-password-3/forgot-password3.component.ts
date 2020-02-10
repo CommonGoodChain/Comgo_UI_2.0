@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { comgoConfigService } from '@comgo/services/config.service';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ComGoAnimations } from '@ComGo/animations';
 
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -39,11 +39,11 @@ export class ForgotPassword3Component implements OnInit {
   /**
    * Constructor
    *
-   * @param {comgoConfigService} _comgoConfigService
+   * @param {ComGoConfigService} _ComGoConfigService
    * @param {FormBuilder} _formBuilder
    */
   constructor(
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private _formBuilder: FormBuilder,
     private routerData: ActivatedRoute,
     private router: Router,
@@ -52,7 +52,7 @@ export class ForgotPassword3Component implements OnInit {
     private _matSnackBar: MatSnackBar,
   ) {
     // Configure the layout
-    this._comgoConfigService.config = {
+    this._ComGoConfigService.config = {
       layout: {
         navbar: {
           hidden: true

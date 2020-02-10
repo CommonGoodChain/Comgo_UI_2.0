@@ -1,9 +1,9 @@
 import { AfterContentChecked, Directive, ElementRef, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
-    selector: '[comgoIfOnDom]'
+    selector: '[ComGoIfOnDom]'
 })
-export class comgoIfOnDomDirective implements AfterContentChecked
+export class ComGoIfOnDomDirective implements AfterContentChecked
 {
     isCreated: boolean;
 

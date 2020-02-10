@@ -3,9 +3,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, take, takeUntil } from 'rxjs/operators';
 
-import { comgoNavigationService } from '@comgo/components/navigation/navigation.service';
-import { comgoPerfectScrollbarDirective } from '@comgo/directives/comgo-perfect-scrollbar/comgo-perfect-scrollbar.directive';
-import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
+import { ComGoNavigationService } from '@ComGo/components/navigation/navigation.service';
+import { ComGoPerfectScrollbarDirective } from '@ComGo/directives/ComGo-perfect-scrollbar/ComGo-perfect-scrollbar.directive';
+import { ComGoSidebarService } from '@ComGo/components/sidebar/sidebar.service';
 
 @Component({
     selector     : 'navbar-vertical-style-2',
@@ -15,23 +15,23 @@ import { comgoSidebarService } from '@comgo/components/sidebar/sidebar.service';
 })
 export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
 {
-    comgoPerfectScrollbarUpdateTimeout: any;
+    ComGoPerfectScrollbarUpdateTimeout: any;
     navigation: any;
 
     // Private
-    private _comgoPerfectScrollbar: comgoPerfectScrollbarDirective;
+    private _ComGoPerfectScrollbar: ComGoPerfectScrollbarDirective;
     private _unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
      *
-     * @param {comgoNavigationService} _comgoNavigationService
-     * @param {comgoSidebarService} _comgoSidebarService
+     * @param {ComGoNavigationService} _ComGoNavigationService
+     * @param {ComGoSidebarService} _ComGoSidebarService
      * @param {Router} _router
      */
     constructor(
-        private _comgoNavigationService: comgoNavigationService,
-        private _comgoSidebarService: comgoSidebarService,
+        private _ComGoNavigationService: ComGoNavigationService,
+        private _ComGoSidebarService: ComGoSidebarService,
         private _router: Router
     )
     {
@@ -44,22 +44,22 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
 
     // Directive
-    @ViewChild(comgoPerfectScrollbarDirective)
-    set directive(theDirective: comgoPerfectScrollbarDirective)
+    @ViewChild(ComGoPerfectScrollbarDirective)
+    set directive(theDirective: ComGoPerfectScrollbarDirective)
     {
         if ( !theDirective )
         {
             return;
         }
 
-        this._comgoPerfectScrollbar = theDirective;
+        this._ComGoPerfectScrollbar = theDirective;
 
         // Update the scrollbar on collapsable item toggle
-        this._comgoNavigationService.onItemCollapseToggled
+        this._ComGoNavigationService.onItemCollapseToggled
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this.comgoPerfectScrollbarUpdateTimeout = setTimeout(() => {
-                    this._comgoPerfectScrollbar.update();
+                this.ComGoPerfectScrollbarUpdateTimeout = setTimeout(() => {
+                    this._ComGoPerfectScrollbar.update();
                 }, 310);
             });
 
@@ -79,7 +79,7 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
                                   activeItemOffsetParentTop = activeNavItem.offsetParent.offsetTop,
                                   scrollDistance            = activeItemOffsetTop - activeItemOffsetParentTop - (48 * 3);
 
-                            this._comgoPerfectScrollbar.scrollToTop(scrollDistance);
+                            this._ComGoPerfectScrollbar.scrollToTop(scrollDistance);
                         }
                     });
                 }
@@ -101,21 +101,21 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe(() => {
-                    if ( this._comgoSidebarService.getSidebar('navbar') )
+                    if ( this._ComGoSidebarService.getSidebar('navbar') )
                     {
-                        this._comgoSidebarService.getSidebar('navbar').close();
+                        this._ComGoSidebarService.getSidebar('navbar').close();
                     }
                 }
             );
 
         // Get current navigation
-        this._comgoNavigationService.onNavigationChanged
+        this._ComGoNavigationService.onNavigationChanged
             .pipe(
                 filter(value => value !== null),
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe(() => {
-                this.navigation = this._comgoNavigationService.getCurrentNavigation();
+                this.navigation = this._ComGoNavigationService.getCurrentNavigation();
             });
     }
 
@@ -124,9 +124,9 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
      */
     ngOnDestroy(): void
     {
-        if ( this.comgoPerfectScrollbarUpdateTimeout )
+        if ( this.ComGoPerfectScrollbarUpdateTimeout )
         {
-            clearTimeout(this.comgoPerfectScrollbarUpdateTimeout);
+            clearTimeout(this.ComGoPerfectScrollbarUpdateTimeout);
         }
 
         // Unsubscribe from all subscriptions
@@ -143,7 +143,7 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
      */
     toggleSidebarOpened(): void
     {
-        this._comgoSidebarService.getSidebar('navbar').toggleOpen();
+        this._ComGoSidebarService.getSidebar('navbar').toggleOpen();
     }
 
     /**
@@ -151,6 +151,6 @@ export class NavbarVerticalStyle2Component implements OnInit, OnDestroy
      */
     toggleSidebarFolded(): void
     {
-        this._comgoSidebarService.getSidebar('navbar').toggleFold();
+        this._ComGoSidebarService.getSidebar('navbar').toggleFold();
     }
 }

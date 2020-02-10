@@ -6,12 +6,12 @@ import { filter } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 // Create the injection token for the custom settings
-export const comgo_CONFIG = new InjectionToken('comgoCustomConfig');
+export const ComGo_CONFIG = new InjectionToken('ComGoCustomConfig');
 
 @Injectable({
     providedIn: 'root'
 })
-export class comgoConfigService
+export class ComGoConfigService
 {
     // Private
     private _configSubject: BehaviorSubject<any>;
@@ -27,7 +27,7 @@ export class comgoConfigService
     constructor(
         private _platform: Platform,
         private _router: Router,
-        @Inject(comgo_CONFIG) private _config
+        @Inject(ComGo_CONFIG) private _config
     )
     {
         // Set the default config from the user provided config (from forRoot)

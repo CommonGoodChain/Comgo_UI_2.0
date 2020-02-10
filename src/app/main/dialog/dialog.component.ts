@@ -1,13 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import * as $ from 'jquery'
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Response, Http,Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { environment } from 'environments/environment';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../layout/i18n/en';
 import { locale as spanish } from '../../layout/i18n/tr';
@@ -15,7 +15,7 @@ import { locale as spanish } from '../../layout/i18n/tr';
 @Component({
   selector: 'dialog-elements-example-dialog',
   templateUrl: 'dialog.component.html',
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class DialogElementsExampleDialog {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -32,7 +32,7 @@ export class DialogElementsExampleDialog {
   value;
   constructor(
     public dialogRef: MatDialogRef<DialogElementsExampleDialog>,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
     private _translateService: TranslateService,
     private http: Http,
     private httpClient: HttpClient,
@@ -53,7 +53,7 @@ export class DialogElementsExampleDialog {
         }); 
     });
       this.lang = sessionStorage.getItem("lang");
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
     if (this.lang == 'en' || this.lang == null) {
       this.sdgUrl = "assets/SDG/";
       this.imageExtenstion = ".png";

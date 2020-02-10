@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,MatIconModule, MatMenuModule, MatToolbarModule,MatTooltipModule} from '@angular/material';
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 import { LoadingModule } from 'ngx-loading';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -23,7 +23,7 @@ const routes = [
     MatFormFieldModule,
     MatInputModule,
     LoadingModule,
-    comgoSharedModule,
+    ComGoSharedModule,
     MatIconModule,
     MatMenuModule, 
     MatToolbarModule,

@@ -26,7 +26,7 @@
 </div>
 
 
-<div class="navbar-scroll-container" comgoPerfectScrollbar [comgoPerfectScrollbarOptions]="{suppressScrollX: true}">
+<div class="navbar-scroll-container" ComGoPerfectScrollbar [ComGoPerfectScrollbarOptions]="{suppressScrollX: true}">
 
     <div class="user mat-white-bg" fxLayout="column">
         <!-- <div *ngIf="userType == 'Organization'" class="h3 username">{{orgName}}</div>
@@ -34,16 +34,16 @@
         <div *ngIf="userType == 'admin'" class="h3 username">{{'Admin' | translate}}</div> -->
         <div class="h5 email ">{{blank}}</div>
         <input hidden type="file" (change)="savePhoto($event)" #fileInput/>
-        <div *ngIf="userType == 'Organization' || userType == 'admin'" class="avatar-container" [ngClass]="comgoConfig.layout.navbar.background" (click)="fileInput.click()">
+        <div *ngIf="userType == 'Organization' || userType == 'admin'" class="avatar-container" [ngClass]="ComGoConfig.layout.navbar.background" (click)="fileInput.click()">
             <img class="avatar" src="{{profileImageUrl}}{{orgName}}" onerror="this.src='assets/images/avatars/Velazquez.jpg'">
         </div>
-        <div *ngIf="userType == 'Private User'" class="avatar-container" [ngClass]="comgoConfig.layout.navbar.background" (click)="fileInput.click()">
+        <div *ngIf="userType == 'Private User'" class="avatar-container" [ngClass]="ComGoConfig.layout.navbar.background" (click)="fileInput.click()">
             <img class="avatar" src="{{profileImageUrl}}{{username}}" onerror="this.src='assets/images/avatars/Velazquez.jpg'">
         </div>
     </div>
 
     <div class="navbar-content">
-        <comgo-navigation layout="vertical"></comgo-navigation>
+        <ComGo-navigation layout="vertical"></ComGo-navigation>
     </div>
 
 </div>

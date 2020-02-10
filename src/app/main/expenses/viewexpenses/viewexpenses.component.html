@@ -57,7 +57,7 @@
         <!-- <div class="content-card mat-white-bg" *ngIf="dataOfExpenses.length !== 0"> -->
         <div *ngIf="dataOfExpenses.length !== 0" class="mat-elevation-z8">
             <mat-table class="orders-table" #table [dataSource]="dataSource" multiTemplateDataRows
-                matSort [@animateStagger]="{value:'50'}" comgoPerfectScrollbar>
+                matSort [@animateStagger]="{value:'50'}" ComGoPerfectScrollbar>
                 <!-- Expense Item Column -->
                 <ng-container matColumnDef="ExpenseItem">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Expense Item' | translate}}</mat-header-cell>

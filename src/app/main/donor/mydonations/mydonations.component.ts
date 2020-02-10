@@ -2,20 +2,20 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { MatPaginator,MatSort } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { environment } from '../../../../environments/environment';
 import { MatTableDataSource } from '@angular/material';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { TranslateService} from '@ngx-translate/core';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 
 @Component({
   selector: 'app-mydonations',
   templateUrl: './mydonations.component.html',
   styleUrls: ['./mydonations.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class MydonationsComponent implements OnInit {
 
@@ -43,13 +43,13 @@ export class MydonationsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private httpClient : HttpClient,
     private router: Router,
     private _translateService: TranslateService,
     private _matSnackBar: MatSnackBar, ) {
     this.donorList = this.donorData.slice()
-    this._comgoConfigService.config = {
+    this._ComGoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true

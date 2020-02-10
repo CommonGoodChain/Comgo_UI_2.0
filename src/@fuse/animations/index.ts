@@ -18,7 +18,7 @@ const customAnimation = animation([
     }
 });
 
-export const comgoAnimations = [
+export const ComGoAnimations = [
 
     trigger('animate', [transition('void => *', [useAnimation(customAnimation)])]),
 

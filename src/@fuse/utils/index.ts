@@ -1,4 +1,4 @@
-export class comgoUtils
+export class ComGoUtils
 {
     /**
      * Filter array by string

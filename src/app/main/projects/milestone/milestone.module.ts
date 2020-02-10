@@ -6,8 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatTooltipModule } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
-import { comgoSharedModule } from '@comgo/shared.module';
-import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
+import { ComGoWidgetModule } from '@ComGo/components/widget/widget.module';
 //newly added by sagar
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
@@ -33,7 +33,7 @@ const routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    comgoSharedModule,
+    ComGoSharedModule,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -51,8 +51,8 @@ const routes = [
     MatCheckboxModule,
     NgxChartsModule,
     MatDialogModule,
-    comgoSharedModule,
-    comgoWidgetModule,
+    ComGoSharedModule,
+    ComGoWidgetModule,
     MatToolbarModule,
     MatStepperModule,
     MatDatepickerModule,

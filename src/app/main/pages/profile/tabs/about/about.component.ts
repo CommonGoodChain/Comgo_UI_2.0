@@ -5,12 +5,12 @@ import { Http, Response,Headers } from '@angular/http';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Observable } from 'rxjs/Rx';
 import { saveAs } from 'file-saver';
 import { DialogElementsExampleDialog } from '../../../../dialog/dialog.component';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatDialog } from '@angular/material';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ var introJS = require('intro.js')
   selector: 'profile-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class ProfileAboutComponent implements OnInit {
   projectId;
@@ -66,9 +66,9 @@ export class ProfileAboutComponent implements OnInit {
     private routerData: ActivatedRoute,
     private httpClient: HttpClient,
     private _translateService:TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
     ) {
-      this._comgoTranslationLoaderService.loadTranslations(english, spanish); }
+      this._ComGoTranslationLoaderService.loadTranslations(english, spanish); }
 
   ngOnInit() {
     this.routeBack  = sessionStorage.getItem('backRoute');

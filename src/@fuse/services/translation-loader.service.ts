@@ -10,7 +10,7 @@ export interface Locale
 @Injectable({
     providedIn: 'root'
 })
-export class comgoTranslationLoaderService
+export class ComGoTranslationLoaderService
 {
     /**
      * Constructor

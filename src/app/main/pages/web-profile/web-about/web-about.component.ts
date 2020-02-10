@@ -7,10 +7,10 @@ import { Http, Response, Headers } from '@angular/http';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
@@ -52,7 +52,7 @@ export class WebAboutComponent implements OnInit {
     private http: Http,
     private _http: HttpClient,
     private _translateService: TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
   ) { }
 
   ngOnInit() {

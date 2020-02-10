@@ -51,7 +51,7 @@
         <!-- CONTENT CARD -->
         <!-- <div class="content-card mat-white-bg" *ngIf="projectsAll.length !== 0"> -->
                 <div class="mat-elevation-z8">
-            <mat-table class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" comgoPerfectScrollbar>
+            <mat-table class="orders-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" ComGoPerfectScrollbar>
                 <ng-container matColumnDef="projectType">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Type' | translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let data">

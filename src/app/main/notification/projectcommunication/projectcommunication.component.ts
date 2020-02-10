@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Subject } from 'rxjs';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './projectcommunication.component.html',
   styleUrls: ['./projectcommunication.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class ProjectcommunicationComponent implements OnInit {
   pageType: string;

@@ -5,12 +5,12 @@ import { MatIconModule, MatRippleModule } from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { comgoNavigationComponent } from './navigation.component';
-import { comgoNavVerticalItemComponent } from './vertical/item/item.component';
-import { comgoNavVerticalCollapsableComponent } from './vertical/collapsable/collapsable.component';
-import { comgoNavVerticalGroupComponent } from './vertical/group/group.component';
-import { comgoNavHorizontalItemComponent } from './horizontal/item/item.component';
-import { comgoNavHorizontalCollapsableComponent } from './horizontal/collapsable/collapsable.component';
+import { ComGoNavigationComponent } from './navigation.component';
+import { ComGoNavVerticalItemComponent } from './vertical/item/item.component';
+import { ComGoNavVerticalCollapsableComponent } from './vertical/collapsable/collapsable.component';
+import { ComGoNavVerticalGroupComponent } from './vertical/group/group.component';
+import { ComGoNavHorizontalItemComponent } from './horizontal/item/item.component';
+import { ComGoNavHorizontalCollapsableComponent } from './horizontal/collapsable/collapsable.component';
 import { HttpModule } from '@angular/http'
 @NgModule({
     imports     : [
@@ -24,17 +24,17 @@ import { HttpModule } from '@angular/http'
         TranslateModule.forChild()
     ],
     exports     : [
-        comgoNavigationComponent
+        ComGoNavigationComponent
     ],
     declarations: [
-        comgoNavigationComponent,
-        comgoNavVerticalGroupComponent,
-        comgoNavVerticalItemComponent,
-        comgoNavVerticalCollapsableComponent,
-        comgoNavHorizontalItemComponent,
-        comgoNavHorizontalCollapsableComponent
+        ComGoNavigationComponent,
+        ComGoNavVerticalGroupComponent,
+        ComGoNavVerticalItemComponent,
+        ComGoNavVerticalCollapsableComponent,
+        ComGoNavHorizontalItemComponent,
+        ComGoNavHorizontalCollapsableComponent
     ]
 })
-export class comgoNavigationModule
+export class ComGoNavigationModule
 {
 }

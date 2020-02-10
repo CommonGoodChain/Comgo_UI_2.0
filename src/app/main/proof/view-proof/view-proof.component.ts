@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { MatTableDataSource } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { Router,ActivatedRoute } from '@angular/router';
@@ -11,12 +11,12 @@ import { environment } from '../../../../environments/environment';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 var introJS = require('intro.js')
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 @Component({
     selector: 'app-view-proof',
     templateUrl: './view-proof.component.html',
     styleUrls: ['./view-proof.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class ViewProofComponent implements OnInit {
     dataOfProof;
@@ -53,7 +53,7 @@ export class ViewProofComponent implements OnInit {
 
 
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private router: Router,
         private httpClient: HttpClient,
         private http: Http,
@@ -63,7 +63,7 @@ export class ViewProofComponent implements OnInit {
         private _translateService: TranslateService,
     ) {
         this.dataOfProof = this.proofData.slice()
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true

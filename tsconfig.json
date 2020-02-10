@@ -9,8 +9,8 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "paths": {
-            "@comgo": [
-                "@comgo/"
+            "@ComGo": [
+                "@ComGo/"
             ]
         },
         "target": "es5",

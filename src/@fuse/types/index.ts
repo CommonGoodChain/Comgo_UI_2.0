@@ -1,2 +1,2 @@
-export * from './comgo-config';
-export * from './comgo-navigation';
+export * from './ComGo-config';
+export * from './ComGo-navigation';

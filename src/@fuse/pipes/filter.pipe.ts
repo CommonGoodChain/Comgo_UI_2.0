@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { comgoUtils } from '../utils';
+import { ComGoUtils } from '../utils';
 
 @Pipe({name: 'filter'})
 export class FilterPipe implements PipeTransform
@@ -14,6 +14,6 @@ export class FilterPipe implements PipeTransform
      */
     transform(mainArr: any[], searchText: string, property: string): any
     {
-        return comgoUtils.filterArrayByString(mainArr, searchText);
+        return ComGoUtils.filterArrayByString(mainArr, searchText);
     }
 }

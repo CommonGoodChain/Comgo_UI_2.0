@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Subject } from 'rxjs';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,14 +14,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class UserProfileComponent implements OnInit {
   dataSource;
@@ -81,9 +81,9 @@ export class UserProfileComponent implements OnInit {
     public dialog: MatDialog,
     private httpClient: HttpClient,
     private _translateService: TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
   ) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
     this._unsubscribeAll = new Subject();
   }
   /** * @author:Akshay * @description: Open success snak bar */

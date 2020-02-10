@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Comgo</title>
+    <title>ComGo</title>
     <base href="/">
 
     <meta property="og:url" content="https://localhost:3010" />
@@ -16,9 +16,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <!-- comgo Splash Screen CSS -->
+    <!-- ComGo Splash Screen CSS -->
     <style type="text/css">
-        #comgo-splash-screen {
+        #ComGo-splash-screen {
             display: block;
             position: absolute;
             top: 0;
@@ -30,7 +30,7 @@
             pointer-events: none;
         }
 
-        #comgo-splash-screen .center {
+        #ComGo-splash-screen .center {
             display: block;
             width: 100%;
             position: absolute;
@@ -38,16 +38,16 @@
             transform: translateY(-50%);
         }
 
-        #comgo-splash-screen .logo {
+        #ComGo-splash-screen .logo {
             width: 128px;
             margin: 0 auto;
         }
 
-        #comgo-splash-screen .logo img {
+        #ComGo-splash-screen .logo img {
             filter: drop-shadow(0px 10px 6px rgba(0, 0, 0, 0.2))
         }
 
-        #comgo-splash-screen .spinner-wrapper {
+        #ComGo-splash-screen .spinner-wrapper {
             display: block;
             position: relative;
             width: 100%;
@@ -55,7 +55,7 @@
             height: 100px;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner {
+        #ComGo-splash-screen .spinner-wrapper .spinner {
             position: absolute;
             overflow: hidden;
             left: 50%;
@@ -63,14 +63,14 @@
             animation: outer-rotate 2.91667s linear infinite;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner {
             width: 100px;
             height: 100px;
             position: relative;
             animation: sporadic-rotate 5.25s cubic-bezier(0.35, 0, 0.25, 1) infinite;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .gap {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .gap {
             position: absolute;
             left: 49px;
             right: 49px;
@@ -80,8 +80,8 @@
             box-sizing: border-box;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .left,
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .right {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .left,
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .right {
             position: absolute;
             top: 0;
             height: 100px;
@@ -89,8 +89,8 @@
             overflow: hidden;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .left .half-circle,
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .right .half-circle {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .left .half-circle,
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .right .half-circle {
             position: absolute;
             top: 0;
             width: 100px;
@@ -101,22 +101,22 @@
             border-radius: 50%;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .left {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .left {
             left: 0;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .left .half-circle {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .left .half-circle {
             left: 0;
             border-right-color: transparent;
             animation: left-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
             -webkit-animation: left-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .right {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .right {
             right: 0;
         }
 
-        #comgo-splash-screen .spinner-wrapper .spinner .inner .right .half-circle {
+        #ComGo-splash-screen .spinner-wrapper .spinner .inner .right .half-circle {
             right: 0;
             border-left-color: transparent;
             animation: right-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
@@ -191,20 +191,20 @@
             }
         }
     </style>
-    <!-- / comgo Splash Screen CSS -->
+    <!-- / ComGo Splash Screen CSS -->
 </head>
 
 <body style="font-family: Roboto;">
 
-    <!-- comgo Splash Screen -->
-    <comgo-splash-screen id="comgo-splash-screen">
+    <!-- ComGo Splash Screen -->
+    <ComGo-splash-screen id="ComGo-splash-screen">
 
         <div class="center">
 
             <div class="logo">
-                <!-- <a href="assets/images/logos/comgologo.png"  target="_blank"><img src="assets/images/logos/comgologo.png" height=50 width=50 /></a> -->
-                <!-- <img  src="assets/images/logos/comgologo.png" alt="comgoLogo" /> -->
-                <!-- <img width="128" src="assets/images/logos/comgo.svg"> -->
+                <!-- <a href="assets/images/logos/ComGologo.png"  target="_blank"><img src="assets/images/logos/ComGologo.png" height=50 width=50 /></a> -->
+                <!-- <img  src="assets/images/logos/ComGologo.png" alt="ComGoLogo" /> -->
+                <!-- <img width="128" src="assets/images/logos/ComGo.svg"> -->
             </div>
 
             <!-- Material Design Spinner -->
@@ -225,8 +225,8 @@
 
         </div>
 
-    </comgo-splash-screen>
-    <!-- / comgo Splash Screen -->
+    </ComGo-splash-screen>
+    <!-- / ComGo Splash Screen -->
 
     <app></app>
     <!-- <script src="../aot/chart_bublechart.bundle.js"></script> -->

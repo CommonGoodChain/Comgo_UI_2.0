@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 import {  ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator,MatSort } from '@angular/material';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { environment } from '../../../../environments/environment';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { Router,ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import {  MatTableDataSource } from '@angular/material';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Http, Headers } from '@angular/http';
 import { locale as english } from '../../../layout/i18n/en';
@@ -19,7 +19,7 @@ var introJS = require('intro.js')
   selector: 'app-my-organizations',
   templateUrl: './my-organizations.component.html',
   styleUrls: ['./my-organizations.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class MyOrganizationsComponent implements OnInit {
   dataSource;
@@ -43,18 +43,18 @@ export class MyOrganizationsComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private _comgoConfigService: comgoConfigService,
+      private _ComGoConfigService: ComGoConfigService,
       private httpClient: HttpClient,
       private http: Http,
       private route: ActivatedRoute,
       private _matSnackBar: MatSnackBar,
       public dialog: MatDialog,
       private _translateService: TranslateService,
-      private _comgoTranslationLoaderService: comgoTranslationLoaderService
+      private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
   ) {
-      this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+      this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
       this.userOrganizations = this.expenseData.slice()
-      this._comgoConfigService.config = {
+      this._ComGoConfigService.config = {
         layout: {
             footer: {
                 hidden: true
@@ -64,7 +64,7 @@ export class MyOrganizationsComponent implements OnInit {
             }
         }
     };
-    //   this._comgoConfigService.config = {
+    //   this._ComGoConfigService.config = {
     //     layout: {
     //         navbar: {
     //             hidden: true

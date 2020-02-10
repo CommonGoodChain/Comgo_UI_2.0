@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { comgoUtils } from '@comgo/utils';
+import { ComGoUtils } from '@ComGo/utils';
 
 @Injectable()
 export class ChatPanelService
@@ -94,7 +94,7 @@ export class ChatPanelService
         return new Promise((resolve, reject) => {
 
             // Generate a new id
-            const chatId = comgoUtils.generateGUID();
+            const chatId = ComGoUtils.generateGUID();
 
             // Prepare the chat object
             const chat = {

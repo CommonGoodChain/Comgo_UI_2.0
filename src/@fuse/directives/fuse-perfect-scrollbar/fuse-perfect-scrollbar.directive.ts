@@ -6,12 +6,12 @@ import { filter, takeUntil } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as _ from 'lodash';
 
-import { comgoConfigService } from '../../services/config.service';
+import { ComGoConfigService } from '../../services/config.service';
 
 @Directive({
-    selector: '[comgoPerfectScrollbar]'
+    selector: '[ComGoPerfectScrollbar]'
 })
-export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
+export class ComGoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
 {
     isInitialized: boolean;
     isMobile: boolean;
@@ -27,13 +27,13 @@ export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
      * Constructor
      *
      * @param {ElementRef} elementRef
-     * @param {comgoConfigService} _comgoConfigService
+     * @param {ComGoConfigService} _ComGoConfigService
      * @param {Platform} _platform
      * @param {Router} _router
      */
     constructor(
         public elementRef: ElementRef,
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private _platform: Platform,
         private _router: Router
     )
@@ -61,13 +61,13 @@ export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
      * @param value
      */
     @Input()
-    set comgoPerfectScrollbarOptions(value)
+    set ComGoPerfectScrollbarOptions(value)
     {
         // Merge the options
         this._options = _.merge({}, this._options, value);
     }
 
-    get comgoPerfectScrollbarOptions(): any
+    get ComGoPerfectScrollbarOptions(): any
     {
         // Return the options
         return this._options;
@@ -78,7 +78,7 @@ export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
      *
      * @param {boolean | ""} value
      */
-    @Input('comgoPerfectScrollbar')
+    @Input('ComGoPerfectScrollbar')
     set enabled(value: boolean | '')
     {
         // If nothing is provided with the directive (empty string),
@@ -126,7 +126,7 @@ export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
     ngAfterViewInit(): void
     {
         // Check if scrollbars enabled or not from the main config
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (settings) => {
@@ -135,7 +135,7 @@ export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
             );
 
         // Scroll to the top on every route change
-        if ( this.comgoPerfectScrollbarOptions.updateOnRouteChange )
+        if ( this.ComGoPerfectScrollbarOptions.updateOnRouteChange )
         {
             this._router.events
                 .pipe(
@@ -198,7 +198,7 @@ export class comgoPerfectScrollbarDirective implements AfterViewInit, OnDestroy
 
         // Initialize the perfect-scrollbar
         this.ps = new PerfectScrollbar(this.elementRef.nativeElement, {
-            ...this.comgoPerfectScrollbarOptions
+            ...this.ComGoPerfectScrollbarOptions
         });
     }
 

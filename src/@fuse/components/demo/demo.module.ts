@@ -3,13 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { MatDividerModule, MatListModule } from '@angular/material';
 
-import { comgoDemoContentComponent } from './demo-content/demo-content.component';
-import { comgoDemoSidebarComponent } from './demo-sidebar/demo-sidebar.component';
+import { ComGoDemoContentComponent } from './demo-content/demo-content.component';
+import { ComGoDemoSidebarComponent } from './demo-sidebar/demo-sidebar.component';
 
 @NgModule({
     declarations: [
-        comgoDemoContentComponent,
-        comgoDemoSidebarComponent
+        ComGoDemoContentComponent,
+        ComGoDemoSidebarComponent
     ],
     imports     : [
         RouterModule,
@@ -18,10 +18,10 @@ import { comgoDemoSidebarComponent } from './demo-sidebar/demo-sidebar.component
         MatListModule
     ],
     exports     : [
-        comgoDemoContentComponent,
-        comgoDemoSidebarComponent
+        ComGoDemoContentComponent,
+        ComGoDemoSidebarComponent
     ]
 })
-export class comgoDemoModule
+export class ComGoDemoModule
 {
 }

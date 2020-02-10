@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 
 import { NavbarComponent } from './navbar.component';
 import { NavbarHorizontalStyle1Module } from './horizontal/style-1/style-1.module';
@@ -13,7 +13,7 @@ import { AuthGuard } from '../../../main/authguard';
         NavbarComponent
     ],
     imports     : [
-        comgoSharedModule,
+        ComGoSharedModule,
         NavbarHorizontalStyle1Module,
         NavbarVerticalStyle1Module,
         NavbarVerticalStyle2Module

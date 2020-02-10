@@ -1,4 +1,4 @@
-@import "src/@comgo/scss/comgo";
+@import "src/@ComGo/scss/ComGo";
 :host {
     .dates{
         height:85%;
@@ -115,7 +115,7 @@
     }
 
     .user-button,
-    comgo-search-bar,
+    ComGo-search-bar,
     .language-button,
     .chat-panel-toggle-button,
     .quick-panel-toggle-button {

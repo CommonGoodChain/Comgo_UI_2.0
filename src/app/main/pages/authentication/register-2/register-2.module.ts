@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 import { NgxMatSelectSearchModule } from 'app/main/mat-select-search/ngx-mat-select-search.module';
 import { Register2Component } from 'app/main/pages/authentication/register-2/register-2.component';
 // import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { comgoWidgetModule } from '@comgo/components/widget/widget.module';
+import { ComGoWidgetModule } from '@ComGo/components/widget/widget.module';
 import {
     MatDatepickerModule, MatChipsModule, MatStepperModule,
     MatIconModule, MatPaginatorModule, MatRippleModule, MatSelectModule,
@@ -41,8 +41,8 @@ const routes = [
         MatStepperModule,
         MatMenuModule,
         MatIconModule,
-        comgoSharedModule,
-        comgoWidgetModule,
+        ComGoSharedModule,
+        ComGoWidgetModule,
         MatPaginatorModule,
         MatRippleModule,
         MatSelectModule,

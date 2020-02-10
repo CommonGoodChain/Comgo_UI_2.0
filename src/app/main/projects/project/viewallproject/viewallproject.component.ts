@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { MatPaginator, MatSort } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { environment } from 'environments/environment';
@@ -11,16 +11,16 @@ import { MatTableDataSource } from '@angular/material';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core'
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 var introJS = require('intro.js')
 @Component({
   selector: 'app-viewallproject',
   templateUrl: './viewallproject.component.html',
   styleUrls: ['./viewallproject.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class viewallprojectComponent implements OnInit {
   dataSource;
@@ -38,7 +38,7 @@ export class viewallprojectComponent implements OnInit {
   organizationName;
   foundationCompany;
   lang;
-  rulesOcomgor;
+  rulesOComGor;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   urlPort = environment.urlPort;
@@ -48,9 +48,9 @@ export class viewallprojectComponent implements OnInit {
   public projectsAll;
   public loading1 = false;
 
-  constructor(private _comgoConfigService: comgoConfigService,private _translateService: TranslateService,private route:ActivatedRoute, private http: Http, private httpClient: HttpClient, private _matSnackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private _comgoTranslationLoaderService: comgoTranslationLoaderService) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
-    this._comgoConfigService.config = {
+  constructor(private _ComGoConfigService: ComGoConfigService,private _translateService: TranslateService,private route:ActivatedRoute, private http: Http, private httpClient: HttpClient, private _matSnackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private _ComGoTranslationLoaderService: ComGoTranslationLoaderService) {
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoConfigService.config = {
       layout: {
           footer: {
               hidden: true
@@ -89,7 +89,7 @@ export class viewallprojectComponent implements OnInit {
           return Observable.throw(err)
       })
       .subscribe((res: Response) => {
-        this.rulesOcomgor = res["Rules"]
+        this.rulesOComGor = res["Rules"]
           for(var i=0;i<res["Rules"].length;i++){
             if(routesPathOrg == res["Rules"][i].orgName){
               var rulesArr = []

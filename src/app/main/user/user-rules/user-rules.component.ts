@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatTableDataSource, MatRadioButton,MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { Subject } from 'rxjs';
@@ -8,17 +8,17 @@ import { HttpClient } from '@angular/common/http';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { environment } from '../../../../environments/environment';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
 import * as $ from 'jquery';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 @Component({
   selector: 'app-user-rules',
   templateUrl: './user-rules.component.html',
   styleUrls: ['./user-rules.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class UserRulesComponent implements OnInit {
   dataOfRules;
@@ -34,7 +34,7 @@ role;
 checkValue=false;
 tableData
 username;
-rulesOcomgor;
+rulesOComGor;
 orgName;
 userType;
 indexOfOrg;
@@ -52,17 +52,17 @@ private _unsubscribeAll: Subject<any>;
 
 constructor(
     private router: Router,
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private routerData: ActivatedRoute,
     private http: Http,
     private _formBuilder: FormBuilder,
     private httpCLient :HttpClient,
     private _matSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
     private _translateService: TranslateService
     ) { 
-     this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+     this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
     // this.product = new Product();
 
     // Set the private defaults
@@ -88,7 +88,7 @@ horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: M
 
   ngOnInit() {
 
-    this._comgoConfigService.config = {
+    this._ComGoConfigService.config = {
       layout: {
           footer: {
               hidden: true
@@ -356,7 +356,7 @@ horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: M
           return Observable.throw(err)
       })
       .subscribe((res: Response) => {
-        this.rulesOcomgor = res["Rules"]
+        this.rulesOComGor = res["Rules"]
           for(var i=0;i<res["Rules"].length;i++){
             if(this.orgName == res["Rules"][i].orgName){
               this.indexOfOrg = i;
@@ -398,7 +398,7 @@ horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: M
   Submit(formData){
     var user;
     if(this.rulesDefined == false){
-      var arr = this.rulesOcomgor;
+      var arr = this.rulesOComGor;
       formData.orgName = this.orgName
       formData.domain = sessionStorage.getItem("domainName")
     arr.push(formData)
@@ -421,10 +421,10 @@ horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: M
   } else {
     formData.orgName = this.orgName
     formData.domain = sessionStorage.getItem("domainName")
-    this.rulesOcomgor.splice(this.indexOfOrg, 1);
-    this.rulesOcomgor.splice(this.indexOfOrg, 0, formData);
+    this.rulesOComGor.splice(this.indexOfOrg, 1);
+    this.rulesOComGor.splice(this.indexOfOrg, 0, formData);
     user = sessionStorage.getItem("rulesSetToUser")
-    this.httpCLient.post(this.urlPort + "/api/users/updateUserRules/"+user,this.rulesOcomgor, { withCredentials: true})
+    this.httpCLient.post(this.urlPort + "/api/users/updateUserRules/"+user,this.rulesOComGor, { withCredentials: true})
     .map(
         (response) => response
     )

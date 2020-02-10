@@ -10,7 +10,7 @@ import * as $ from 'jquery'
 import { Sort } from '@angular/material';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../../dialog/dialog.component';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
@@ -78,9 +78,9 @@ export class ActivitiesComponent implements OnInit {
     private _matSnackBar: MatSnackBar,
     public dialog: MatDialog,
     private _translateService: TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
   ) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
     this.milestone = this.milestoneData.slice()
   }
 

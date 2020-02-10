@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Response, BaseResponseOptions } from '@angular/http';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Http } from '@angular/http';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
@@ -17,7 +17,7 @@ import { locale as spanish } from '../../../layout/i18n/tr';
   selector: 'app-myproject',
   templateUrl: './myproject.component.html',
   styleUrls: ['./myproject.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class MyprojectComponent implements OnInit {
   project;
@@ -31,7 +31,7 @@ export class MyprojectComponent implements OnInit {
   filteredIcons;
   default;
   lang;
-  rulesOcomgor;
+  rulesOComGor;
   allProjectTypeData;
   validatorId;
   otherProject:any;
@@ -62,10 +62,10 @@ export class MyprojectComponent implements OnInit {
     private http: Http,
     private httpClient: HttpClient,
     private _translateService: TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
 
   ) {
-    this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+    this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
   }
 
   ngOnInit() {
@@ -436,7 +436,7 @@ else {
   //         return Observable.throw(err)
   //     })
   //     .subscribe((res: Response) => {
-  //       this.rulesOcomgor = res["Rules"]
+  //       this.rulesOComGor = res["Rules"]
   //         for(var i=0;i<res["Rules"].length;i++){
   //           if(index.owner == res["Rules"][i].orgName){
   //             // var rulesArr = []

@@ -2,12 +2,12 @@ import { Directive, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/co
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoMatchMediaService } from '../../services/match-media.service';
+import { ComGoMatchMediaService } from '../../services/match-media.service';
 
 @Directive({
     selector: '.inner-scroll'
 })
-export class comgoInnerScrollDirective implements OnInit, OnDestroy
+export class ComGoInnerScrollDirective implements OnInit, OnDestroy
 {
     // Private
     private _parent: any;
@@ -18,12 +18,12 @@ export class comgoInnerScrollDirective implements OnInit, OnDestroy
      * Constructor
      *
      * @param {ElementRef} _elementRef
-     * @param {comgoMatchMediaService} _comgoMediaMatchService
+     * @param {ComGoMatchMediaService} _ComGoMediaMatchService
      * @param {Renderer2} _renderer
      */
     constructor(
         private _elementRef: ElementRef,
-        private _comgoMediaMatchService: comgoMatchMediaService,
+        private _ComGoMediaMatchService: ComGoMatchMediaService,
         private _renderer: Renderer2
     )
     {
@@ -53,7 +53,7 @@ export class comgoInnerScrollDirective implements OnInit, OnDestroy
         this._grandParent = this._renderer.parentNode(this._parent);
 
         // Register to the media query changes
-        this._comgoMediaMatchService.onMediaChange
+        this._ComGoMediaMatchService.onMediaChange
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((alias) => {
 

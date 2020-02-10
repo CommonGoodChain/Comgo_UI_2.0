@@ -55,10 +55,10 @@
 
     <div class="children" [@slideInOut]="isOpen">
         <ng-container *ngFor="let item of item.children">
-            <comgo-nav-vertical-item *ngIf="item.type=='item'" [item]="item"></comgo-nav-vertical-item>
-            <comgo-nav-vertical-collapsable *ngIf="item.type=='collapsable'"
-                                           [item]="item"></comgo-nav-vertical-collapsable>
-            <comgo-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></comgo-nav-vertical-group>
+            <ComGo-nav-vertical-item *ngIf="item.type=='item'" [item]="item"></ComGo-nav-vertical-item>
+            <ComGo-nav-vertical-collapsable *ngIf="item.type=='collapsable'"
+                                           [item]="item"></ComGo-nav-vertical-collapsable>
+            <ComGo-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></ComGo-nav-vertical-group>
         </ng-container>
     </div>
 

@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "comgo": {
+        "ComGo": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -70,27 +70,27 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "comgo:build",
+                        "browserTarget": "ComGo:build",
                         "host": "https://localhost:3010",
                         "port": 3010
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "comgo:build:production"
+                            "browserTarget": "ComGo:build:production"
                         },
                         "hmr": {
                             "hmr": true,
-                            "browserTarget": "comgo:build:hmr"
+                            "browserTarget": "ComGo:build:hmr"
                         },
                         "ec": {
-                            "browserTarget": "comgo:build:ec"
+                            "browserTarget": "ComGo:build:ec"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "comgo:build"
+                        "browserTarget": "ComGo:build"
                     }
                 },
                 "test": {
@@ -126,7 +126,7 @@
                 }
             }
         },
-        "comgo-e2e": {
+        "ComGo-e2e": {
             "root": "e2e/",
             "projectType": "application",
             "architect": {
@@ -134,7 +134,7 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "comgo:serve"
+                        "devServerTarget": "ComGo:serve"
                     }
                 },
                 "lint": {
@@ -151,5 +151,5 @@
             }
         }
     },
-    "defaultProject": "comgo"
+    "defaultProject": "ComGo"
 }

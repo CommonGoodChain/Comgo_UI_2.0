@@ -6,11 +6,11 @@ import * as Prism from 'prismjs/prism';
 import './prism-languages';
 
 @Component({
-    selector : 'comgo-highlight',
+    selector : 'ComGo-highlight',
     template : '',
     styleUrls: ['./highlight.component.scss']
 })
-export class comgoHighlightComponent implements OnInit, OnDestroy
+export class ComGoHighlightComponent implements OnInit, OnDestroy
 {
     // Source
     @ContentChild('source')
@@ -104,7 +104,7 @@ export class comgoHighlightComponent implements OnInit, OnDestroy
 
         // Remove the first and the last line of the source
         // code if they are blank lines. This way, the html
-        // can be formatted properly while using comgo-highlight
+        // can be formatted properly while using ComGo-highlight
         // component
         if ( !sourceLines[0].trim() )
         {

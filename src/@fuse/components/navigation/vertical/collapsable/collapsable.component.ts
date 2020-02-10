@@ -3,20 +3,20 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { comgoNavigationItem } from '../../../../types';
-import { comgoAnimations } from '../../../../animations';
-import { comgoNavigationService } from '../../navigation.service';
+import { ComGoNavigationItem } from '../../../../types';
+import { ComGoAnimations } from '../../../../animations';
+import { ComGoNavigationService } from '../../navigation.service';
 
 @Component({
-    selector   : 'comgo-nav-vertical-collapsable',
+    selector   : 'ComGo-nav-vertical-collapsable',
     templateUrl: './collapsable.component.html',
     styleUrls  : ['./collapsable.component.scss'],
-    animations : comgoAnimations
+    animations : ComGoAnimations
 })
-export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
+export class ComGoNavVerticalCollapsableComponent implements OnInit, OnDestroy
 {
     @Input()
-    item: comgoNavigationItem;
+    item: ComGoNavigationItem;
 
     @HostBinding('class')
     classes = 'nav-collapsable nav-item';
@@ -30,11 +30,11 @@ export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {comgoNavigationService} _comgoNavigationService
+     * @param {ComGoNavigationService} _ComGoNavigationService
      * @param {Router} _router
      */
     constructor(
-        private _comgoNavigationService: comgoNavigationService,
+        private _ComGoNavigationService: ComGoNavigationService,
         private _router: Router
     )
     {
@@ -72,7 +72,7 @@ export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
             });
 
         // Listen for collapsing of any navigation item
-        this._comgoNavigationService.onItemCollapsed
+        this._ComGoNavigationService.onItemCollapsed
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (clickedItem) => {
@@ -139,8 +139,8 @@ export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
         this.isOpen = !this.isOpen;
 
         // Navigation collapse toggled...
-        this._comgoNavigationService.onItemCollapsed.next(this.item);
-        this._comgoNavigationService.onItemCollapseToggled.next();
+        this._ComGoNavigationService.onItemCollapsed.next(this.item);
+        this._ComGoNavigationService.onItemCollapseToggled.next();
     }
 
     /**
@@ -154,7 +154,7 @@ export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
         }
 
         this.isOpen = true;
-        this._comgoNavigationService.onItemCollapseToggled.next();
+        this._ComGoNavigationService.onItemCollapseToggled.next();
     }
 
     /**
@@ -168,7 +168,7 @@ export class comgoNavVerticalCollapsableComponent implements OnInit, OnDestroy
         }
 
         this.isOpen = false;
-        this._comgoNavigationService.onItemCollapseToggled.next();
+        this._ComGoNavigationService.onItemCollapseToggled.next();
     }
 
     /**

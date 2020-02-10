@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator,MatSort } from '@angular/material';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { environment } from '../../../../environments/environment';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component'
@@ -9,19 +9,19 @@ import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Sort, MatTableDataSource } from '@angular/material';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 var introJS = require('intro.js')
 
 @Component({
     selector: 'app-viewexpenses',
     templateUrl: './viewexpenses.component.html',
     styleUrls: ['./viewexpenses.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class ViewexpensesComponent implements OnInit {
     status;
@@ -53,17 +53,17 @@ export class ViewexpensesComponent implements OnInit {
     userRules;
 
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private router: Router,
         private httpClient: HttpClient,
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
         private _translateService: TranslateService,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
     ) {
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
         this.dataOfExpenses = this.expenseData.slice()
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 footer: {
                     hidden: true

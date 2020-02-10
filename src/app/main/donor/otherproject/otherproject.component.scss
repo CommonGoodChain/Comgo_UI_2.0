@@ -1,4 +1,4 @@
-@import "src/@comgo/scss/comgo";
+@import "src/@ComGo/scss/ComGo";
 
 :host {
     .example-form {
@@ -136,7 +136,7 @@
                 .card-source {
                     display: none;
                 }
-                .comgo-card:hover {
+                .ComGo-card:hover {
                     box-shadow: 0 5px 14px rgba(10, 10, 10, 0.3), 0 0 0 0px rgba(10, 10, 10, 0.1);
                     -webkit-transform: translateY(-5px);
                     transform: translateY(-5px);

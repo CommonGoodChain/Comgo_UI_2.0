@@ -7,7 +7,7 @@ export const environment = {
     imageUrl: "https://"+host+"/img/project",
     angularIp : "https://"+host+"/pages/auth/login-2",
     profileImageUrl: "https://"+host+"/getProfileImage/",
-    foundation: "ComgoMarketUI",
+    foundation: "ComGoMarketUI",
     createdBy: "sagar",
     defaultImage: "this.src='https://"+host+"/img/project/DefaultImage/default.jpg'",
     forgetPasswordUrl: "https://"+host+"/pages/auth/forgot-password-3",

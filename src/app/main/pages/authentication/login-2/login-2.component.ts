@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { comgoConfigService } from '@comgo/services/config.service';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
@@ -10,7 +10,7 @@ import { environment } from '../../../../../environments/environment';
 import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatDialog, MatSnackBarVerticalPosition } from '@angular/material';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 var introJS = require('intro.js')
@@ -19,7 +19,7 @@ var introJS = require('intro.js')
     selector: 'login-2',
     templateUrl: './login-2.component.html',
     styleUrls: ['./login-2.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class Login2Component implements OnInit {
     loginForm: FormGroup;
@@ -50,7 +50,7 @@ export class Login2Component implements OnInit {
     public loading1 = false;
 
     constructor(
-        private _comgoConfigService: comgoConfigService,
+        private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
         private dialogRef: MatDialog,
@@ -59,10 +59,10 @@ export class Login2Component implements OnInit {
         private _translateService: TranslateService,
         private http: Http,
         private _matSnackBar: MatSnackBar,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
     ) {
         // Configure the layout
-        this._comgoConfigService.config = {
+        this._ComGoConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true
@@ -96,7 +96,7 @@ export class Login2Component implements OnInit {
             }
         ];
 
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
     }
 
     ngOnInit(): void {
@@ -172,7 +172,7 @@ export class Login2Component implements OnInit {
                 },
                 {
                     element: '#loginButton',
-                    intro: 'User can log into Comgo by clicking here.',
+                    intro: 'User can log into ComGo by clicking here.',
                     position: 'left'
                 },
                 {
@@ -269,7 +269,7 @@ export class Login2Component implements OnInit {
                                             // } else {
                                             //     sessionStorage.setItem("orgName", '') 
                                             // }
-                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "comgo", addProjByNgo: "true" }]);    
+                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "ComGo", addProjByNgo: "true" }]);    
                                             if (res["regUser"] == 0) {
                                                 this.openSnackBar('User Deactivated');
                                             } else {
@@ -369,7 +369,7 @@ export class Login2Component implements OnInit {
                                             // } else {
                                             //     sessionStorage.setItem("orgName", '') 
                                             // }
-                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "comgo", addProjByNgo: "true" }]);    
+                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "ComGo", addProjByNgo: "true" }]);    
                                             if (res["regUser"] == 0) {
                                                 this.openSnackBar('User Deactivated');
                                             } else {

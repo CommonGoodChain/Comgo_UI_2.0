@@ -1,6 +1,6 @@
-import { comgoNavigation } from '@comgo/types';
+import { ComGoNavigation } from '@ComGo/types';
 
-export const navigation: comgoNavigation[] = [
+export const navigation: ComGoNavigation[] = [
 
 
     {
@@ -23,7 +23,7 @@ export const navigation: comgoNavigation[] = [
 ];
 
 
-// export const navigation: comgoNavigation[] = [
+// export const navigation: ComGoNavigation[] = [
 
 
 //     {

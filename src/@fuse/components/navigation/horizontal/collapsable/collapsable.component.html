@@ -52,14 +52,14 @@
 
     <div class="children" [ngClass]="{'open': isOpen}">
 
-        <div class="{{comgoConfig.layout.navbar.background}}">
+        <div class="{{ComGoConfig.layout.navbar.background}}">
 
             <ng-container *ngFor="let item of item.children">
-                <comgo-nav-horizontal-item *ngIf="item.type=='item'" [item]="item"></comgo-nav-horizontal-item>
-                <comgo-nav-horizontal-collapsable *ngIf="item.type=='collapsable'"
-                                                 [item]="item"></comgo-nav-horizontal-collapsable>
-                <comgo-nav-horizontal-collapsable *ngIf="item.type=='group'"
-                                                 [item]="item"></comgo-nav-horizontal-collapsable>
+                <ComGo-nav-horizontal-item *ngIf="item.type=='item'" [item]="item"></ComGo-nav-horizontal-item>
+                <ComGo-nav-horizontal-collapsable *ngIf="item.type=='collapsable'"
+                                                 [item]="item"></ComGo-nav-horizontal-collapsable>
+                <ComGo-nav-horizontal-collapsable *ngIf="item.type=='group'"
+                                                 [item]="item"></ComGo-nav-horizontal-collapsable>
             </ng-container>
 
         </div>

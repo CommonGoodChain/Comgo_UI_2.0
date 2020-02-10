@@ -1,19 +1,19 @@
-import { comgoConfig } from '@comgo/types';
+import { ComGoConfig } from '@ComGo/types';
 
 /**
- * Default comgo Configuration
+ * Default ComGo Configuration
  *
  * You can edit these options to change the default options. All these options also can be changed per component
  * basis. See `app/main/pages/authentication/login/login.component.ts` constructor method to learn more
  * about changing these options per component basis.
  */
 
-export const comgoConfig: comgoConfig = {
+export const ComGoConfig: ComGoConfig = {
     layout          : {
         style    : 'vertical-layout-1',
         width    : 'fullwidth',
         navbar   : {
-            background: 'mat-comgo-dark-700-bg',
+            background: 'mat-ComGo-dark-700-bg',
             folded    : false,
             hidden    : false,
             position  : 'left',
@@ -25,7 +25,7 @@ export const comgoConfig: comgoConfig = {
             position  : 'below-static'
         },
         footer   : {
-            background: 'mat-comgo-dark-900-bg',
+            background: 'mat-ComGo-dark-900-bg',
             hidden    : false,
             position  : 'below-fixed'
         },

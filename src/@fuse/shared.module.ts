@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { comgoDirectivesModule } from './directives/directives';
-import { comgoPipesModule } from './pipes/pipes.module';
+import { ComGoDirectivesModule } from './directives/directives';
+import { ComGoPipesModule } from './pipes/pipes.module';
 
 @NgModule({
     imports  : [
@@ -15,8 +15,8 @@ import { comgoPipesModule } from './pipes/pipes.module';
 
         FlexLayoutModule,
 
-        comgoDirectivesModule,
-        comgoPipesModule
+        ComGoDirectivesModule,
+        ComGoPipesModule
     ],
     exports  : [
         CommonModule,
@@ -25,10 +25,10 @@ import { comgoPipesModule } from './pipes/pipes.module';
 
         FlexLayoutModule,
 
-        comgoDirectivesModule,
-        comgoPipesModule
+        ComGoDirectivesModule,
+        ComGoPipesModule
     ]
 })
-export class comgoSharedModule
+export class ComGoSharedModule
 {
 }

@@ -1,4 +1,4 @@
-export interface comgoNavigationItem
+export interface ComGoNavigationItem
 {
     id: string;
     title: string;
@@ -18,10 +18,10 @@ export interface comgoNavigationItem
         bg?: string;
         fg?: string;
     };
-    children?: comgoNavigationItem[];
+    children?: ComGoNavigationItem[];
 }
 
-export interface comgoNavigation extends comgoNavigationItem
+export interface ComGoNavigation extends ComGoNavigationItem
 {
-    children?: comgoNavigationItem[];
+    children?: ComGoNavigationItem[];
 }

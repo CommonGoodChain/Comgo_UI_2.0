@@ -4,15 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 
-import { comgoDirectivesModule } from '../../directives/directives';
-import { comgoSidebarModule } from '../sidebar/sidebar.module';
-import { comgoMaterialColorPickerModule } from '../material-color-picker/material-color-picker.module';
+import { ComGoDirectivesModule } from '../../directives/directives';
+import { ComGoSidebarModule } from '../sidebar/sidebar.module';
+import { ComGoMaterialColorPickerModule } from '../material-color-picker/material-color-picker.module';
 
-import { comgoThemeOptionsComponent } from './theme-options.component';
+import { ComGoThemeOptionsComponent } from './theme-options.component';
 
 @NgModule({
     declarations: [
-        comgoThemeOptionsComponent
+        ComGoThemeOptionsComponent
     ],
     imports     : [
         CommonModule,
@@ -30,14 +30,14 @@ import { comgoThemeOptionsComponent } from './theme-options.component';
         MatSelectModule,
         MatSlideToggleModule,
 
-        comgoDirectivesModule,
-        comgoMaterialColorPickerModule,
-        comgoSidebarModule
+        ComGoDirectivesModule,
+        ComGoMaterialColorPickerModule,
+        ComGoSidebarModule
     ],
     exports     : [
-        comgoThemeOptionsComponent
+        ComGoThemeOptionsComponent
     ]
 })
-export class comgoThemeOptionsModule
+export class ComGoThemeOptionsModule
 {
 }

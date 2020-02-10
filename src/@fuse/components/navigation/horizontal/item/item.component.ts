@@ -1,11 +1,11 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
-    selector   : 'comgo-nav-horizontal-item',
+    selector   : 'ComGo-nav-horizontal-item',
     templateUrl: './item.component.html',
     styleUrls  : ['./item.component.scss']
 })
-export class comgoNavHorizontalItemComponent
+export class ComGoNavHorizontalItemComponent
 {
     @HostBinding('class')
     classes = 'nav-item';

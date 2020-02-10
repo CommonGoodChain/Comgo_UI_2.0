@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class comgoMatchMediaService
+export class ComGoMatchMediaService
 {
     activeMediaQuery: string;
     onMediaChange: BehaviorSubject<string> = new BehaviorSubject<string>('');

@@ -5,11 +5,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatTooltipModule } from '@angular/material';
 import { CookieService } from 'ngx-cookie-service';
 
-import { comgoShortcutsComponent } from './shortcuts.component';
+import { ComGoShortcutsComponent } from './shortcuts.component';
 
 @NgModule({
     declarations: [
-        comgoShortcutsComponent
+        ComGoShortcutsComponent
     ],
     imports     : [
         CommonModule,
@@ -27,12 +27,12 @@ import { comgoShortcutsComponent } from './shortcuts.component';
         MatTooltipModule
     ],
     exports     : [
-        comgoShortcutsComponent
+        ComGoShortcutsComponent
     ],
     providers   : [
         CookieService
     ]
 })
-export class comgoShortcutsModule
+export class ComGoShortcutsModule
 {
 }

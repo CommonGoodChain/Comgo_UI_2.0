@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class HomePageComponent implements OnInit {
     form: FormGroup;
     formErrors: any;
     loginForm: FormGroup;
 
-  constructor( private _comgoConfigService: comgoConfigService, private _formBuilder: FormBuilder,private router: Router) {
-    this._comgoConfigService.config = {
+  constructor( private _ComGoConfigService: ComGoConfigService, private _formBuilder: FormBuilder,private router: Router) {
+    this._ComGoConfigService.config = {
       layout: {
           navbar: {
               hidden: true

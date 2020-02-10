@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class comgo2Page {
+export class ComGo2Page {
     navigateTo() {
         return browser.get('/');
     }

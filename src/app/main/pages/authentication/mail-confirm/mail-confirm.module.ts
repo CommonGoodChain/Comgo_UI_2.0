@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material';
 
-import { comgoSharedModule } from '@comgo/shared.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
 
 import { MailConfirmComponent } from './mail-confirm.component';
 
@@ -22,7 +22,7 @@ const routes = [
 
         MatIconModule,
 
-        comgoSharedModule
+        ComGoSharedModule
     ]
 })
 export class MailConfirmModule

@@ -4,17 +4,17 @@ import { ObservableMedia } from '@angular/flex-layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoSidebarService } from './sidebar.service';
-import { comgoMatchMediaService } from '../../services/match-media.service';
-import { comgoConfigService } from '../../services/config.service';
+import { ComGoSidebarService } from './sidebar.service';
+import { ComGoMatchMediaService } from '../../services/match-media.service';
+import { ComGoConfigService } from '../../services/config.service';
 
 @Component({
-    selector     : 'comgo-sidebar',
+    selector     : 'ComGo-sidebar',
     templateUrl  : './sidebar.component.html',
     styleUrls    : ['./sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class comgoSidebarComponent implements OnInit, OnDestroy
+export class ComGoSidebarComponent implements OnInit, OnDestroy
 {
     // Name
     @Input()
@@ -66,7 +66,7 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
 
     // Private
     private _folded: boolean;
-    private _comgoConfig: any;
+    private _ComGoConfig: any;
     private _wasActive: boolean;
     private _wasFolded: boolean;
     private _backdrop: HTMLElement | null = null;
@@ -82,9 +82,9 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
      * @param {AnimationBuilder} _animationBuilder
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {ElementRef} _elementRef
-     * @param {comgoConfigService} _comgoConfigService
-     * @param {comgoMatchMediaService} _comgoMatchMediaService
-     * @param {comgoSidebarService} _comgoSidebarService
+     * @param {ComGoConfigService} _ComGoConfigService
+     * @param {ComGoMatchMediaService} _ComGoMatchMediaService
+     * @param {ComGoSidebarService} _ComGoSidebarService
      * @param {ObservableMedia} _observableMedia
      * @param {Renderer2} _renderer
      */
@@ -92,9 +92,9 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
         private _animationBuilder: AnimationBuilder,
         private _changeDetectorRef: ChangeDetectorRef,
         private _elementRef: ElementRef,
-        private _comgoConfigService: comgoConfigService,
-        private _comgoMatchMediaService: comgoMatchMediaService,
-        private _comgoSidebarService: comgoSidebarService,
+        private _ComGoConfigService: ComGoConfigService,
+        private _ComGoMatchMediaService: ComGoMatchMediaService,
+        private _ComGoSidebarService: ComGoSidebarService,
         private _observableMedia: ObservableMedia,
         private _renderer: Renderer2
     )
@@ -210,14 +210,14 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                this._comgoConfig = config;
+                this._ComGoConfig = config;
             });
 
         // Register the sidebar
-        this._comgoSidebarService.register(this.name, this);
+        this._ComGoSidebarService.register(this.name, this);
 
         // Setup visibility
         this._setupVisibility();
@@ -244,7 +244,7 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
         }
 
         // Unregister the sidebar
-        this._comgoSidebarService.unregister(this.name);
+        this._ComGoSidebarService.unregister(this.name);
 
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
@@ -312,7 +312,7 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
         this._showSidebar();
 
         // Act on every media change
-        this._comgoMatchMediaService.onMediaChange
+        this._ComGoMatchMediaService.onMediaChange
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
 
@@ -448,12 +448,12 @@ export class comgoSidebarComponent implements OnInit, OnDestroy
         this._backdrop = this._renderer.createElement('div');
 
         // Add a class to the backdrop element
-        this._backdrop.classList.add('comgo-sidebar-overlay');
+        this._backdrop.classList.add('ComGo-sidebar-overlay');
 
         // Add a class depending on the invisibleOverlay option
         if ( this.invisibleOverlay )
         {
-            this._backdrop.classList.add('comgo-sidebar-overlay-invisible');
+            this._backdrop.classList.add('ComGo-sidebar-overlay-invisible');
         }
 
         // Append the backdrop to the parent of the sidebar

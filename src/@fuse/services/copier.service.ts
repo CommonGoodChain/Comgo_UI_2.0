@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class comgoCopierService
+export class ComGoCopierService
 {
     private textarea: HTMLTextAreaElement;
 

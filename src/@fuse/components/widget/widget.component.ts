@@ -1,20 +1,20 @@
 import { AfterContentInit, Component, ContentChildren, ElementRef, HostBinding, QueryList, Renderer2, ViewEncapsulation } from '@angular/core';
-import { comgoWidgetToggleDirective } from './widget-toggle.directive';
+import { ComGoWidgetToggleDirective } from './widget-toggle.directive';
 
 @Component({
-    selector     : 'comgo-widget',
+    selector     : 'ComGo-widget',
     templateUrl  : './widget.component.html',
     styleUrls    : ['./widget.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class comgoWidgetComponent implements AfterContentInit
+export class ComGoWidgetComponent implements AfterContentInit
 {
     @HostBinding('class.flipped')
     flipped = false;
 
-    @ContentChildren(comgoWidgetToggleDirective, {descendants: true})
-    toggleButtons: QueryList<comgoWidgetToggleDirective>;
+    @ContentChildren(ComGoWidgetToggleDirective, {descendants: true})
+    toggleButtons: QueryList<ComGoWidgetToggleDirective>;
 
     /**
      * Constructor

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Response, Http, Headers } from '@angular/http';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs/Rx';
@@ -11,7 +11,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
   selector: 'app-find-workspace',
   templateUrl: './find-workspace.component.html',
   styleUrls: ['./find-workspace.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class FindWorkspaceComponent implements OnInit {
     form: FormGroup;
@@ -22,8 +22,8 @@ export class FindWorkspaceComponent implements OnInit {
     horizontalPosition: MatSnackBarHorizontalPosition = 'right';
     verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  constructor( private _comgoConfigService: comgoConfigService,  private _matSnackBar: MatSnackBar,private _formBuilder: FormBuilder,private router: Router,private http: Http) {
-    this._comgoConfigService.config = {
+  constructor( private _ComGoConfigService: ComGoConfigService,  private _matSnackBar: MatSnackBar,private _formBuilder: FormBuilder,private router: Router,private http: Http) {
+    this._ComGoConfigService.config = {
       layout: {
           navbar: {
               hidden: true

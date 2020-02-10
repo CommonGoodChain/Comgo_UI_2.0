@@ -23,6 +23,6 @@ import { CamelCaseToDashPipe } from './camelCaseToDash.pipe';
         CamelCaseToDashPipe
     ]
 })
-export class comgoPipesModule
+export class ComGoPipesModule
 {
 }

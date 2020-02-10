@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { Observable } from 'rxjs/Rx';
 import { Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,16 +11,16 @@ import { MouseEvent } from '@agm/core';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
-import { comgoConfigService } from '@comgo/services/config.service';
+import { ComGoConfigService } from '@ComGo/services/config.service';
 
 @Component({
   selector: 'app-addproject',
   templateUrl: './addproject.component.html',
   styleUrls: ['./addproject.component.scss'],
-  animations: comgoAnimations
+  animations: ComGoAnimations
 })
 export class AddprojectComponent implements OnInit {
   sdgUrl;
@@ -91,7 +91,7 @@ export class AddprojectComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
-    private _comgoConfigService: comgoConfigService,
+    private _ComGoConfigService: ComGoConfigService,
     private _formBuilder: FormBuilder,
     private _matSnackBar: MatSnackBar,
     private router: Router,
@@ -100,10 +100,10 @@ export class AddprojectComponent implements OnInit {
     private http: Http,
     public dialog: MatDialog,
     private _translateService: TranslateService,
-    private _comgoTranslationLoaderService: comgoTranslationLoaderService
+    private _ComGoTranslationLoaderService: ComGoTranslationLoaderService
 
-  ) { this._comgoTranslationLoaderService.loadTranslations(english, spanish); 
-    this._comgoConfigService.config = {
+  ) { this._ComGoTranslationLoaderService.loadTranslations(english, spanish); 
+    this._ComGoConfigService.config = {
       layout: {
           footer: {
               hidden: true

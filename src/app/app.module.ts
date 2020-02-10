@@ -9,11 +9,11 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 import { NgxMatSelectSearchModule } from 'app/main/mat-select-search/ngx-mat-select-search.module';
-import { comgoModule } from '@comgo/comgo.module';
-import { comgoSharedModule } from '@comgo/shared.module';
-import { comgoSidebarModule, comgoThemeOptionsModule } from '@comgo/components';
+import { ComGoModule } from '@ComGo/ComGo.module';
+import { ComGoSharedModule } from '@ComGo/shared.module';
+import { ComGoSidebarModule, ComGoThemeOptionsModule } from '@ComGo/components';
 import { LoadingModule } from 'ngx-loading';
-import { comgoConfig } from 'app/comgo-config';
+import { ComGoConfig } from 'app/ComGo-config';
 
 import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
@@ -139,11 +139,11 @@ const appRoutes: Routes = [
         MatButtonModule,
         MatIconModule,
         MatTabsModule ,
-        comgoModule.forRoot(comgoConfig),
-        comgoSharedModule,
-        comgoSidebarModule,
+        ComGoModule.forRoot(ComGoConfig),
+        ComGoSharedModule,
+        ComGoSidebarModule,
         MatSnackBarModule,
-        comgoThemeOptionsModule,
+        ComGoThemeOptionsModule,
         MatToolbarModule,
         MatTooltipModule,
         MatSidenavModule,

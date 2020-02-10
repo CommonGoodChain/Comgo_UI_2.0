@@ -2,21 +2,21 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
-    selector   : 'comgo-confirm-dialog',
+    selector   : 'ComGo-confirm-dialog',
     templateUrl: './confirm-dialog.component.html',
     styleUrls  : ['./confirm-dialog.component.scss']
 })
-export class comgoConfirmDialogComponent
+export class ComGoConfirmDialogComponent
 {
     public confirmMessage: string;
 
     /**
      * Constructor
      *
-     * @param {MatDialogRef<comgoConfirmDialogComponent>} dialogRef
+     * @param {MatDialogRef<ComGoConfirmDialogComponent>} dialogRef
      */
     constructor(
-        public dialogRef: MatDialogRef<comgoConfirmDialogComponent>
+        public dialogRef: MatDialogRef<ComGoConfirmDialogComponent>
     )
     {
     }

@@ -1,6 +1,6 @@
-@import "src/@comgo/scss/comgo";
+@import "src/@ComGo/scss/ComGo";
 
-comgo-sidebar {
+ComGo-sidebar {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
@@ -55,7 +55,7 @@ comgo-sidebar {
     }
 }
 
-.comgo-sidebar-overlay {
+.ComGo-sidebar-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -65,7 +65,7 @@ comgo-sidebar {
     background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
 
-    &.comgo-sidebar-overlay-invisible {
+    &.ComGo-sidebar-overlay-invisible {
         background-color: transparent;
     }
 }

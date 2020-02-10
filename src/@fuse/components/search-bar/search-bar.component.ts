@@ -2,21 +2,21 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoConfigService } from '../../services/config.service';
-import { comgoTranslationLoaderService } from '../../services/translation-loader.service';
+import { ComGoConfigService } from '../../services/config.service';
+import { ComGoTranslationLoaderService } from '../../services/translation-loader.service';
 import { locale as english } from 'app/layout/i18n/tr';
 import { locale as spanish } from 'app/layout/i18n/tr';
 import {TranslateService}from "@ngx-translate/core"
 
 @Component({
-    selector   : 'comgo-search-bar',
+    selector   : 'ComGo-search-bar',
     templateUrl: './search-bar.component.html',
     styleUrls  : ['./search-bar.component.scss']
 })
-export class comgoSearchBarComponent implements OnInit, OnDestroy
+export class ComGoSearchBarComponent implements OnInit, OnDestroy
 {
     collapsed: boolean;
-    comgoConfig: any;
+    ComGoConfig: any;
 
     @Output()
     input: EventEmitter<any>;
@@ -27,17 +27,17 @@ export class comgoSearchBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {comgoConfigService} _comgoConfigService
+     * @param {ComGoConfigService} _ComGoConfigService
      */
     constructor(
-        private _comgoConfigService: comgoConfigService,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+        private _ComGoConfigService: ComGoConfigService,
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
         private _translateService:TranslateService
     )
     {
         // Set the defaults
         this.input = new EventEmitter();
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
         this.collapsed = true;
 
         // Set the private defaults
@@ -54,11 +54,11 @@ export class comgoSearchBarComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (config) => {
-                    this.comgoConfig = config;
+                    this.ComGoConfig = config;
                 }
             );
     }

@@ -1,4 +1,4 @@
-export interface comgoConfig
+export interface ComGoConfig
 {
     layout: {
         style: string,

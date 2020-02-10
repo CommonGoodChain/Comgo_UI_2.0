@@ -3,20 +3,20 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { comgoAnimations } from '../../animations';
-import { comgoConfigService } from '../../services/config.service';
-import { comgoNavigationService } from '../navigation/navigation.service';
-import { comgoSidebarService } from '../sidebar/sidebar.service';
+import { ComGoAnimations } from '../../animations';
+import { ComGoConfigService } from '../../services/config.service';
+import { ComGoNavigationService } from '../navigation/navigation.service';
+import { ComGoSidebarService } from '../sidebar/sidebar.service';
 
 @Component({
-    selector   : 'comgo-theme-options',
+    selector   : 'ComGo-theme-options',
     templateUrl: './theme-options.component.html',
     styleUrls  : ['./theme-options.component.scss'],
-    animations : comgoAnimations
+    animations : ComGoAnimations
 })
-export class comgoThemeOptionsComponent implements OnInit, OnDestroy
+export class ComGoThemeOptionsComponent implements OnInit, OnDestroy
 {
-    comgoConfig: any;
+    ComGoConfig: any;
     form: FormGroup;
 
     @HostBinding('class.bar-closed')
@@ -29,16 +29,16 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {FormBuilder} _formBuilder
-     * @param {comgoConfigService} _comgoConfigService
-     * @param {comgoNavigationService} _comgoNavigationService
-     * @param {comgoSidebarService} _comgoSidebarService
+     * @param {ComGoConfigService} _ComGoConfigService
+     * @param {ComGoNavigationService} _ComGoNavigationService
+     * @param {ComGoSidebarService} _ComGoSidebarService
      * @param {Renderer2} _renderer
      */
     constructor(
         private _formBuilder: FormBuilder,
-        private _comgoConfigService: comgoConfigService,
-        private _comgoNavigationService: comgoNavigationService,
-        private _comgoSidebarService: comgoSidebarService,
+        private _ComGoConfigService: ComGoConfigService,
+        private _ComGoNavigationService: ComGoNavigationService,
+        private _ComGoSidebarService: ComGoSidebarService,
         private _renderer: Renderer2
     )
     {
@@ -90,12 +90,12 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
         });
 
         // Subscribe to the config changes
-        this._comgoConfigService.config
+        this._ComGoConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
 
                 // Update the stored config
-                this.comgoConfig = config;
+                this.ComGoConfig = config;
 
                 // Set the config form values without emitting an event
                 // so that we don't end up with an infinite loop
@@ -119,7 +119,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
             .subscribe((config) => {
 
                 // Update the config
-                this._comgoConfigService.config = config;
+                this._ComGoConfigService.config = config;
             });
 
         // Add customize nav item that opens the bar programmatically
@@ -141,7 +141,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
             ]
         };
 
-        this._comgoNavigationService.addNavigationItem(customFunctionNavItem, 'end');
+        this._ComGoNavigationService.addNavigationItem(customFunctionNavItem, 'end');
     }
 
     /**
@@ -154,7 +154,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
 
         // Remove the custom function menu
-        this._comgoNavigationService.removeNavigationItem('custom-function');
+        this._ComGoNavigationService.removeNavigationItem('custom-function');
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-comgo-dark-700-bg',
+                            background: 'mat-ComGo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'left',
@@ -191,7 +191,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'below-static'
                         },
                         footer : {
-                            background: 'mat-comgo-dark-900-bg',
+                            background: 'mat-ComGo-dark-900-bg',
                             hidden    : false,
                             position  : 'below-static'
                         }
@@ -208,7 +208,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-comgo-dark-700-bg',
+                            background: 'mat-ComGo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'left',
@@ -220,7 +220,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'below'
                         },
                         footer : {
-                            background: 'mat-comgo-dark-900-bg',
+                            background: 'mat-ComGo-dark-900-bg',
                             hidden    : false,
                             position  : 'below'
                         }
@@ -237,7 +237,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-comgo-dark-700-bg',
+                            background: 'mat-ComGo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'left',
@@ -249,7 +249,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'above-static'
                         },
                         footer : {
-                            background: 'mat-comgo-dark-900-bg',
+                            background: 'mat-ComGo-dark-900-bg',
                             hidden    : false,
                             position  : 'above-static'
                         }
@@ -266,7 +266,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                     layout: {
                         width  : 'fullwidth',
                         navbar : {
-                            background: 'mat-comgo-dark-700-bg',
+                            background: 'mat-ComGo-dark-700-bg',
                             folded    : false,
                             hidden    : false,
                             position  : 'top',
@@ -278,7 +278,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
                             position  : 'above'
                         },
                         footer : {
-                            background: 'mat-comgo-dark-900-bg',
+                            background: 'mat-ComGo-dark-900-bg',
                             hidden    : false,
                             position  : 'above-fixed'
                         }
@@ -301,7 +301,7 @@ export class comgoThemeOptionsComponent implements OnInit, OnDestroy
      */
     toggleSidebarOpen(key): void
     {
-        this._comgoSidebarService.getSidebar(key).toggleOpen();
+        this._ComGoSidebarService.getSidebar(key).toggleOpen();
     }
 
 }

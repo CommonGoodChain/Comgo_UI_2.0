@@ -1,40 +1,40 @@
 <!-- PROGRESS BAR -->
-<!-- <comgo-progress-bar></comgo-progress-bar> -->
+<!-- <ComGo-progress-bar></ComGo-progress-bar> -->
 <!-- / PROGRESS BAR -->
 
 <!-- VERTICAL LAYOUT 1 -->
-<ng-container *ngIf="comgoConfig.layout.style === 'vertical-layout-1'">
+<ng-container *ngIf="ComGoConfig.layout.style === 'vertical-layout-1'">
     <vertical-layout-1></vertical-layout-1>
 </ng-container>
 <!-- / VERTICAL LAYOUT 1 -->
 
 <!-- VERTICAL LAYOUT 2 -->
-<ng-container *ngIf="comgoConfig.layout.style === 'vertical-layout-2'">
+<ng-container *ngIf="ComGoConfig.layout.style === 'vertical-layout-2'">
     <vertical-layout-2></vertical-layout-2>
 </ng-container>
 <!-- / VERTICAL LAYOUT 2 -->
 
 <!-- VERTICAL LAYOUT 3 -->
-<ng-container *ngIf="comgoConfig.layout.style === 'vertical-layout-3'">
+<ng-container *ngIf="ComGoConfig.layout.style === 'vertical-layout-3'">
     <vertical-layout-3></vertical-layout-3>
 </ng-container>
 <!-- / VERTICAL LAYOUT 3 -->
 
 <!-- HORIZONTAL LAYOUT 1 -->
-<ng-container *ngIf="comgoConfig.layout.style === 'horizontal-layout-1'">
+<ng-container *ngIf="ComGoConfig.layout.style === 'horizontal-layout-1'">
     <horizontal-layout-1></horizontal-layout-1>
 </ng-container>
 <!-- / HORIZONTAL LAYOUT 1 -->
 
 <!-- THEME OPTIONS PANEL -->
 <!-- <button mat-icon-button class="mat-primary-bg mat-elevation-z2 theme-options-button"
-[ngClass]="{'right-side-panel': comgoConfig.layout.sidepanel.position === 'right',
-            'side-panel-hidden': comgoConfig.layout.sidepanel.hidden === true}"
+[ngClass]="{'right-side-panel': ComGoConfig.layout.sidepanel.position === 'right',
+            'side-panel-hidden': ComGoConfig.layout.sidepanel.hidden === true}"
 (click)="toggleSidebarOpen('themeOptionsPanel')">
 <mat-icon>settings</mat-icon>
 </button>
 
-<comgo-sidebar name="themeOptionsPanel" class="theme-options-sidebar" position="right">
-<comgo-theme-options></comgo-theme-options>
-</comgo-sidebar> -->
+<ComGo-sidebar name="themeOptionsPanel" class="theme-options-sidebar" position="right">
+<ComGo-theme-options></ComGo-theme-options>
+</ComGo-sidebar> -->
 <!-- / THEME OPTIONS PANEL -->

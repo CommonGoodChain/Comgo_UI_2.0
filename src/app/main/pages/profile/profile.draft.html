@@ -29,7 +29,7 @@
     
                         <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNavbar">
                             <div class="logo ml-16">
-                                <img class="logo-icon" src="assets/images/logos/comgo.png">
+                                <img class="logo-icon" src="assets/images/logos/ComGo.png">
                             </div>
                         </div>
                     </div>
@@ -289,7 +289,7 @@
                                             <div fxFlex="100" fxLayout="column">
                                                 <div fxFlex="50">
                                                     <div fxLayout="row">
-                                                        <div class="comgo-widget-front mat-white-bg mat-elevation-z2"
+                                                        <div class="ComGo-widget-front mat-white-bg mat-elevation-z2"
                                                             fxFlex="20">
                                                             <div style="padding-top:51px;padding-bottom: 50px !important;" fxLayout="column"
                                                                 fxLayoutAlign="center center">
@@ -311,7 +311,7 @@
                                                         </div>
     
                                                         <div style="margin-left: 2em;"
-                                                            class="comgo-widget-front mat-white-bg mat-elevation-z2"
+                                                            class="ComGo-widget-front mat-white-bg mat-elevation-z2"
                                                             fxFlex="20">
                                                             <div style="padding-top:51px;padding-bottom: 50px !important;" fxLayout="column"
                                                                 fxLayoutAlign="center center">
@@ -421,7 +421,7 @@
                                                     </owl-carousel> -->
                                                     <mat-card>
                                                             <div style="height:305px;">
-                                                                <ngx-charts-pie-chart class="pie-chart-container" *comgoIfOnDom
+                                                                <ngx-charts-pie-chart class="pie-chart-container" *ComGoIfOnDom
                                                                     [scheme]="widget6.scheme" [results]="projectData"
                                                                     [legend]="widget6.showLegend"
                                                                     [explodeSlices]="widget6.explodeSlices"
@@ -826,7 +826,7 @@
                                             <div fxFlex="30">
                                                 <mat-card>
                                                     <div style="height:100%;">
-                                                        <ngx-charts-pie-chart class="pie-chart-container" *comgoIfOnDom
+                                                        <ngx-charts-pie-chart class="pie-chart-container" *ComGoIfOnDom
                                                             [scheme]="widget6.scheme" [results]="projectData"
                                                             [legend]="widget6.showLegend"
                                                             [explodeSlices]="widget6.explodeSlices"
@@ -962,7 +962,7 @@
                     </div>
                     <br />
                     <div *ngIf="viewActivities == 0" class="mat-elevation-z1">
-                        <mat-table class="orders-table" #table [dataSource]="milestone" matSort comgoPerfectScrollbar>
+                        <mat-table class="orders-table" #table [dataSource]="milestone" matSort ComGoPerfectScrollbar>
     
                             <ng-container matColumnDef="milestone">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg"
@@ -1044,7 +1044,7 @@
                     </div>
                     <div class="content-card mat-white-bg" *ngIf="viewActivities == 1">
                         <mat-table class="orders-table" #table [dataSource]="activities" multiTemplateDataRows matSort
-                            comgoPerfectScrollbar>
+                            ComGoPerfectScrollbar>
     
                             <!-- Name Column -->
                             <ng-container matColumnDef="activity">
@@ -1351,7 +1351,7 @@
                                 <li *ngFor="let post of timeLine; let ti index ">
                                     <div class="content card container">
                                         <h3>
-                                            <div class="tooltip" style="color: #02579b;"><a href="https://comgo.io/en/"
+                                            <div class="tooltip" style="color: #02579b;"><a href="https://ComGo.io/en/"
                                                     target="_blank" style="color: #02579b;">{{post.txnId | slice:0:38}} </a>
                                             </div>
     
@@ -1564,7 +1564,7 @@
                         <h1><u>To-Do:</u></h1>
                     </div>
                     <mat-table *ngIf="projectStatusForPublish == 'false'" class="orders-table" #table
-                        [dataSource]="todoData" matSort (matSortChange)="sortData($event)" comgoPerfectScrollbar>
+                        [dataSource]="todoData" matSort (matSortChange)="sortData($event)" ComGoPerfectScrollbar>
                         <!-- activity Column -->
                         <ng-container matColumnDef="activity">
                             <mat-header-cell *matHeaderCellDef mat-sort-header="activityData" class="mat-accent-900-bg">
@@ -1622,7 +1622,7 @@
                         <br />
                     </mat-table>
                     <mat-table *ngIf="projectStatusForPublish == 'true'" class="orders-table" #table
-                        [dataSource]="activitiesData" matSort comgoPerfectScrollbar>
+                        [dataSource]="activitiesData" matSort ComGoPerfectScrollbar>
     
                         <!-- Name Column -->
                         <ng-container matColumnDef="activity">

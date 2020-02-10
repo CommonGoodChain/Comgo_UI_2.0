@@ -11,7 +11,7 @@
         </div>
         <br/>
         <div *ngIf="viewActivities == 0" class="mat-elevation-z8">
-            <mat-table class="orders-table" #table [dataSource]="milestone" matSort comgoPerfectScrollbar>
+            <mat-table class="orders-table" #table [dataSource]="milestone" matSort ComGoPerfectScrollbar>
 
                 <ng-container matColumnDef="milestone">
                     <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-accent-900-bg" style="display:flex !important;">{{'Milestone' | translate}}</mat-header-cell>
@@ -77,7 +77,7 @@
         </div>
         <!--Activties  -->
         <div class="content-card mat-white-bg" *ngIf="viewActivities == 1">
-            <mat-table class="orders-table" #table [dataSource]="activities" multiTemplateDataRows matSort comgoPerfectScrollbar>
+            <mat-table class="orders-table" #table [dataSource]="activities" multiTemplateDataRows matSort ComGoPerfectScrollbar>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="activity">

@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { comgoAnimations } from '@comgo/animations';
+import { ComGoAnimations } from '@ComGo/animations';
 import { ProfileService } from '../../profile.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { environment } from 'environments/environment';
-import { comgoTranslationLoaderService } from '@comgo/services/translation-loader.service';
+import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../../layout/i18n/tr';
@@ -19,7 +19,7 @@ import { locale as spanish } from '../../../../../layout/i18n/tr';
     selector: 'profile-timeline',
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.scss'],
-    animations: comgoAnimations
+    animations: ComGoAnimations
 })
 export class ProfileTimelineComponent implements OnInit {
     displayedColumns = ['Activity', 'Validator', 'Status'];
@@ -61,10 +61,10 @@ export class ProfileTimelineComponent implements OnInit {
         private httpClient: HttpClient,
         private http: Http,
         private _matSnackBar: MatSnackBar,
-        private _comgoTranslationLoaderService: comgoTranslationLoaderService,
+        private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
         private _translateService: TranslateService
     ) {
-        this._comgoTranslationLoaderService.loadTranslations(english, spanish);
+        this._ComGoTranslationLoaderService.loadTranslations(english, spanish);
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
