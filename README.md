@@ -1,4 +1,5 @@
 # ComGo
+Welcome to ComGo, please create an account or log in to start tracking your impact
 
 ## API for devlopers
 The ComGo API contains information 
