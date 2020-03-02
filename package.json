@@ -1,7 +1,6 @@
 {
   "name": "ComGo",
   "version": "6.2.4",
-  "license": "https://themeforest.net/licenses/terms/regular",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --ssl true",

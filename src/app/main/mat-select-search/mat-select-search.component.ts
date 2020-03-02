@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2018 Bithost GmbH All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
@@ -123,10 +116,6 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
   /** Label to be shown when no entries are found. Set to null if no message should be shown. */
   @Input() noEntriesFoundLabel = 'No Data Found';
 
-  /**
-    * Whether or not the search field should be cleared after the dropdown menu is closed.
-    * Useful for server-side filtering. See [#3](https://github.com/bithost-gmbh/ngx-mat-select-search/issues/3)
-    */
   @Input() clearSearchInput = true;
 
   /** Disables initial focusing of the input field */

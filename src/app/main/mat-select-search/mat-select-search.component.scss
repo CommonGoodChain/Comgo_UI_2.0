@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2018 Bithost GmbH All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 $mat-menu-side-padding: 16px !default;
 $clear-button-width: 20px;
 $multiple-check-width: 33px;
@@ -20,11 +13,7 @@ $multiple-check-width: 33px;
   border-bottom-style: solid;
   z-index: 100;
   font-size: inherit;
-  /*
-    compensate effects of .mat-datepicker-content
-    (see https://github.com/angular/material2/blob/master/src/lib/datepicker/datepicker-content.scss#L27)
-    TODO: implement proper theming (https://github.com/bithost-gmbh/ngx-mat-select-search/issues/34)
-  */
+  
   box-shadow: none;
   border-radius: 0;
   &.mat-select-search-inner-multiple {

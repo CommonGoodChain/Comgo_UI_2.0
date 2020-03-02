@@ -1,10 +1,3 @@
-/**
- * This class is based on the code in the following projects:
- * https://github.com/zenorocha/select
- * https://github.com/zenorocha/clipboard.js/
- *
- * Both released under MIT license - © Zeno Rocha
- */
 import { Injectable } from '@angular/core';
 
 @Injectable({

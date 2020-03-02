@@ -47,15 +47,6 @@ $code-color-important: $base08;
 $code-color-tag: $base0D;
 $code-color-atrule: $base0C;
 
-// @import "../partials/prism"; 
-/**
- * Prism base code highlighter theme using Sass 
- *
- * @author @MoOx
- * https://github.com/MoOx/sass-prism-theme-base/blob/master/_prism.scss
- * slightly adapted by me, Bram de Haan
- */
-
 // prism selector
 $code-selector: "code[class*=\"language-\"], pre[class*=\"language-\"]";
 $code-selector-block: "pre[class*=\"language-\"]";
@@ -242,16 +233,6 @@ $code-color-punctuation: $code-color-fade !default;
         // &.time
         // &.angle
         // &.fontfamily
-
-        // ruby/vim https://github.com/LeaVerou/prism/pull/18
-        // &.inst-var
-        // &.builtin
-        // &.const
-        // &.symbol
-        //
-        // php https://github.com/LeaVerou/prism/pull/20
-        // &.deliminator
-        // &.function
 
         &.punctuation {
             color: $code-color-punctuation;
