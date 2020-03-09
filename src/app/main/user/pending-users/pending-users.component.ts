@@ -15,6 +15,7 @@ import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
 import { ComGoConfigService } from '@ComGo/services/config.service';
+import { PendingUsersService } from './pending-users.service'
 var introJS = require('intro.js')
 
 @Component({
@@ -56,6 +57,7 @@ export class PendingUsersComponent implements OnInit {
    */
 
     constructor(
+        private pendingUsersService: PendingUsersService,
         private _ComGoConfigService: ComGoConfigService,
         private router: Router,
         private http: Http,
@@ -145,10 +147,11 @@ export class PendingUsersComponent implements OnInit {
     }
 
     showPage() {
-        this.httpCLient.get(this.urlPort + "/api/users/getAllUser/" + sessionStorage.getItem('userType') + "/pendingUser/noOrg", { withCredentials: true })
-            .map(
-                (response) => response
-            )
+         /**
+         * @author Kuldeep
+         * @description This function will return users which are not yet approved.
+         */
+        this.pendingUsersService.getPendingUsers()
             .catch((err) => {
                 var error = err["_body"]
                 if (error == "session expired") {
@@ -161,7 +164,7 @@ export class PendingUsersComponent implements OnInit {
                 this.dataSource.sort = this.sort;
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
                 // this.notification.Success(res['response']);
                 // this.router.navigate(['/components/collections'])
                 var users = [];
@@ -254,8 +257,13 @@ export class PendingUsersComponent implements OnInit {
                         data.status = stat
                     }
                     this.loading1 = true
-                    this.httpCLient.post(this.urlPort + "/api/users/approveUser", data, { withCredentials: true })
-                        .catch((err) => {
+                    
+                    /**
+                    * @author Kuldeep
+                    * @description This function is used to approve or reject user.
+                    */
+                    this.pendingUsersService.approveRejectUser(data)
+                    .catch((err) => {
                             this.loading1 = false
                             var error = err["_body"]
                             if (error == "session expired") {
@@ -264,7 +272,7 @@ export class PendingUsersComponent implements OnInit {
                             }
                             return Observable.throw(err)
                         })
-                        .subscribe((res: Response) => {
+                        .then(res => {
                             this.loading1 = false
                             if (stat == 'activate') {
                                 var snackBar = this._translateService.instant("User Activated");
