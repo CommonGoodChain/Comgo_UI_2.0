@@ -13,6 +13,7 @@ import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loade
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import { TranslateService } from "@ngx-translate/core";
+import { ResetPassword2Service } from './reset-password2.service'
 @Component({
     selector: 'reset-password-2',
     templateUrl: './reset-password-2.component.html',
@@ -36,6 +37,7 @@ export class ResetPassword2Component implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
+        private resetPassword2Service: ResetPassword2Service,
         private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
@@ -118,14 +120,17 @@ export class ResetPassword2Component implements OnInit, OnDestroy {
             "username": this.username,
             "password": password
         }
-        this.http.post(this.urlPort + "/api/users/checkPassword", body)
-            .map(
-                (response) => response.json()
-            )
-            .catch((err) => {
+
+        /**
+ * @author Kuldeep
+ * @param: body- JSON  consist of projectId
+ * @description This function will check user old password
+ */
+        this.resetPassword2Service.checkPassword(body)
+        .catch((err) => {
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
                 //   $("#reset").prop("disabled",false)
             })
     }
@@ -146,19 +151,26 @@ export class ResetPassword2Component implements OnInit, OnDestroy {
             "username": this.username,
             "password": formData.oldPassword
         }
-        this.http.post(this.urlPort + "/api/users/checkPassword", body)
-            .map(
-                (response) => response.json()
-            )
-            .catch((err) => {
+        
+        /**
+ * @author Kuldeep
+ * @param: body- JSON  consist of projectId
+ * @description This function will check user old password
+ */
+        this.resetPassword2Service.checkPassword(body)
+        .catch((err) => {
                 this.openSnackBar("Incorrect Password");
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
                 formData.username = this.username;
-                this.http.get("https://ipinfo.io/")
-                    .subscribe(
-                        (res: Response) => {
+
+                /**
+                * @author Kuldeep
+                * @description This function will return Current Location of the system.
+                */
+                this.resetPassword2Service.getCurrentLocation()
+                    .then(res => {
                             this.myip = res.json().loc;
                             var body = {
                                 "username": this.username,
@@ -167,14 +179,17 @@ export class ResetPassword2Component implements OnInit, OnDestroy {
                                 "longitude": parseFloat(this.myip.split(",")[1]),
                                 "ip": window.location.origin
                             }
-                            this.http.post(this.urlPort + "/api/users/changePassword", body)
-                                .map(
-                                    (response) => response.json()
-                                )
-                                .catch((err) => {
+
+                            /**
+                            * @author Kuldeep
+                            * @param: body- JSON  consist of username, password, latitude, longitude, ip.
+                            * @description This function will change password
+                            */
+                            this.resetPassword2Service.changePassword(body)
+                            .catch((err) => {
                                     return Observable.throw(err)
                                 })
-                                .subscribe((res: Response) => {
+                                .then(res => {
                                     var body = res;
                                     if (this.createFlag == 1) {
                                         if (this.role == 'donor') {
@@ -212,17 +227,18 @@ export class ResetPassword2Component implements OnInit, OnDestroy {
      * function ends here
      */
 
+     /**
+ * @author Kuldeep
+ * @description This function will check session
+ */
     getSessionData() {
 
-        this.http.get(this.urlPort + "/api/session/name", { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-            .map(
-                (response) => response.json()
-            )
-            .catch((err) => {
+        this.resetPassword2Service.getSessionData()
+        .catch((err) => {
                 // this.notification.Info(err['_body']);
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
             })
     }
 }

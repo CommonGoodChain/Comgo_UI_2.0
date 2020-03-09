@@ -4,7 +4,7 @@ import { ComGoAnimations } from '@ComGo/animations';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Response, Http, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
@@ -13,6 +13,7 @@ import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loade
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { TranslateService } from '@ngx-translate/core';
+import { DonorFormService } from './donor-form.service'
 
 declare let paypal: any;
 
@@ -58,6 +59,7 @@ export class DonorFormComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
+    private donorFormService:  DonorFormService,
     private _formBuilder: FormBuilder,
     private _matSnackBar: MatSnackBar,
     private routerData: ActivatedRoute,
@@ -134,25 +136,6 @@ export class DonorFormComponent implements OnInit {
         paypal.Button.render(this.paypalConfig, '#paypal-button');
       });
     }
-
-    // this.httpClient.get(this.urlPort + "/api/donates/getCurrencies", { withCredentials: true })
-    // .map(
-    //   (response) => response
-    // )
-    // .catch((err) => {
-    //   var error = err["_body"]
-    //   if (error == "session expired") {
-    //     this.sessionSnackBar(err["_body"]);
-    //     this.router.navigate(['/pages/auth/login-2']);
-    //   } else {
-    //     var snackBar = this._translateService.instant("Failed to get Mode of Payment");
-    //     this.openSnackBar(snackBar);
-    //   }
-    //   return Observable.throw(err)
-    // })
-    // .subscribe((res: Response) => {
-      
-    // })
   }
 
   getDropDowns() {
@@ -170,49 +153,49 @@ export class DonorFormComponent implements OnInit {
     }
     ]
 
-    this.httpClient.get(this.urlPort + "/api/donationType/all", { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
-        var error = err["_body"]
-        if (error == "session expired") {
-          this.sessionSnackBar(err["_body"]);
-          this.router.navigate(['/pages/auth/login-2']);
-        } else {
-          var snackBar = this._translateService.instant("Failed to get Donation Type");
-          this.openSnackBar(snackBar);
-        }
-        return Observable.throw(err)
-      })
-      .subscribe((res: Response) => {
-        this.donation = res;
-      });
+    /**
+    * @author Kuldeep
+    * @description This function will return All donation types.
+    */
+    this.donorFormService.getDonationType().then(res => {
+      this.donation = res;
+    }).catch((err) => {
+      var error = err["_body"]
+      if (error == "session expired") {
+        this.sessionSnackBar(err["_body"]);
+        this.router.navigate(['/pages/auth/login-2']);
+      } else {
+        var snackBar = this._translateService.instant("Failed to get Donation Type");
+        this.openSnackBar(snackBar);
+      }
+      return Observable.throw(err)
+    })
 
-    this.httpClient.get(this.urlPort + "/api/donates/getAllNotification", { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
-        var error = err["_body"]
-        if (error == "session expired") {
-          this.sessionSnackBar(err["_body"]);
-          this.router.navigate(['/pages/auth/login-2']);
-        } else {
-          var snackBar = this._translateService.instant("Failed to get Notification");
-          this.openSnackBar(snackBar);
-        }
-        return Observable.throw(err)
-      })
-      .subscribe((res: Response) => {
-        this.notification = res;
-      })
+    /**
+    * @author Kuldeep
+    * @description This function will return All Notification Types.
+    */
+    this.donorFormService.getAllNotification().then(res => {
+      this.notification = res;
+    }).catch((err) => {
+      var error = err["_body"]
+      if (error == "session expired") {
+        this.sessionSnackBar(err["_body"]);
+        this.router.navigate(['/pages/auth/login-2']);
+      } else {
+        var snackBar = this._translateService.instant("Failed to get Notification");
+        this.openSnackBar(snackBar);
+      }
+      return Observable.throw(err)
+    })
 
-    this.httpClient.get(this.urlPort + "/api/modeofpayment/all", { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
+    /**
+    * @author Kuldeep
+    * @description This function will return All Mode of Payment.
+    */
+    this.donorFormService.getModeOfPayment().then(res => {
+        this.modeOfPaymentForFoun = res;
+    }).catch((err) => {
         var error = err["_body"]
         if (error == "session expired") {
           this.sessionSnackBar(err["_body"]);
@@ -223,22 +206,15 @@ export class DonorFormComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
-        // var tableData = [];
-        //   for (var i = 0; i < this.modeOfPay.length; i++) {
-        //     if (this.modeOfPay[i].paymentType !== 'Cash' && this.modeOfPay[i].paymentType !== 'Crypto Currency') {
-        //       tableData.push(this.modeOfPay[i])
-        //     }
-        //   }
-          this.modeOfPaymentForFoun = res;
 
-      })
-
-    this.httpClient.get(this.urlPort + "/api/currency/all", { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
+      /**
+      * @author Kuldeep
+      * @description This function will return All Currencies.
+      */
+      this.donorFormService.getAllCurrencies().then(res => {
+        this.getCurrency = res;
+        this.currencyArray = this.getCurrency
+      }).catch((err) => {
         var error = err["_body"]
         if (error == "session expired") {
           this.sessionSnackBar(err["_body"]);
@@ -248,10 +224,6 @@ export class DonorFormComponent implements OnInit {
         this.openSnackBar(snackBar);
         }
         return Observable.throw(err)
-      })
-      .subscribe((res: Response) => {
-        this.getCurrency = res;
-        this.currencyArray = this.getCurrency
       })
   }
 
@@ -295,8 +267,22 @@ export class DonorFormComponent implements OnInit {
           donationData.projectOwner = sessionStorage.getItem("projectOwnerForProjectProfile");
           donationData.projectCurrency = sessionStorage.getItem("currency");
           donationData.donationType = this.donationType
-              this.httpClient.post(this.urlPort + "/api/donates/create", donationData, { withCredentials: true })
-                .catch((err) => {
+
+          /**
+          * @author Kuldeep
+          * @description This function is used by user to donate to project.
+          */
+          this.donorFormService.donorDonate(donationData).then(res => {
+            var donationSuccessful = this._translateService.instant('Donation Successful');
+                  this.loading1 = false;
+                  if(this.projectIdForLogin != undefined && this.projectIdForLogin != null && this.projectIdForLogin != ''){
+                    this.router.navigate(['/user/user/myOrganization'])
+                  } else {
+                  // this.router.navigate([this.routeBack])
+                  history.back()
+                  }
+                  this.openSnackBar(donationSuccessful);
+          }).catch((err) => {
                   this.loading1 = false;
                   var error = err["_body"]
                   if (error == "session expired") {
@@ -307,17 +293,6 @@ export class DonorFormComponent implements OnInit {
                     this.openSnackBar(snackBar)
                   }
                   return Observable.throw(err)
-                })
-                .subscribe((res: Response) => {
-                  var donationSuccessful = this._translateService.instant('Donation Successful');
-                  this.loading1 = false;
-                  if(this.projectIdForLogin != undefined && this.projectIdForLogin != null && this.projectIdForLogin != ''){
-                    this.router.navigate(['/user/user/myOrganization'])
-                  } else {
-                  // this.router.navigate([this.routeBack])
-                  history.back()
-                  }
-                  this.openSnackBar(donationSuccessful);
                 })
         }
         else {
@@ -361,32 +336,31 @@ export class DonorFormComponent implements OnInit {
                   var path = './donorUploads/' + this.routerData.snapshot.paramMap.get('projectId') + '/'+ sessionStorage.getItem("username")+ '/'
                   var fd = new FormData();
                   fd.append('file', this.file, randomImageId + this.file['name'])
-                  this.http.post(this.urlPort + "/api/filesUpload/saveFile" + "?path=" + path +"&purpose=" +purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-                    .map(
-                      (response) => response.json()
-                    )
-                    .catch((err) => {
-                      this.loading1 = false;
-                      var error = err["_body"]
-                      if (error == "session expired") {
-                        this.sessionSnackBar(err["_body"]);
-                        this.router.navigate(['/pages/auth/login-2']);
-                      }
-                      return Observable.throw(err)
-                    })
-                    .subscribe((res: Response) => {
-                      var result = res;
+
+                  /**
+                  * @author Kuldeep
+                  * @description This function is used by user to upload file while donation.
+                  */
+                  this.donorFormService.donationFileUpload(path,purpose,fd).then(res => {
+                    var result = res;
                       hash = result["hash"];
                     donationData.fileHash =  hash
                   donationData.fileName = randomImageId + this.file['name'];
                   donationData.filePath = '/donorUploads/' + this.routerData.snapshot.paramMap.get('projectId') + '/'+ sessionStorage.getItem("username")+ '/';
                   donationData.projectCurrency = sessionStorage.getItem("currency");
                   donationData.donationType = this.donationType
-                  this.httpClient.post(this.urlPort + "/api/donates/foundationDonate", donationData, { withCredentials: true })
-                    .map(
-                      (response) => response
-                    )
-                    .catch((err) => {
+
+                  /**
+                  * @author Kuldeep
+                  * @description This function is used by user to donate to project if does not have donate permission.
+                  */
+                  this.donorFormService.foundationDonate(donationData).then(res => {
+                    var donationSuccessful = this._translateService.instant('Donation Successful');
+                      this.loading1 = false;
+                      // this.router.navigate([this.routeBack])
+                      history.back()
+                      this.openSnackBar(donationSuccessful);
+                  }).catch((err) => {
                       this.loading1 = false;
                       var error = err["_body"]
                       if (error == "session expired") {
@@ -398,13 +372,14 @@ export class DonorFormComponent implements OnInit {
                       }
                       return Observable.throw(err)
                     })
-                    .subscribe(res => {
-                      var donationSuccessful = this._translateService.instant('Donation Successful');
-                      this.loading1 = false;
-                      // this.router.navigate([this.routeBack])
-                      history.back()
-                      this.openSnackBar(donationSuccessful);
-                    })
+                  }).catch((err) => {
+                    this.loading1 = false;
+                    var error = err["_body"]
+                    if (error == "session expired") {
+                      this.sessionSnackBar(err["_body"]);
+                      this.router.navigate(['/pages/auth/login-2']);
+                    }
+                    return Observable.throw(err)
                   })
                 } else {
                   this.loading1 = false;
@@ -419,48 +394,48 @@ export class DonorFormComponent implements OnInit {
                   var path = './donorUploads/' + this.routerData.snapshot.paramMap.get('projectId') + '/'+ sessionStorage.getItem("username")+ '/'
                   var fd = new FormData();
                   fd.append('file', this.file, randomImageId + this.file['name'])
-                  this.http.post(this.urlPort + "/api/filesUpload/saveFile" + "?path=" + path +"&purpose=" +purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-                    .map(
-                      (response) => response.json()
-                    )
-                    .catch((err) => {
-                      this.loading1 = false;
-                      var error = err["_body"]
-                      if (error == "session expired") {
-                        this.sessionSnackBar(err["_body"]);
-                        this.router.navigate(['/pages/auth/login-2']);
-                      }
-                      return Observable.throw(err)
-                    })
-                    .subscribe((res: Response) => {
-                      var result = res;
-                      hash = result["hash"];
-                    donationData.fileHash =  hash
-                  donationData.fileName = randomImageId + this.file['name'];
-                  donationData.filePath = '/donorUploads/' + this.routerData.snapshot.paramMap.get('projectId') + '/'+ sessionStorage.getItem("username")+ '/';
-                  this.httpClient.post(this.urlPort + "/api/donates/foundationDonate", donationData, { withCredentials: true })
-                    .map(
-                      (response) => response
-                    )
-                    .catch((err) => {
-                      this.loading1 = false;
-                      var error = err["_body"]
-                      if (error == "session expired") {
-                        this.sessionSnackBar(err["_body"]);
-                        this.router.navigate(['/pages/auth/login-2']);
-                      } else {
-                        var snackBar = this._translateService.instant("Donation Unsuccessful");
-                        this.openSnackBar(snackBar)
-                      }
-                      return Observable.throw(err)
-                    })
-                    .subscribe((res: Response) => {
-                      var donationSuccessful = this._translateService.instant('Donation Successful');
-                      this.loading1 = false;
-                      // this.router.navigate([this.routeBack])
-                      history.back()
-                      this.openSnackBar(donationSuccessful);
-                    })
+
+                  /**
+                  * @author Kuldeep
+                  * @description This function is used by user to upload file while donation.
+                  */
+                  this.donorFormService.donationFileUpload(path,purpose,fd).then(res => {
+                    var result = res;
+                    hash = result["hash"];
+                  donationData.fileHash =  hash
+                donationData.fileName = randomImageId + this.file['name'];
+                donationData.filePath = '/donorUploads/' + this.routerData.snapshot.paramMap.get('projectId') + '/'+ sessionStorage.getItem("username")+ '/';
+                
+                /**
+                * @author Kuldeep
+                * @description This function is used by user to donate to project if does not have donate permission.
+                */
+                this.donorFormService.foundationDonate(donationData).then(res => {
+                  var donationSuccessful = this._translateService.instant('Donation Successful');
+                    this.loading1 = false;
+                    // this.router.navigate([this.routeBack])
+                    history.back()
+                    this.openSnackBar(donationSuccessful);
+                }).catch((err) => {
+                    this.loading1 = false;
+                    var error = err["_body"]
+                    if (error == "session expired") {
+                      this.sessionSnackBar(err["_body"]);
+                      this.router.navigate(['/pages/auth/login-2']);
+                    } else {
+                      var snackBar = this._translateService.instant("Donation Unsuccessful");
+                      this.openSnackBar(snackBar)
+                    }
+                    return Observable.throw(err)
+                  })
+                  }).catch((err) => {
+                    this.loading1 = false;
+                    var error = err["_body"]
+                    if (error == "session expired") {
+                      this.sessionSnackBar(err["_body"]);
+                      this.router.navigate(['/pages/auth/login-2']);
+                    }
+                    return Observable.throw(err)
                   })
             }
           } else {
@@ -494,29 +469,25 @@ export class DonorFormComponent implements OnInit {
                   this.loading1 = true;
                   donationData.donationType = this.donationType
                   donationData.projectCurrency = sessionStorage.getItem("currency");
-                  this.httpClient.post(this.urlPort + "/api/donates/foundationDonate", donationData, { withCredentials: true })
-                    .map(
-                      (response) => response
-                    )
-                    .catch((err) => {
-                      this.loading1 = false;
-                      var error = err["_body"]
-                      if (error == "session expired") {
-                        this.sessionSnackBar(err["_body"]);
-                        this.router.navigate(['/pages/auth/login-2']);
-                      } else {
-                        var snackBar = this._translateService.instant("Donation Unsuccessful");
-                        this.openSnackBar(snackBar)
-                      }
-                      return Observable.throw(err)
-                    })
-                    .subscribe(res => {
-                      var donationSuccessful = this._translateService.instant('Donation Successful');
+
+                  this.donorFormService.foundationDonate(donationData).then(res => {
+                    var donationSuccessful = this._translateService.instant('Donation Successful');
                       this.loading1 = false;
                       // this.router.navigate([this.routeBack])
                       history.back()
                       this.openSnackBar(donationSuccessful);
-                    })
+                  }).catch((err) => {
+                    this.loading1 = false;
+                    var error = err["_body"]
+                    if (error == "session expired") {
+                      this.sessionSnackBar(err["_body"]);
+                      this.router.navigate(['/pages/auth/login-2']);
+                    } else {
+                      var snackBar = this._translateService.instant("Donation Unsuccessful");
+                      this.openSnackBar(snackBar)
+                    }
+                    return Observable.throw(err)
+                  })
                 } else {
                   this.loading1 = false;
                 }
@@ -526,11 +497,14 @@ export class DonorFormComponent implements OnInit {
               donationData.fileName = this.fileName;
               donationData.projectCurrency = sessionStorage.getItem("currency");
               donationData.donationType = this.donationType
-                  this.httpClient.post(this.urlPort + "/api/donates/foundationDonate", donationData, { withCredentials: true })
-                    .map(
-                      (response) => response
-                    )
-                    .catch((err) => {
+
+              this.donorFormService.foundationDonate(donationData).then(res => {
+                var donationSuccessful = this._translateService.instant('Donation Successful');
+                this.loading1 = false;
+                // this.router.navigate([this.routeBack])
+                history.back()
+                this.openSnackBar(donationSuccessful);
+              }).catch((err) => {
                       this.loading1 = false;
                       var error = err["_body"]
                       if (error == "session expired") {
@@ -541,13 +515,6 @@ export class DonorFormComponent implements OnInit {
                         this.openSnackBar(snackBar)
                       }
                       return Observable.throw(err)
-                    })
-                    .subscribe((res: Response) => {
-                      var donationSuccessful = this._translateService.instant('Donation Successful');
-                      this.loading1 = false;
-                      // this.router.navigate([this.routeBack])
-                      history.back()
-                      this.openSnackBar(donationSuccessful);
                     })
             }
           } else {
@@ -709,21 +676,21 @@ export class DonorFormComponent implements OnInit {
   }
 
   checkPaypalSession() {
-    this.http.post(this.urlPort + "/api/checkRegisterSession", { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-      .map(
-        (response) => response.json()
-      )
-      .catch((err) => {
-        this.loading1 = false;
-        var error = err["_body"]
-        if (error == "session expired") {
-          this.sessionSnackBar(err["_body"]);
-          this.router.navigate(['/pages/auth/login-2']);
-        }
-        return Observable.throw(err)
-      })
-      .subscribe((res: Response) => {
-      })
+    /**
+    * @author Kuldeep
+    * @description This function is used by user to refresh session.
+    */
+    this.donorFormService.checkRegisterSession().then(res => {
+
+    }).catch((err) => {
+      this.loading1 = false;
+      var error = err["_body"]
+      if (error == "session expired") {
+        this.sessionSnackBar(err["_body"]);
+        this.router.navigate(['/pages/auth/login-2']);
+      }
+      return Observable.throw(err)
+    })
   }
 
   backToProjectAbout(){

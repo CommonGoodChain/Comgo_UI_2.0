@@ -1,17 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { Subject } from 'rxjs';
 import { ComGoAnimations } from '@ComGo/animations';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-
+import { ProjectcommunicationService } from './projectcommunication.service'
 
 @Component({
   selector: 'app-projectcommunication',
@@ -56,13 +53,10 @@ export class ProjectcommunicationComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
+    private projectCommunicationService: ProjectcommunicationService,
     private _formBuilder: FormBuilder,
-    private _location: Location,
     private _matSnackBar: MatSnackBar,
-    private routerData: ActivatedRoute,
     private router: Router,
-    private http: Http,
-    private httpClient: HttpClient,
     private _translateService: TranslateService,
     public dialog: MatDialog,
   ) {
@@ -85,10 +79,13 @@ export class ProjectcommunicationComponent implements OnInit {
     this.projectId = sessionStorage.getItem('projectIdForProjectProfile');
     this.loading1 = true;
 
-    this.httpClient.get(this.urlPort + "/api/projects/getByProjId/" + this.projectId, { withCredentials: true })
-      .map(
-        (response) => response
-      ).catch((err) => {
+    /**
+    * @author Kuldeep
+    * @param: projectId- Project Id of a Project
+    * @description This function will return Project Details
+    */
+    this.projectCommunicationService.getProjectDetails(this.projectId)
+        .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
         if (error == "session expired") {
@@ -97,7 +94,7 @@ export class ProjectcommunicationComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe(res => {
+      .then(res => {
         var projectsAll
         projectsAll = res
         this.loading1 = false;
@@ -139,10 +136,15 @@ export class ProjectcommunicationComponent implements OnInit {
           this.organizationName = sessionStorage.getItem("organizationName");
           var path = './crmFiles/'
           var purpose = 'saveCRMFile'
-          this.http.post(this.urlPort + "/api/filesUpload/saveFile" + "?path=" + path + "&purpose=" + purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-            .map(
-              (response) => response.json()
-            )
+
+          /**
+        * @author Kuldeep
+        * @param: path- Path where file should upload
+        * @param: purpose- Purpose of file upload
+        * @param: fd- File to upload
+        * @description This function is used to upload file.
+        */
+          this.projectCommunicationService.uploadFile(path,purpose,fd)
             .catch((err) => {
               var error = err["_body"]
               this.loading1 = false;
@@ -153,11 +155,14 @@ export class ProjectcommunicationComponent implements OnInit {
               // this.notification.Info(err['_body']);
               return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
-              this.httpClient.post(this.urlPort + "/api/projectcommunication/saveEmail", dataForEmail, { withCredentials: true })
-                .map(
-                  (response) => response
-                )
+            .then(res => {
+
+              /**
+              * @author Kuldeep
+              * @param: dataForEmail- Notification Data
+              * @description This function will send Notification to Donors.
+              */
+              this.projectCommunicationService.sendNotification(dataForEmail)
                 .catch((err) => {
                   var error = err["_body"]
                   this.loading1 = false;
@@ -171,7 +176,7 @@ export class ProjectcommunicationComponent implements OnInit {
                   // this.notification.Info(err['_body']);
                   return Observable.throw(err)
                 })
-                .subscribe((res: Response) => {
+                .then(res => {
                   this.loading1 = false;
                   var snackBar = this._translateService.instant("Email sent successfully!!!");
                   this.openSnackBar(snackBar);
@@ -197,10 +202,13 @@ export class ProjectcommunicationComponent implements OnInit {
         this.addDialogResult = result;
         if (this.addDialogResult == 'yes') {
           this.loading1 = true;
-          this.httpClient.post(this.urlPort + "/api/projectcommunication/saveEmail", dataForEmail, { withCredentials: true })
-            .map(
-              (response) => response
-            )
+
+          /**
+          * @author Kuldeep
+          * @param: dataForEmail- Notification Data
+          * @description This function will send Notification to Donors.
+          */
+          this.projectCommunicationService.sendNotification(dataForEmail)
             .catch((err) => {
               var error = err["_body"]
               this.loading1 = false;
@@ -214,7 +222,7 @@ export class ProjectcommunicationComponent implements OnInit {
               // this.notification.Info(err['_body']);
               return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
               this.loading1 = false;
               var snackBar = this._translateService.instant("Email sent successfully!!!");
               this.openSnackBar(snackBar);

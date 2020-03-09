@@ -15,6 +15,7 @@ import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import * as $ from 'jquery';
 import { ComGoConfigService } from '@ComGo/services/config.service';
+import { AddProofService } from './add-proof.service'
 
 @Component({
   selector: 'app-add-proof',
@@ -84,13 +85,13 @@ export class AddProofComponent implements OnInit {
    */
   constructor(
     // private _ecommerceProductService: EcommerceProductService,
+    private addProofService: AddProofService,
     private _formBuilder: FormBuilder,
     private _ComGoConfigService: ComGoConfigService,
     private _location: Location,
     private _matSnackBar: MatSnackBar,
     private routerData: ActivatedRoute,
     private router: Router,
-    private httpClient: HttpClient,
     private http: Http,
     private _ComGoTranslationLoaderService: ComGoTranslationLoaderService,
     private _translateService: TranslateService,
@@ -165,10 +166,13 @@ export class AddProofComponent implements OnInit {
         smsBody: ['', [Validators.pattern("[a-zA-Z0-9 -_\.'!/,:~À-ÿ]{1,1000}")]]
       });
     }
-    this.httpClient.get(this.urlPort + "/api/activity/getActivityById/" + this.routerData.snapshot.paramMap.get('activityId'), { withCredentials: true })
-      .map(
-        (response) => response
-      )
+
+    /**
+ * @author Kuldeep
+ * @param activityId Activity Id of a Activity
+ * @description This function will return activity Details
+ */
+    this.addProofService.getActivityData(this.routerData.snapshot.paramMap.get('activityId'))
       .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
@@ -178,7 +182,7 @@ export class AddProofComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe(res => {
+      .then(res => {
         var result = res;
         this.activityName = result["activityName"];
         this.secondaryValidation = result["secondaryValidation"];
@@ -186,14 +190,10 @@ export class AddProofComponent implements OnInit {
       })
 
     /**
-       * @author:sagar
-       * @description:to get activity info by id
-       */
-
-    this.httpClient.get(this.urlPort + "/api/currency/all", { withCredentials: true })
-      .map(
-        (response) => response
-      )
+ * @author Kuldeep
+ * @description This function will return all the currencies
+ */
+    this.addProofService.getAllCurrencies()
       .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
@@ -203,15 +203,16 @@ export class AddProofComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
+      .then(res => {
         this.getCurrency = res;
         this.currencyArray = this.getCurrency;
       })
 
-    this.httpClient.get(this.urlPort + "/api/proofs/getDocTypeForAddProof", { withCredentials: true })
-      .map(
-        (response) => response
-      )
+      /**
+ * @author Kuldeep
+ * @description This function will return proof document types.
+ */
+    this.addProofService.getDocTypes()
       .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
@@ -221,22 +222,20 @@ export class AddProofComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
+      .then(res => {
         this.getDocTypes = res;
       })
 
-    /**
-  * @author: Kuldeep
-  * @argument:none
-  * @description:Get Country Codes
-  */
     var countryCodesBody = {
       sessionCheck: true
     }
-    this.httpClient.post(this.urlPort + "/api/country/countryCodes", countryCodesBody, { withCredentials: true })
-      .map(
-        (response) => response
-      )
+
+     /**
+    * @author Kuldeep
+    * @param countryCodesBody is a json consist of sessionCheck
+    * @description This function will return all the Country Codes.
+    */
+    this.addProofService.getCountryCodes(countryCodesBody)
       .catch((err) => {
         this.loading1 = false;
         // var error = err["_body"]
@@ -249,15 +248,17 @@ export class AddProofComponent implements OnInit {
         // }
         return Observable.throw(err)
       })
-      .subscribe(res => {
+      .then(res => {
         this.getCountryCodes = res;
         this.codeArray = this.getCountryCodes
       })
 
-    this.httpClient.get(this.urlPort + "/api/proofs/all/" + sessionStorage.getItem('activityIdForProfile') + '/' + this.projectId, { withCredentials: true })
-      .map(
-        (response) => response
-      )
+      /**
+ * @author Kuldeep
+ * @param projectId Project Id of a Project
+ * @description This function will return all the Proofs Submitted For Activity.
+ */
+    this.addProofService.getProofSubmittedForActivity(this.projectId)
       .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
@@ -267,7 +268,7 @@ export class AddProofComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
+      .then(res => {
         if (res["length"] > 0) {
           for (var i = 0; i < res["length"]; i++) {
             this.proofAmount = this.proofAmount + res[i].amount;
@@ -280,14 +281,13 @@ export class AddProofComponent implements OnInit {
     for (var i = 0; i < organizations.length; i++) {
       arr.push(organizations[i].OrgName)
     }
+    
     /**
      * @author : Kuldeep.N
-     * @description Get all validators list
+     * @param arr Array of Organizations whose Validator have to fetch
+     * @description Get all validators of organization.
      */
-    this.httpClient.get(this.urlPort + "/api/users/getAllValidator/" + sessionStorage.getItem("username") + "/" + JSON.stringify(arr), { withCredentials: true })
-      .map(
-        (response) => response
-      )
+    this.addProofService.getAllValidators(arr)
       .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
@@ -300,7 +300,7 @@ export class AddProofComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
+      .then(res => {
         this.getData = res;
         var set = []
         // for (var i = 0; i < this.getData.length; i++) {
@@ -317,10 +317,12 @@ export class AddProofComponent implements OnInit {
         this.anotherArray = this.detailsOfValidators
       })
 
-    this.httpClient.get(this.urlPort + "/api/milestone/BKCGetAll/" + this.projectId, { withCredentials: true })
-      .map(
-        (response) => response
-      )
+      /**
+     * @author : Kuldeep.N
+     * @param projectId Project Id of a project.
+     * @description Returns Transactions of a project.
+     */
+    this.addProofService.getProjectTransactions(this.projectId)
       .catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
@@ -330,7 +332,7 @@ export class AddProofComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe((res: any[]) => {
+      .then(res => {
         this.transactions = res.reverse();
         var length = this.transactions.length
         var donationsLength = this.transactions[0].Value.donations.length
@@ -346,10 +348,13 @@ export class AddProofComponent implements OnInit {
       })
 
       if(this.proofId != undefined && this.proofId != '' && this.proofId != null){
-        this.httpClient.get(this.urlPort + "/api/proofs/getProof/" + this.proofId, { withCredentials: true })
-        .map(
-            (response) => response
-        )
+
+        /**
+     * @author : Kuldeep.N
+     * @param proofId MongoId of Proof.
+     * @description Returns Proof Details.
+     */
+        this.addProofService.getProofDetails(this.proofId)
         .catch((err) => {
             this.loading1 = false;
             var error = err["_body"]
@@ -359,7 +364,7 @@ export class AddProofComponent implements OnInit {
             }
             return Observable.throw(err)
         })
-        .subscribe((res: Response) => {
+        .then(res => {
           $(document).ready(function () {
             $("#otherValidator").attr("disabled", true)
             $("#proofCountryCode").attr("disabled",true)
@@ -444,10 +449,17 @@ export class AddProofComponent implements OnInit {
             proof.documentName = this.file.name;
             var purpose = "uploadProof"
             var path = './uploads/' + proof.projectId + '/' + proof.milestoneId + '/'
-            this.http.post(this.urlPort + "/api/filesUpload/saveFile" + "?path=" + path + "&projectId=" + proof.projectId + "&milestoneId=" + proof.milestoneId + "&purpose=" + purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-              .map(
-                (response) => response.json()
-              )
+
+            /**
+            * @author : Kuldeep.N
+            * @param path Path where file will be stored.
+            * @param projectId Project Id of a Project.
+            * @param milestoneId Milestone Id of a Project
+            * @param purpose Purpose of file upload.
+            * @param fd File to upload.
+            * @description Upload Proof File.
+            */
+            this.addProofService.saveFile(path, proof.projectId, proof.milestoneId, purpose, fd)
               .catch((err) => {
                 this.loading1 = false;
                 var error = err["_body"]
@@ -457,7 +469,7 @@ export class AddProofComponent implements OnInit {
                 }
                 return Observable.throw(err)
               })
-              .subscribe((res: Response) => {
+              .then(res => {
                 var result = res;
                 this.hash = result["hash"];
                 var activityName = this.activityName.substring(0, 25);
@@ -486,10 +498,13 @@ export class AddProofComponent implements OnInit {
                   "milestoneStatus": sessionStorage.getItem("milestoneStatusTillActivity"),
                   "projectStatus": sessionStorage.getItem("projectStatusForProjectProfile")
                 }
-                this.httpClient.post(this.urlPort + "/api/documents/create", doc, { withCredentials: true })
-                  .map(
-                    (response) => response
-                  )
+
+                /**
+                * @author : Kuldeep.N
+                * @param doc Data of Proof Document.
+                * @description Submit Proof Document Data.
+                */
+                this.addProofService.submitProofDocumentData(proof)
                   .catch((err) => {
                     this.loading1 = false;
                     var error = err["_body"]
@@ -499,11 +514,17 @@ export class AddProofComponent implements OnInit {
                     }
                     return Observable.throw(err)
                   })
-                  .subscribe((res: Response) => {
+                  .then(res => {
                     this.documentId = res;
                     proof.documentId = this.documentId.insertedIds[0];
                     proof.hash = this.hash;
-                    this.httpClient.post(this.urlPort + "/api/proofs/create", proof, { withCredentials: true })
+
+                    /**
+                    * @author : Kuldeep.N
+                    * @param proof Proof Data.
+                    * @description Returns Proof Details.
+                    */
+                    this.addProofService.submitProof(proof)
                       .catch((err) => {
                         this.loading1 = false;
                         var error = err["_body"]
@@ -513,10 +534,17 @@ export class AddProofComponent implements OnInit {
                         }
                         return Observable.throw(err)
                       })
-                      .subscribe((res: Response) => {
+                      .then(res => {
                         var status = 'Closed';
                         var milestoneId = proof.milestoneId
-                        this.httpClient.get(this.urlPort + "/api/milestone/updateProofStatus/" + milestoneId + '/' + status, { withCredentials: true })
+
+                        /**
+                        * @author : Kuldeep.N
+                        * @param milestoneId milestoneId.
+                        * @param status Status Value.
+                        * @description Changes Proof Status.
+                        */
+                        this.addProofService.updateProofStatus(milestoneId,status)
                           .catch((err) => {
                             this.loading1 = false;
                             var error = err["_body"]
@@ -526,7 +554,7 @@ export class AddProofComponent implements OnInit {
                             }
                             return Observable.throw(err)
                           })
-                          .subscribe((res: Response) => {
+                          .then(res => {
                             var proofSubmitted = this._translateService.instant('Proof Submitted');
                             this.loading1 = false;
                             var snackBar = this._translateService.instant(proofSubmitted);
@@ -566,10 +594,12 @@ export class AddProofComponent implements OnInit {
       if (updateDialogResult == 'yes') {
         proof.id = this.proofId;
         this.loading1 = true;
-        this.httpClient.put(this.urlPort + "/api/proofs/updateProof", proof, { withCredentials: true })
-          .map(
-            (response) => response
-          )
+        /**
+        * @author : Kuldeep.N
+        * @param proof Updated Proof Data.
+        * @description Update Proof Details.
+        */
+        this.addProofService.updateProof(proof)
           .catch((err) => {
             this.loading1 = false;
             var error = err["_body"]
@@ -579,7 +609,7 @@ export class AddProofComponent implements OnInit {
             }
             return Observable.throw(err)
           })
-          .subscribe((res: Response) => {
+          .then(res => {
             this.loading1 = false;
             var snackBar = this._translateService.instant("Proof Updated");
             this.openSnackBar(snackBar)

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComGoAnimations } from '@ComGo/animations';
 import { Router } from '@angular/router';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Response,Http,Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { environment } from 'environments/environment';
@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { TranslateService }from '@ngx-translate/core';
 import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ProjectuploadsService } from './projectuploads.service'
+
 @Component({
   selector: 'app-projectuploads',
   templateUrl: './projectuploads.component.html',
@@ -41,6 +43,7 @@ export class ProjectuploadsComponent implements OnInit {
    */
   horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
+    private projectUploadsService: ProjectuploadsService,
     private _ComGoConfigService: ComGoConfigService,
     private _matSnackBar: MatSnackBar,
     private router: Router,
@@ -64,15 +67,13 @@ export class ProjectuploadsComponent implements OnInit {
   ngOnInit() {
     this.projectId = sessionStorage.getItem("projectIdForProjectProfile");
     this.projectUploadsPurpose = sessionStorage.getItem("projectUploadsPurpose")
+    
     /**
       * @author: Kuldeep
       * @argument:projectId
-      * @description:Get data of projectFiles by Id
+      * @description:Get data of projectFiles by projectId
       */
-    this.httpClient.get(this.urlPort + "/api/projects/projectFiles/" + this.projectId, { withCredentials: true})
-    .map(
-      (response) => response
-    )
+     this.projectUploadsService.getProjectFiles(this.projectId)
     .catch((err) => {
       this.loading1 = false;
       var error = err["_body"]
@@ -91,7 +92,7 @@ export class ProjectuploadsComponent implements OnInit {
       }
       return Observable.throw(err)
     })
-    .subscribe((res: any[]) => {
+    .then(res => {
       var getData = res;
          var pastEventSet = [];
          var projectSupporterSet = [];
@@ -135,7 +136,13 @@ export class ProjectuploadsComponent implements OnInit {
           id: element._id
         }
         this.loading1 = true;
-        this.httpClient.post(this.urlPort + "/api/filesUpload/deletePastEvent", fileInformation, { withCredentials: true})
+
+        /**
+      * @author: Kuldeep
+      * @param:fileInformation- consist of file path, MongoId of file Info and file name.
+      * @description:Delete Past Event Files
+      */
+        this.projectUploadsService.deletePastEvent(fileInformation)
           .catch((err) => {
             var error = err["_body"]
             if (error == "session expired") {
@@ -148,7 +155,7 @@ export class ProjectuploadsComponent implements OnInit {
             this.loading1 = false;
             return Observable.throw(err)
           })
-          .subscribe((res: Response) => {
+          .then(res => {
             this.loading1 = false;
             var snackBar = this._translateService.instant("Past Event File Deleted");
             this.openSnackBar(snackBar);
@@ -177,8 +184,14 @@ export class ProjectuploadsComponent implements OnInit {
           id: element._id
         }
         this.loading1 = true;
-        this.httpClient.post(this.urlPort + "/api/filesUpload/deleteProjectSupporter", fileInformation, { withCredentials: true })
-          .catch((err) => {
+
+        /**
+      * @author: Kuldeep
+      * @argument:fileInformation- consist of file path, MongoId of file Info and file name.
+      * @description:Delete Project Supporter Files
+      */
+        this.projectUploadsService.deleteProjectSupporter(fileInformation)
+        .catch((err) => {
             var error = err["_body"]
             if (error == "session expired") {
               this.sessionSnackBar(err["_body"]);
@@ -190,7 +203,7 @@ export class ProjectuploadsComponent implements OnInit {
             this.loading1 = false;
             return Observable.throw(err)
           })
-          .subscribe((res: Response) => {
+          .then(res => {
             this.loading1 = false;
             var snackBar = this._translateService.instant("Project Supporter file deleted");
             this.openSnackBar(snackBar);
@@ -226,8 +239,17 @@ export class ProjectuploadsComponent implements OnInit {
       this.loading1 = true;
       var purpose = 'updatePastEvent'
       var path = './ProjectFiles/'+this.projectId+'/ProjectPastEvents/'
-      this.http.post(this.urlPort + "/api/filesUpload/saveFile" + "?path=" + path +"&projectId="+ this.projectId +"&purpose=" + purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-        .catch((err) => {
+
+      /**
+      * @author: Kuldeep
+      * @param:path- path where file should upload
+      * @param:projectId- project id of project
+      * @param:purpose- purpose of file upload
+      * @param:fd- file to upload
+      * @description: Update Project Past Events Files
+      */
+      this.projectUploadsService.uploadProjectFiles(path, this.projectId, purpose, fd)
+      .catch((err) => {
           var error = err["_body"]
           if (error == "session expired") {
             this.sessionSnackBar(err["_body"]);
@@ -239,7 +261,7 @@ export class ProjectuploadsComponent implements OnInit {
           this.loading1 = false;
           return Observable.throw(err)
         })
-        .subscribe((res: Response) => {
+        .then(res => {
           this.loading1 = false;
           var snackBar = this._translateService.instant('Past Event File Updated');
           this.openSnackBar(snackBar);
@@ -272,7 +294,16 @@ export class ProjectuploadsComponent implements OnInit {
       this.loading1 = true;
       var purpose = 'updateProjectSupporter'
       var path = './ProjectFiles/'+this.projectId+'/ProjectSupporters/'
-      this.http.post(this.urlPort + "/api/filesUpload/saveFile/" + "?path=" + path +"&projectId="+ this.projectId +"&purpose=" + purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
+
+      /**
+      * @author: Kuldeep
+      * @param:path- path where file should upload
+      * @param:projectId- project id of project
+      * @param:purpose- purpose of file upload
+      * @param:fd- file to upload
+      * @description: Update Project Supporter Files
+      */
+      this.projectUploadsService.uploadProjectFiles(path, this.projectId, purpose, fd)
       .catch((err) => {
         var error = err["_body"]
         if (error == "session expired") {
@@ -285,7 +316,7 @@ export class ProjectuploadsComponent implements OnInit {
         this.loading1 = false;
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
+      .then(res => {
         var snackBar = this._translateService.instant("Project Supporters file updated");
           this.openSnackBar(snackBar);
         this.loading1 = false;
@@ -299,8 +330,14 @@ export class ProjectuploadsComponent implements OnInit {
   downloadProjectPastEvents(fileName) {
     this.filename = fileName;
     var body = { filename: this.filename, projectId: this.projectId }
-    this.httpClient.post(this.urlPort + "/api/uploadProjectDoc/downloadProjectPastEvents", body, { responseType: "blob",withCredentials: true })
-      .catch((err) => {
+
+    /**
+      * @author: Kuldeep
+      * @param: body- json consist of filename and project id.
+      * @description:Download Past Events Files
+      */
+    this.projectUploadsService.downloadProjectPastEvents(body, this.filename)
+    .catch((err) => {
         var error = err["_body"]
         if (error == "session expired") {
           this.sessionSnackBar(err["_body"]);
@@ -311,7 +348,7 @@ export class ProjectuploadsComponent implements OnInit {
         }
         return Observable.throw(err)
       })
-      .subscribe(res => {
+      .then(res => {
         var URL = window.URL.createObjectURL(res);
         saveAs(res, this.filename)
       })
@@ -321,8 +358,14 @@ export class ProjectuploadsComponent implements OnInit {
 
     this.filename = fileName;
     var body = { filename: this.filename, projectId: this.projectId }
-    this.httpClient.post(this.urlPort + "/api/uploadProjectDoc/downloadProjectSupporter", body, { responseType: "blob",withCredentials: true })
-      .catch((err) => {
+
+    /**
+      * @author: Kuldeep
+      * @argument:body- json consist of filename and project id.
+      * @description:Download Project Supporter Files
+      */
+    this.projectUploadsService.downloadProjectSupporter(body,this.filename)
+    .catch((err) => {
         var error = err["_body"]
         if (error == "session expired") {
           this.sessionSnackBar(err["_body"]);
@@ -332,7 +375,7 @@ export class ProjectuploadsComponent implements OnInit {
           this.openSnackBar(snackBar);        }
         return Observable.throw(err)
       })
-      .subscribe(res => {
+      .then(res => {
         saveAs(res, this.filename)
       })
   }
@@ -358,8 +401,17 @@ export class ProjectuploadsComponent implements OnInit {
       this.loading1 = true;
       var purpose = 'uploadProjectPastEvents'
       var path = './ProjectFiles/'+this.projectId+'/ProjectPastEvents/'
-      this.http.post(this.urlPort + "/api/filesUpload/saveFile" + "?path=" + path +"&projectId="+ this.projectId +"&purpose=" + purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-        .catch((err) => {
+
+      /**
+      * @author: Kuldeep
+      * @param:path- path where file should upload
+      * @param:projectId- project id of project
+      * @param:purpose- purpose of file upload
+      * @param:fd- file to upload
+      * @description: Upload Project Past Events Files
+      */
+      this.projectUploadsService.uploadProjectFiles(path, this.projectId, purpose, fd)
+      .catch((err) => {
           var error = err["_body"]
           if (error == "session expired") {
             this.sessionSnackBar(err["_body"]);
@@ -372,7 +424,7 @@ export class ProjectuploadsComponent implements OnInit {
           this.loading1 = false;
           return Observable.throw(err)
         })
-        .subscribe((res: Response) => {
+        .then(res => {
           var snackBar = this._translateService.instant("Past Event File Uploaded");
           this.openSnackBar(snackBar);
           
@@ -403,8 +455,17 @@ export class ProjectuploadsComponent implements OnInit {
       this.loading1 = true;
       var purpose = "uploadProjectSupporters";
       var path = './ProjectFiles/'+this.projectId+'/ProjectSupporters/'
-      this.http.post(this.urlPort + "/api/filesUpload/saveFile/" + "?path=" + path +"&projectId="+ this.projectId +"&purpose=" + purpose, fd, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-        .catch((err) => {
+
+      /**
+      * @author: Kuldeep
+      * @param:path- path where file should upload
+      * @param:projectId- project id of project
+      * @param:purpose- purpose of file upload
+      * @param:fd- file to upload
+      * @description: Upload Project Supporters Files
+      */
+      this.projectUploadsService.uploadProjectFiles(path, this.projectId, purpose, fd)
+      .catch((err) => {
           var error = err["_body"]
           if (error == "session expired") {
             this.sessionSnackBar(err["_body"]);
@@ -416,7 +477,7 @@ export class ProjectuploadsComponent implements OnInit {
           this.loading1 = false;
           return Observable.throw(err)
         })
-        .subscribe((res: Response) => {
+        .then(res => {
           var snackBar = this._translateService.instant("Project Supporter file uploaded");
           this.openSnackBar(snackBar);
           

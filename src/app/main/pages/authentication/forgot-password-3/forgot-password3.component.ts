@@ -20,7 +20,9 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { map, startWith } from 'rxjs/operators';
+import { ForgotPassword3Service } from './forgot-password-3.service'
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material'
+
 
 @Component({
   selector: 'app-forgot-password3',
@@ -43,11 +45,11 @@ export class ForgotPassword3Component implements OnInit {
    * @param {FormBuilder} _formBuilder
    */
   constructor(
+    private forgotPassword3Service: ForgotPassword3Service,
     private _ComGoConfigService: ComGoConfigService,
     private _formBuilder: FormBuilder,
     private routerData: ActivatedRoute,
     private router: Router,
-    private http: Http,
     private _translateService: TranslateService,
     private _matSnackBar: MatSnackBar,
   ) {
@@ -99,17 +101,20 @@ export class ForgotPassword3Component implements OnInit {
       username: this.username
 
     }
-    this.http.post(this.urlPort + "/api/users/forgotPassword", userdata, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-      .map(
-        (response) => response.json()
-      )
-      .catch((err) => {
+    
+    /**
+ * @author Kuldeep
+ * @param: userdata- JSON  consist of username and new password.
+ * @description This function will change user password.
+ */
+    this.forgotPassword3Service.forgotPassword(userdata)
+    .catch((err) => {
         this.loading1 = false;
         this.openSnackBar("Some error occurs");
         // this.notification.Info(err['_body']);
         return Observable.throw(err)
       })
-      .subscribe((res: Response) => {
+      .then(res => {
         this.openSnackBar("Password reset successfully!!");
         this.router.navigate(['/pages/auth/login-2'])
 

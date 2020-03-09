@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { TranslateService} from '@ngx-translate/core';
 import { ComGoConfigService } from '@ComGo/services/config.service';
+import { MydonationsService } from './mydonations.service'
 
 @Component({
   selector: 'app-mydonations',
@@ -43,6 +44,7 @@ export class MydonationsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
+    private myDonationsService: MydonationsService,
     private _ComGoConfigService: ComGoConfigService,
     private httpClient : HttpClient,
     private router: Router,
@@ -71,30 +73,24 @@ export class MydonationsComponent implements OnInit {
     var userdata = {
       userName: sessionStorage.getItem("username")
     }
-
-    this.httpClient.post(this.urlPort + "/api/alldonor/getMyDonations", userdata, { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
-        this.loading1 = false;
-        var error = err["_body"]
-          if(error == "session expired"){
-            this.sessionSnackBar(err["_body"]);
-            this.router.navigate(['/pages/auth/login-2']);
-          }else{
-            var snackBar = this._translateService.instant("Failed to get list of donor");
-            this.openSnackBar(snackBar);          
-          }
-        return Observable.throw(err)
-      })
-      .subscribe( (res: any[]) => {
-        this.loading1 = false;
+    this.myDonationsService.getMyDonations(userdata).then(res => {
+      this.loading1 = false;
         this.donationInfo = res.reverse();
         this.dataSource = new MatTableDataSource(this.donationInfo);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      })
+    }).catch((err) => {
+      this.loading1 = false;
+      var error = err["_body"]
+        if(error == "session expired"){
+          this.sessionSnackBar(err["_body"]);
+          this.router.navigate(['/pages/auth/login-2']);
+        }else{
+          var snackBar = this._translateService.instant("Failed to get list of donor");
+          this.openSnackBar(snackBar);          
+        }
+      return Observable.throw(err)
+    })
   }
 
   /**
@@ -133,47 +129,47 @@ export class MydonationsComponent implements OnInit {
   audit(index) {
     this.loading1 = true;
     console.log("index: ",index)
-    this.httpClient.get(this.urlPort + "/api/projects/getByProjId/" + index.projectId, { withCredentials: true })
-    .map(
-        (response) => response
-    ).catch((err) => {
-this.loading1 = false;
-var error = err["_body"]
-if (error == "session expired") {
-this.sessionSnackBar(err["_body"]);
-this.router.navigate(['/pages/auth/login-2']);
-}
-return Observable.throw(err)
-})
-.subscribe(res => {
-var projectData = res
-console.log("projectData: ",projectData["SDG"])
-var sdg = JSON.stringify(projectData["SDG"])
-    sessionStorage.setItem("SDG",sdg)
-    sessionStorage.setItem("projectProjectBudgetTillActivity", projectData["projectBudget"]);
-    sessionStorage.setItem("projectCreatedBy", projectData["createdBy"]);
-    sessionStorage.setItem("boardRemarks", projectData["remarks"]);
-    sessionStorage.setItem("descriptionForProjectProfile", projectData["description"]);
-    sessionStorage.setItem("startDateForMilestone", projectData["startDate"]);
-    sessionStorage.setItem("endDateForMilestone", projectData["endDate"]);
-    sessionStorage.setItem("flagForProjectProfile", "db");
-    sessionStorage.setItem("projectIdForProjectProfile", projectData["projectId"]);
-    sessionStorage.setItem("projectNameForProjectProfile", projectData["projectName"]);
-    sessionStorage.setItem("projectFundGoalForProjectProfile", projectData["fundGoal"]);
-    sessionStorage.setItem("projectOwnerForProjectProfile", projectData["owner"]);
-    sessionStorage.setItem("currencyTypeForProjectProfile", projectData["currency"]);
-    sessionStorage.setItem("latForProjectProfile", projectData["projectLoc"].latitude);
-    sessionStorage.setItem("lngForProjectProfile", projectData["projectLoc"].longitude);
-    sessionStorage.setItem("fundRaisedForProjectProfile", projectData["fundRaised"]);
-    sessionStorage.setItem("projectStatusForPublish", projectData["isPublished"]);
-    sessionStorage.setItem("approveStatusForPublish", projectData["isApproved"]);
-    sessionStorage.setItem("fundAllocationType", projectData["fundAllocationType"]);
-    sessionStorage.setItem("fundNotAllocated",projectData["fundNotAllocated"])
-    sessionStorage.setItem("projectStatusForProjectProfile", projectData["status"]);
-    sessionStorage.setItem('organization',JSON.stringify(projectData["organization"]))
-    sessionStorage.setItem('backRoute','/donor/donor/mydonations')
-    this.loading1 = false;
-    this.router.navigate(['/pages/profile', { flag: 'BC'}])
-})
+    /**
+    * @author Kuldeep
+    * @description This function will return project Details
+    */
+    this.myDonationsService.getProjectDetails(index.projectId).then(res => {
+      var projectData = res
+      console.log("projectData: ",projectData["SDG"])
+      var sdg = JSON.stringify(projectData["SDG"])
+          sessionStorage.setItem("SDG",sdg)
+          sessionStorage.setItem("projectProjectBudgetTillActivity", projectData["projectBudget"]);
+          sessionStorage.setItem("projectCreatedBy", projectData["createdBy"]);
+          sessionStorage.setItem("boardRemarks", projectData["remarks"]);
+          sessionStorage.setItem("descriptionForProjectProfile", projectData["description"]);
+          sessionStorage.setItem("startDateForMilestone", projectData["startDate"]);
+          sessionStorage.setItem("endDateForMilestone", projectData["endDate"]);
+          sessionStorage.setItem("flagForProjectProfile", "db");
+          sessionStorage.setItem("projectIdForProjectProfile", projectData["projectId"]);
+          sessionStorage.setItem("projectNameForProjectProfile", projectData["projectName"]);
+          sessionStorage.setItem("projectFundGoalForProjectProfile", projectData["fundGoal"]);
+          sessionStorage.setItem("projectOwnerForProjectProfile", projectData["owner"]);
+          sessionStorage.setItem("currencyTypeForProjectProfile", projectData["currency"]);
+          sessionStorage.setItem("latForProjectProfile", projectData["projectLoc"].latitude);
+          sessionStorage.setItem("lngForProjectProfile", projectData["projectLoc"].longitude);
+          sessionStorage.setItem("fundRaisedForProjectProfile", projectData["fundRaised"]);
+          sessionStorage.setItem("projectStatusForPublish", projectData["isPublished"]);
+          sessionStorage.setItem("approveStatusForPublish", projectData["isApproved"]);
+          sessionStorage.setItem("fundAllocationType", projectData["fundAllocationType"]);
+          sessionStorage.setItem("fundNotAllocated",projectData["fundNotAllocated"])
+          sessionStorage.setItem("projectStatusForProjectProfile", projectData["status"]);
+          sessionStorage.setItem('organization',JSON.stringify(projectData["organization"]))
+          sessionStorage.setItem('backRoute','/donor/donor/mydonations')
+          this.loading1 = false;
+          this.router.navigate(['/pages/profile', { flag: 'BC'}])
+    }).catch((err) => {
+      this.loading1 = false;
+      var error = err["_body"]
+      if (error == "session expired") {
+      this.sessionSnackBar(err["_body"]);
+      this.router.navigate(['/pages/auth/login-2']);
+      }
+      return Observable.throw(err)
+      })
   }
 }

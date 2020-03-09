@@ -12,6 +12,7 @@ import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
+import { MyprojectService } from './myproject.service'
 
 @Component({
   selector: 'app-myproject',
@@ -56,6 +57,7 @@ export class MyprojectComponent implements OnInit {
     * @param {HttpClient} _httpClient
     */
   constructor(
+    private myProjectService: MyprojectService,
     private _matSnackBar: MatSnackBar,
     public dialog: MatDialog,
     private router: Router,
@@ -101,11 +103,67 @@ export class MyprojectComponent implements OnInit {
     var userdata = {
       userName: sessionStorage.getItem("username")
     }
-    this.httpClient.post(this.urlPort + "/api/alldonor/getMyDonations", userdata, { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
+    /**
+ * @author Kuldeep
+ * @description This function will return user donations
+ */
+    this.myProjectService.getMyDonations(userdata).then(res => {
+      this.loading1 = false;
+      var donatedProjects = res;
+      console.log("donatedProjects: ",donatedProjects)
+      /**
+      * @author Kuldeep
+      * @description This function will return Published Projects to organization user
+      */
+      this.myProjectService.getMyProjects().then(res => {
+        this.project = res;
+    var otherProjectDetails = [];
+    for(var i=0;i<this.project.length;i++){
+      var otherSingleProject = {};
+      for(var j=0;j < donatedProjects.length;j++){
+        console.log(this.project[i].Record.projectId,donatedProjects[j].projectId)
+        if(this.project[i].Record.projectId == donatedProjects[j].projectId){
+          otherSingleProject['projectId'] = this.project[i].Key;
+      otherSingleProject['isPublished'] = this.project[i].Record.isPublished;
+      otherSingleProject['fundAllocationType'] = this.project[i].Record.fundAllocationType;
+      otherSingleProject['projectName'] = this.project[i].Record.projectName;
+      otherSingleProject['description'] = this.project[i].Record.description;
+      otherSingleProject['projectType'] = this.project[i].Record.projectType;
+      otherSingleProject['milestones'] = this.project[i].Record.milestones;
+      otherSingleProject['fundGoal'] = this.project[i].Record.fundGoal;
+      otherSingleProject['remarks'] = this.project[i].Record.remarks;
+      otherSingleProject['fundRaised'] = this.project[i].Record.fundRaised;
+      otherSingleProject['owner'] = this.project[i].Record.projectOwner;
+      otherSingleProject['organization'] = this.project[i].Record.organization;
+      otherSingleProject['status'] = "Published";
+      otherSingleProject['fundNotAllocated'] = this.project[i].Record.fundNotAllocated
+      otherSingleProject['currency'] = this.project[i].Record.currency;
+      otherSingleProject['imageUrl'] = "img/project" + "/" + this.project[i].Key;
+      otherSingleProject['SDG'] = this.project[i].Record.SDG;
+      otherSingleProject['projectLoc'] = this.project[i].Record.projectLoc;
+      otherSingleProject['projectBudget'] = this.project[i].Record.projectBudget;
+      otherSingleProject['percentage'] = (otherSingleProject['fundRaised'] * 100) / otherSingleProject['projectBudget']
+      otherSingleProject['bgImageUrl'] = this.imageUrl + '/' + this.project[i].Key + '/img1'
+      otherSingleProject['txnBalance'] = this.project[i].Record.projectBudget - this.project[i].Record.fundRaised;
+      otherProjectDetails.push(otherSingleProject);
+      break;
+        }
+      }
+    }
+    this.otherProject = otherProjectDetails.reverse();
+      }).catch((err) => {
+        var error = err["_body"]
+        if (error == "session expired") {
+          this.sessionSnackBar(err["_body"]);
+          this.router.navigate(['/pages/auth/login-2']);
+        } else {
+          var snackBar = this._translateService.instant("Projects not found");
+          this.openSnackBar(snackBar);
+        }
+        this.loading1 = false;
+        return Observable.throw(err)
+      })
+    }).catch((err) => {
         this.loading1 = false;
         var error = err["_body"]
           if(error == "session expired"){
@@ -117,64 +175,6 @@ export class MyprojectComponent implements OnInit {
           }
         return Observable.throw(err)
       })
-      .subscribe( (res: any[]) => {
-        this.loading1 = false;
-        var donatedProjects = res;
-        console.log("donatedProjects: ",donatedProjects)
-    this.httpClient.get(this.urlPort + '/api/projects/getMyProjects/'+sessionStorage.getItem('userType'), { withCredentials: true})
-    .map(
-      (response) => response
-    )
-    .catch((err) => {
-      var error = err["_body"]
-      if (error == "session expired") {
-        this.sessionSnackBar(err["_body"]);
-        this.router.navigate(['/pages/auth/login-2']);
-      } else {
-        var snackBar = this._translateService.instant("Projects not found");
-        this.openSnackBar(snackBar);
-      }
-      this.loading1 = false;
-      return Observable.throw(err)
-    })
-    .subscribe(res => {
-      this.project = res;
-      var otherProjectDetails = [];
-      for(var i=0;i<this.project.length;i++){
-        var otherSingleProject = {};
-        for(var j=0;j < donatedProjects.length;j++){
-          console.log(this.project[i].Record.projectId,donatedProjects[j].projectId)
-          if(this.project[i].Record.projectId == donatedProjects[j].projectId){
-            otherSingleProject['projectId'] = this.project[i].Key;
-        otherSingleProject['isPublished'] = this.project[i].Record.isPublished;
-        otherSingleProject['fundAllocationType'] = this.project[i].Record.fundAllocationType;
-        otherSingleProject['projectName'] = this.project[i].Record.projectName;
-        otherSingleProject['description'] = this.project[i].Record.description;
-        otherSingleProject['projectType'] = this.project[i].Record.projectType;
-        otherSingleProject['milestones'] = this.project[i].Record.milestones;
-        otherSingleProject['fundGoal'] = this.project[i].Record.fundGoal;
-        otherSingleProject['remarks'] = this.project[i].Record.remarks;
-        otherSingleProject['fundRaised'] = this.project[i].Record.fundRaised;
-        otherSingleProject['owner'] = this.project[i].Record.projectOwner;
-        otherSingleProject['organization'] = this.project[i].Record.organization;
-        otherSingleProject['status'] = "Published";
-        otherSingleProject['fundNotAllocated'] = this.project[i].Record.fundNotAllocated
-        otherSingleProject['currency'] = this.project[i].Record.currency;
-        otherSingleProject['imageUrl'] = "img/project" + "/" + this.project[i].Key;
-        otherSingleProject['SDG'] = this.project[i].Record.SDG;
-        otherSingleProject['projectLoc'] = this.project[i].Record.projectLoc;
-        otherSingleProject['projectBudget'] = this.project[i].Record.projectBudget;
-        otherSingleProject['percentage'] = (otherSingleProject['fundRaised'] * 100) / otherSingleProject['projectBudget']
-        otherSingleProject['bgImageUrl'] = this.imageUrl + '/' + this.project[i].Key + '/img1'
-        otherSingleProject['txnBalance'] = this.project[i].Record.projectBudget - this.project[i].Record.fundRaised;
-        otherProjectDetails.push(otherSingleProject);
-        break;
-          }
-        }
-      }
-      this.otherProject = otherProjectDetails.reverse();
-    })
-  })
   }
   /**
     * @author:Sagar
@@ -219,24 +219,13 @@ export class MyprojectComponent implements OnInit {
     projectId: index.projectId
   }
   this.loading1 = true;
-  this.httpClient.post(this.urlPort + "/api/alldonor/getAllDonorListDB", data, { withCredentials: true })
-    .map(
-      (response) => response
-    )
-    .catch((err) => {
-      var error = err["_body"]
-      if (error == "session expired") {
-        this.sessionSnackBar(err["_body"]);
-        this.router.navigate(['/pages/auth/login-2']);
-      } else {
-        var snackBar = this._translateService.instant("Failed to get list of donor");
-        this.openSnackBar(snackBar);
-      }
-      this.loading1 = false;
-      return Observable.throw(err)
-    })
-    .subscribe(res => {
-      this.donorList = res;
+  /**
+ * @author Kuldeep
+ * @param It contains project Id in JSON format
+ * @description This function will return All the Donations to a Project.
+ */
+  this.myProjectService.getAllDonorListDB(data).then(res => {
+    this.donorList = res;
       for (var i = 0; i < this.donorList.length; i++) {
         if (this.donorList[i].donationType == "Donation") {
 
@@ -259,7 +248,18 @@ export class MyprojectComponent implements OnInit {
       }
       this.loading1 = false;
       this.router.navigate(["/donor/donor/donorForm", { projectId: projectId, projectName: projectName, fundAmount: this.fundAmount, donationType: 'Donation' }])
-    })
+  }).catch((err) => {
+    var error = err["_body"]
+    if (error == "session expired") {
+      this.sessionSnackBar(err["_body"]);
+      this.router.navigate(['/pages/auth/login-2']);
+    } else {
+      var snackBar = this._translateService.instant("Failed to get list of donor");
+      this.openSnackBar(snackBar);
+    }
+    this.loading1 = false;
+    return Observable.throw(err)
+  })
     } else if(donationType == 'selfDonate'){
       this.towardsSelfDonation(index)
     }
@@ -270,71 +270,60 @@ else {
     projectId: index.projectId
   }
   this.loading1 = true;
-  this.httpClient.post(this.urlPort + "/api/alldonor/getAllDonorListDB", data, { withCredentials: true })
-    .map(
-      (response) => response
-    )
-    .catch((err) => {
-      var error = err["_body"]
-      if (error == "session expired") {
-        this.sessionSnackBar(err["_body"]);
-        this.router.navigate(['/pages/auth/login-2']);
-      } else {
-        var snackBar = this._translateService.instant("Failed to get list of donor");
-        this.openSnackBar(snackBar);
-      }
-      this.loading1 = false;
-      return Observable.throw(err)
-    })
-    .subscribe(res => {
-      this.donorList = res;
-      for (var i = 0; i < this.donorList.length; i++) {
-        if (this.donorList[i].donationType == "Donation") {
+  /**
+ * @author Kuldeep
+ * @param It contains project Id in JSON format
+ * @description This function will return All the Donations to a Project.
+ */
+  this.myProjectService.getAllDonorListDB(data).then(res => {
+    this.donorList = res;
+    for (var i = 0; i < this.donorList.length; i++) {
+      if (this.donorList[i].donationType == "Donation") {
 
-          this.donatedAmount = this.donorList[i].amount + this.donatedAmount;
-        } else {
-
-          this.foundationAmount = this.donorList[i].amount + this.foundationAmount;
-        }
-      }
-      sessionStorage.setItem("projectNameForProjectProfile", index.projectName);
-      sessionStorage.setItem("currency", index.currency);
-      sessionStorage.setItem("owner", index.owner);
-      sessionStorage.setItem("projectOwnerForProjectProfile", index.owner);
-      var projectId = index.projectId;
-      var projectName = index.projectName;
-      if (this.foundationAmount > index.projectBudget - index.fundGoal) {
-        this.fundAmount = index.projectBudget - index.fundRaised;
+        this.donatedAmount = this.donorList[i].amount + this.donatedAmount;
       } else {
-        this.fundAmount = index.fundGoal - this.donatedAmount;
+
+        this.foundationAmount = this.donorList[i].amount + this.foundationAmount;
       }
-      this.loading1 = false;
-      this.router.navigate(["/donor/donor/donorForm", { projectId: projectId, projectName: projectName, fundAmount: this.fundAmount, donationType: 'Donation' }])
-    })
+    }
+    sessionStorage.setItem("projectNameForProjectProfile", index.projectName);
+    sessionStorage.setItem("currency", index.currency);
+    sessionStorage.setItem("owner", index.owner);
+    sessionStorage.setItem("projectOwnerForProjectProfile", index.owner);
+    var projectId = index.projectId;
+    var projectName = index.projectName;
+    if (this.foundationAmount > index.projectBudget - index.fundGoal) {
+      this.fundAmount = index.projectBudget - index.fundRaised;
+    } else {
+      this.fundAmount = index.fundGoal - this.donatedAmount;
+    }
+    this.loading1 = false;
+    this.router.navigate(["/donor/donor/donorForm", { projectId: projectId, projectName: projectName, fundAmount: this.fundAmount, donationType: 'Donation' }])
+  }).catch((err) => {
+    var error = err["_body"]
+    if (error == "session expired") {
+      this.sessionSnackBar(err["_body"]);
+      this.router.navigate(['/pages/auth/login-2']);
+    } else {
+      var snackBar = this._translateService.instant("Failed to get list of donor");
+      this.openSnackBar(snackBar);
+    }
+    this.loading1 = false;
+    return Observable.throw(err)
+  })
 }
 } else {
   var data = {
     projectId: index.projectId
   }
   this.loading1 = true;
-  this.httpClient.post(this.urlPort + "/api/alldonor/getAllDonorListDB", data, { withCredentials: true })
-    .map(
-      (response) => response
-    )
-    .catch((err) => {
-      var error = err["_body"]
-      if (error == "session expired") {
-        this.sessionSnackBar(err["_body"]);
-        this.router.navigate(['/pages/auth/login-2']);
-      } else {
-        var snackBar = this._translateService.instant("Failed to get list of donor");
-        this.openSnackBar(snackBar);
-      }
-      this.loading1 = false;
-      return Observable.throw(err)
-    })
-    .subscribe(res => {
-      this.donorList = res;
+  /**
+ * @author Kuldeep
+ * @param It contains project Id in JSON format
+ * @description This function will return All the Donations to a Project.
+ */
+  this.myProjectService.getAllDonorListDB(data).then(res => {
+    this.donorList = res;
       for (var i = 0; i < this.donorList.length; i++) {
         if (this.donorList[i].donationType == "Donation") {
 
@@ -357,6 +346,17 @@ else {
       }
       this.loading1 = false;
       this.router.navigate(["/donor/donor/donorForm", { projectId: projectId, projectName: projectName, fundAmount: this.fundAmount, donationType: 'Donation' }])
+  }).catch((err) => {
+      var error = err["_body"]
+      if (error == "session expired") {
+        this.sessionSnackBar(err["_body"]);
+        this.router.navigate(['/pages/auth/login-2']);
+      } else {
+        var snackBar = this._translateService.instant("Failed to get list of donor");
+        this.openSnackBar(snackBar);
+      }
+      this.loading1 = false;
+      return Observable.throw(err)
     })
 }
 }

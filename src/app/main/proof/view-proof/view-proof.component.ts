@@ -4,13 +4,11 @@ import { ComGoAnimations } from '@ComGo/animations';
 import { MatTableDataSource } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { environment } from '../../../../environments/environment';
+import { ViewProofService } from './view-proof.service'
 import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 var introJS = require('intro.js')
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComGoConfigService } from '@ComGo/services/config.service';
 @Component({
     selector: 'app-view-proof',
@@ -30,8 +28,6 @@ export class ViewProofComponent implements OnInit {
     horizontalPosition: MatSnackBarHorizontalPosition = 'right';
     verticalPosition: MatSnackBarVerticalPosition = 'top';
     dataToShow;
-    // url = config.url;
-    // port = config.port;
     urlPort = environment.urlPort;
     currencyType;
     getDocTypes;
@@ -50,13 +46,10 @@ export class ViewProofComponent implements OnInit {
     @ViewChild('filter')
     filter: ElementRef;
 
-
-
     constructor(
+        private viewProofService: ViewProofService,
         private _ComGoConfigService: ComGoConfigService,
         private router: Router,
-        private httpClient: HttpClient,
-        private http: Http,
         private routerData: ActivatedRoute,
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
@@ -91,10 +84,12 @@ export class ViewProofComponent implements OnInit {
         this.activityId = sessionStorage.getItem("activityIdForProfile")
         this.milestoneId = sessionStorage.getItem("milestoneIdTillActivity")
         this.projectId = sessionStorage.getItem('projectIdForProjectProfile');
-        this.httpClient.get(this.urlPort + "/api/proofs/getDocType", { withCredentials: true })
-            .map(
-                (response) => response
-            )
+        
+        /**
+ * @author Kuldeep
+ * @description This function will return Document Type of Proof.
+ */
+        this.viewProofService.getDocType()
             .catch((err) => {
                 this.loading1 = false;
                 var error = err["_body"]
@@ -104,15 +99,19 @@ export class ViewProofComponent implements OnInit {
                 }
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
                 this.getDocTypes = res;
             })
         if (this.activityId) {
             this.loading1 = true;
-            this.httpClient.get(this.urlPort + "/api/proofs/all/" + this.activityId + '/' + this.projectId, { withCredentials: true })
-                .map(
-                    (response) => response
-                )
+
+            /**
+            * @author Kuldeep
+            * @param activityId Activity Id of a Activity
+            * @param projectId Project Id of a Project
+            * @description This function will return all the Submitted Proof.
+            */
+            this.viewProofService.getAllProofs(this.activityId, this.projectId)
                 .catch((err) => {
                     this.loading1 = false;
                     var error = err["_body"]
@@ -122,7 +121,7 @@ export class ViewProofComponent implements OnInit {
                     }
                     return Observable.throw(err)
                 })
-                .subscribe((res: Response) => {
+                .then(res => {
                     this.loading1 = false;
                     // this.notification.Success(res['response']);
                     // this.router.navigate(['/components/collections'])

@@ -14,6 +14,7 @@ import { MatSnackBar, MatDialog, MatSnackBarHorizontalPosition, MatSnackBarVerti
 import { environment } from '../../../../environments/environment';
 import { DialogElementsExampleDialog } from '../../dialog/dialog.component';
 import { ComGoConfigService } from '@ComGo/services/config.service';
+import { AddexpenseService } from './addexpense.service';
 
 @Component({
   selector: 'app-addexpense',
@@ -44,6 +45,7 @@ export class AddexpenseComponent implements OnInit {
    */
   horizontalPosition: MatSnackBarHorizontalPosition = 'right'; verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
+    private addExpenseService: AddexpenseService,
     private _ComGoConfigService: ComGoConfigService,
     private _formBuilder: FormBuilder,
     private _matSnackBar: MatSnackBar,
@@ -101,27 +103,28 @@ export class AddexpenseComponent implements OnInit {
     var id = this.id;
     if(this.purpose=='Update'){
     this.loading1 = true;
-    this.httpClient.get(this.urlPort + "/api/invoices/getExpenseEdit/" + id, { withCredentials: true })
-      .map(
-        (response) => response
-      )
-      .catch((err) => {
-        this.loading1 = false;
-        var error = err["_body"]
-        if (error == "session expired") {
-          this.sessionSnackBar(err["_body"]);
-          this.router.navigate(['/pages/auth/login-2']);
-        }
-        return Observable.throw(err)
-      })
-      .subscribe((res: Response) => {
-        this.loading1 = false;
+
+    /**
+ * @author Kuldeep
+ * @param id MongoId of Expense
+ * @description This function will return expense details for editing expense
+ */
+    this.addExpenseService.getExpenseEdit(id).then(res => {
+      this.loading1 = false;
         var dataOfExpenses;
         dataOfExpenses = res;
         this.form.controls['expenseItem'].setValue(dataOfExpenses[0].expenseItem);
         this.form.controls['description'].setValue(dataOfExpenses[0].description);
         this.expItem = dataOfExpenses[0].expenseItem
-      })
+    }).catch((err) => {
+      this.loading1 = false;
+      var error = err["_body"]
+      if (error == "session expired") {
+        this.sessionSnackBar(err["_body"]);
+        this.router.navigate(['/pages/auth/login-2']);
+      }
+      return Observable.throw(err)
+    })
     }
   }
 
@@ -153,27 +156,29 @@ export class AddexpenseComponent implements OnInit {
         if (addDialogResult == 'yes') {
           inv.status = 'Not Approved'
           this.loading1 = true;
-          this.httpClient.post(this.urlPort + "/api/invoices/create", inv, { withCredentials: true })
-            .map(
-              (response) => response
-            )
-            .catch((err) => {
-              this.loading1 = false;
-              var error = err["_body"]
-              if (error == "session expired") {
-                this.sessionSnackBar(err["_body"]);
-                this.router.navigate(['/pages/auth/login-2']);
-              }
-              this.openSnackBar("Some errors occurs while inserting expense");
-              return Observable.throw(err)
-            })
-            .subscribe((res: Response) => {
-              this.loading1 = false;
-              var snackBar = this._translateService.instant('Expense inserted successfully!!!');
-              this.openSnackBar(snackBar)
-              sessionStorage.setItem("backFromMilestone", "true")
-              this.router.navigate(['/expenses/expenses/viewexpenses'])
-            })
+
+          /**
+          * @author Kuldeep
+          * @param id MongoId of Expense
+          * @description This function will return expense details for editing expense
+          */
+          this.addExpenseService.createExpense(inv).then(res => {
+            this.loading1 = false;
+            var snackBar = this._translateService.instant('Expense inserted successfully!!!');
+            this.openSnackBar(snackBar)
+            sessionStorage.setItem("backFromMilestone", "true")
+            this.router.navigate(['/expenses/expenses/viewexpenses'])
+          }).catch((err) => {
+            this.loading1 = false;
+            var error = err["_body"]
+            if (error == "session expired") {
+              this.sessionSnackBar(err["_body"]);
+              this.router.navigate(['/pages/auth/login-2']);
+            }
+            this.openSnackBar("Some errors occurs while inserting expense");
+            return Observable.throw(err)
+          })
+
         } else {
           this.loading1 = false;
           var snackBar = this._translateService.instant('operation cancelled!!!');
@@ -194,11 +199,18 @@ export class AddexpenseComponent implements OnInit {
           inv._id = this.id
           inv.status = 'Expense Updated'
           this.loading1 = true;
-          this.httpClient.put(this.urlPort + "/api/invoices/", inv, { withCredentials: true })
-            .map(
-              (response) => response
-            )
-            .catch((err) => {
+          
+          /**
+          * @author Kuldeep
+          * @param inv Data of Expense
+          * @description This function will return expense details for editing expense
+          */
+          this.addExpenseService.editExpense(inv).then(res => {
+            this.loading1 = false;
+              var snackBar = this._translateService.instant("Expense Updated");
+              this.openSnackBar(snackBar)
+              this.router.navigate(["/expenses/expenses/viewexpenses"])
+          }).catch((err) => {
               this.loading1 = false;
               var error = err["_body"]
               if (error == "session expired") {
@@ -206,13 +218,6 @@ export class AddexpenseComponent implements OnInit {
                 this.router.navigate(['/pages/auth/login-2']);
               }
               return Observable.throw(err)
-            })
-            .subscribe((res: Response) => {
-              this.loading1 = false;
-              var snackBar = this._translateService.instant("Expense Updated");
-              this.openSnackBar(snackBar)
-              this.router.navigate(["/expenses/expenses/viewexpenses"])
-
             })
         } else {
           this.loading1 = false;

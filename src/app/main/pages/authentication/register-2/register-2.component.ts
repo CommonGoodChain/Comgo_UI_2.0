@@ -15,6 +15,7 @@ import { Observable } from 'rxjs/Rx';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
 import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
+import { Register2Service } from './register2.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 @Component({
     selector: 'register-2',
@@ -48,6 +49,7 @@ export class Register2Component implements OnInit {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
+        private register2Service: Register2Service,
         private httpClient: HttpClient,
         private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
@@ -154,24 +156,22 @@ export class Register2Component implements OnInit {
         // $('#idNumber').hide();
         // $("#countryCode").prop("disabled", true);
         // $('#country').hide();
-        /**
-    * @author: Madhu
-    * @argument:none
-    * @description:Get data of Country
-    */
         var countryBody = {
             sessionCheck: false
         }
-        this.http.post(this.urlPort + "/api/country/all", countryBody)
-            .map(
-                (response) => response.json()
-            )
-            .catch((err) => {
+        
+        /**
+ * @author Kuldeep
+ * @param: countryBody- JSON  consist of sessionCheck
+ * @description This function will return all the country names
+ */
+        this.register2Service.getCountryNames(countryBody)
+        .catch((err) => {
                 var snackBar = this._translateService.instant("Failed to get country data");
                 this.openSnackBar(snackBar);
                 return Observable.throw(err)
             })
-            .subscribe(res => {
+            .then(res => {
                 this.getCountry = res;
                 this.countryArray = this.getCountry
             })
@@ -184,16 +184,19 @@ export class Register2Component implements OnInit {
         var countryCodesBody = {
             sessionCheck: false
         }
-        this.http.post(this.urlPort + "/api/country/countryCodes", countryCodesBody)
-            .map(
-                (response) => response.json()
-            )
-            .catch((err) => {
+
+        /**
+ * @author Kuldeep
+ * @param: countryCodesBody- JSON  consist of sessionCheck
+ * @description This function will return all the country codes
+ */
+        this.register2Service.getCountryCodes(countryCodesBody)
+        .catch((err) => {
                 var snackBar = this._translateService.instant("Failed to get country codes");
                 this.openSnackBar(snackBar);
                 return Observable.throw(err)
             })
-            .subscribe(res => {
+            .then(res => {
                 this.getCountryCodes = res;
             })
 
@@ -249,9 +252,13 @@ export class Register2Component implements OnInit {
         data.role = data.userType;
         data.createFlag = 1; //does not check if user first login
         // this.loading1 = true;
-        this.http.get("https://ipinfo.io/")
-            .subscribe(
-                (res: Response) => {
+
+        /**
+        * @author Kuldeep
+        * @description This function will return Current Location of the system.
+        */
+        this.register2Service.getCurrentLocation()
+            .then(res => {
                     this.myip = res.json().loc;
                     data.location = this.myip;
                     this.mylat = parseFloat(this.myip.split(",")[0]);
@@ -264,17 +271,20 @@ export class Register2Component implements OnInit {
                             this.loading1 = true;
                             data.phone = data.countryCode + data.phone
                             data.sessionCheck = true
-                            this.http.post(this.urlPort + "/api/users/register", data, { headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-                                .map(
-                                    (response) => response.json()
-                                )
-                                .catch((err) => {
+
+                            /**
+                            * @author Kuldeep
+                            * @param: data- JSON  consist of user data
+                            * @description This function will register user
+                            */
+                            this.register2Service.register(data)
+                            .catch((err) => {
                                     this.loading1 = false;
                                     var snackBar = this._translateService.instant(err['_body']);
                                     this.openSnackBar(snackBar)
                                     return Observable.throw(err)
                                 })
-                                .subscribe((res: Response) => {
+                                .then(res => {
 
                                     if (res["error"]) {
                                         this.loading1 = false;
@@ -295,17 +305,20 @@ export class Register2Component implements OnInit {
                         this.loading1 = true;
                         data.phone = data.countryCode + data.phone
                         data.sessionCheck = true
-                        this.http.post(this.urlPort + "/api/users/register", data, { headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
-                            .map(
-                                (response) => response.json()
-                            )
-                            .catch((err) => {
+
+                        /**
+                        * @author Kuldeep
+                        * @param: data- JSON  consist of user data
+                        * @description This function will register user
+                        */
+                        this.register2Service.register(data)
+                        .catch((err) => {
                                 this.loading1 = false;
                                 var snackBar = this._translateService.instant(err['_body']);
                                 this.openSnackBar(snackBar)
                                 return Observable.throw(err)
                             })
-                            .subscribe((res: Response) => {
+                            .then(res => {
 
                                 if (res["error"]) {
                                     this.loading1 = false;

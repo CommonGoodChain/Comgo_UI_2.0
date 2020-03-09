@@ -12,6 +12,7 @@ import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loade
 import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
+import { ForgotPassword2Service } from './forgot-password2.service'
 
 @Component({
     selector: 'forgot-password-2',
@@ -32,6 +33,7 @@ export class ForgotPassword2Component implements OnInit {
      * @param {FormBuilder} _formBuilder
      */
     constructor(
+        private forgotPassword2Service: ForgotPassword2Service,
         private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
         private httpClient: HttpClient,
@@ -83,11 +85,14 @@ export class ForgotPassword2Component implements OnInit {
 
         // this.http.post(this.urlPort + "/api/users/validateUser", userdata, { withCredentials: true, headers: new Headers({ 'Authorization': 'Bearer ' + sessionStorage.getItem('token') }) })
         this.loading1 = true;
-        this.httpClient.post(this.urlPort + "/api/users/validateUser", userdata, { withCredentials: true })
-            .map(
-                (response) => response
-            )
-            .catch((err) => {
+
+        /**
+ * @author Kuldeep
+ * @param: userdata- JSON  consist of username and url.
+ * @description This function will check if user presents.
+ */
+        this.forgotPassword2Service.validateUser(userdata)
+        .catch((err) => {
                 this.loading1 = false;
                 var snackBar = this._translateService.instant("User not found");
                 this.openSnackBar(snackBar)
@@ -95,7 +100,7 @@ export class ForgotPassword2Component implements OnInit {
                 // this.notification.Info(err['_body']);
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then(res => {
                 var passwordReset = this._translateService.instant('Password reset link has been sent on');
                 var mailId = res['accepted'][0];
                 var secureIdStart = mailId.substring(0, 3);

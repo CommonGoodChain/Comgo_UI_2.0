@@ -15,6 +15,7 @@ import { locale as english } from '../../../layout/i18n/en';
 import { locale as spanish } from '../../../layout/i18n/tr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComGoConfigService } from '@ComGo/services/config.service';
+import { ViewexpensesService } from './viewexpenses.service'
 var introJS = require('intro.js')
 
 @Component({
@@ -53,9 +54,9 @@ export class ViewexpensesComponent implements OnInit {
     userRules;
 
     constructor(
+        private viewExpensesService: ViewexpensesService,
         private _ComGoConfigService: ComGoConfigService,
         private router: Router,
-        private httpClient: HttpClient,
         private _matSnackBar: MatSnackBar,
         public dialog: MatDialog,
         private _translateService: TranslateService,
@@ -195,11 +196,18 @@ export class ViewexpensesComponent implements OnInit {
 
     getExpenses() {
             this.loading1 = true;
-            this.httpClient.get(this.urlPort + "/api/invoices/allById/" + sessionStorage.getItem("activityIdForProfile"), { withCredentials: true })
-                .map(
-                    (response) => response
-                )
-                .catch((err) => {
+
+            /**
+            * @author Kuldeep
+            * @description This function will return all the Expenses of a activity
+            */
+            this.viewExpensesService.getExpenses().then(res=>{
+                this.loading1 = false;
+                    this.dataOfExpenses = res;
+                    this.dataSource = new MatTableDataSource(this.dataOfExpenses);
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.sort = this.sort;
+            }).catch((err) => {
                     this.loading1 = false;
                     var error = err["_body"]
                     if (error == "session expired") {
@@ -208,13 +216,6 @@ export class ViewexpensesComponent implements OnInit {
                     }
 
                     return Observable.throw(err)
-                })
-                .subscribe((res: Response) => {
-                    this.loading1 = false;
-                    this.dataOfExpenses = res;
-                    this.dataSource = new MatTableDataSource(this.dataOfExpenses);
-                    this.dataSource.paginator = this.paginator;
-                    this.dataSource.sort = this.sort;
                 })
     }
 
@@ -284,26 +285,27 @@ export class ViewexpensesComponent implements OnInit {
                 milestoneStatus : sessionStorage.getItem("milestoneStatusTillActivity"),
                 projectStatus : sessionStorage.getItem("projectStatusForProjectProfile")
                 }
-                this.httpClient.post(this.urlPort + "/api/milestone/BKCFundRequest", requestData, { withCredentials: true })
-                    .map(
-                        (response) => response
-                    )
-                    .catch((err) => {
-                        this.loading1 = false;
-                        var error = err["_body"]
-                        if (error == "session expired") {
-                            this.sessionSnackBar(err["_body"]);
-                            this.router.navigate(['/pages/auth/login-2']);
-                        }
-                        return Observable.throw(err)
-                    })
-                    .subscribe((res: Response) => {
-                        var fundRequested = this._translateService.instant('Fund Requested');
+
+                /**
+                * @author Kuldeep
+                * @param requestData is of type json contains activityId,status,Fund Amount,Activity Name, Milestone Status, Project Status
+                * @description This function will request fund for activity
+                */
+                this.viewExpensesService.requestFund(requestData).then(res=>{
+                    var fundRequested = this._translateService.instant('Fund Requested');
                         this.loading1 = false;
                         this.openSnackBar(fundRequested);
                         sessionStorage.setItem("backFromMilestone", "true")
                         this.router.navigate(['/pages/profile'])
-                    })
+                }).catch((err) => {
+                    this.loading1 = false;
+                    var error = err["_body"]
+                    if (error == "session expired") {
+                        this.sessionSnackBar(err["_body"]);
+                        this.router.navigate(['/pages/auth/login-2']);
+                    }
+                    return Observable.throw(err)
+                })
             } else {
                 this.loading1 = false;
                 var snackBar = this._translateService.instant('operation cancelled!!!');
@@ -327,22 +329,26 @@ export class ViewexpensesComponent implements OnInit {
             this.deleteDialogResult = result;
             if (this.deleteDialogResult == 'yes') {
                 this.loading1 = true;
-                this.httpClient.delete(this.urlPort + "/api/invoices/" + document._id, { withCredentials: true })
-                    .catch((err) => {
-                        this.loading1 = false;
-                        var error = err["_body"]
-                        if (error == "session expired") {
-                            this.sessionSnackBar(err["_body"]);
-                            this.router.navigate(['/pages/auth/login-2']);
-                        }
-                        return Observable.throw(err)
-                    })
-                    .subscribe((res: Response) => {
-                        this.loading1 = false;
+
+                /**
+                * @author Kuldeep
+                * @param id MongoId of a Expense
+                * @description This function will delete the Expense
+                */
+                this.viewExpensesService.deleteExpense(document._id).then(res=>{
+                    this.loading1 = false;
                         var snackbar = this._translateService.instant('Expense deleted!!!');
                         this.openSnackBar(snackbar)
                         this.ngOnInit();
-                    })
+                }).catch((err) => {
+                    this.loading1 = false;
+                    var error = err["_body"]
+                    if (error == "session expired") {
+                        this.sessionSnackBar(err["_body"]);
+                        this.router.navigate(['/pages/auth/login-2']);
+                    }
+                    return Observable.throw(err)
+                })
             } else {
                 this.loading1 = false;
                 var snackBar = this._translateService.instant('operation cancelled!!!');
@@ -364,83 +370,6 @@ export class ViewexpensesComponent implements OnInit {
             verticalPosition: this.verticalPosition,
         });
     }
-
-
-    // expenseStatusChange(data, status) {
-    //     if (status == "Approved") {
-    //         data.expenseStatus = "Approved"
-    //         let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
-    //             width: '500px',
-    //             height: '200px',
-    //             data: { operation: 'expenseApprove' }
-    //         });
-    //         dialogRef.afterClosed().subscribe(result => {
-    //             this.expenseApproveDialogResult = result;
-    //             if (this.expenseApproveDialogResult.ans == 'yes') {
-    //                 data.remarks = this.expenseApproveDialogResult.remarks;
-    //                 this.httpClient.put(this.urlPort + "/api/invoices/changeExpenseStatus", data, { withCredentials: true })
-    //                     .map(
-    //                         (response) => response
-    //                     )
-    //                     .catch((err) => {
-    //                         this.loading1 = false;
-    //                         var error = err["_body"]
-    //                         if (error == "session expired") {
-    //                             this.sessionSnackBar(err["_body"]);
-    //                             this.router.navigate(['/pages/auth/login-2']);
-    //                         }
-    //                         return Observable.throw(err)
-    //                     })
-    //                     .subscribe((res: Response) => {
-    //                         this.loading1 = false;
-    //                         var snackBar = this._translateService.instant("Expense Approved");
-    //                         this.openSnackBar(snackBar)
-    //                         this.ngOnInit();
-    //                     })
-    //             } else {
-    //                 this.loading1 = false;
-    //                 var snackBar = this._translateService.instant('operation cancelled!!!');
-    //                 this.openSnackBar(snackBar)
-    //             }
-    //         })
-    //     } else {
-    //         data.expenseStatus = "Rejected"
-    //         let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
-    //             width: '500px',
-    //             height: '200px',
-    //             data: { operation: 'expenseReject' }
-    //         });
-    //         dialogRef.afterClosed().subscribe(result => {
-    //             this.expenseApproveDialogResult = result;
-    //             if (this.expenseApproveDialogResult.ans == 'yes') {
-    //                 data.remarks = this.expenseApproveDialogResult.remarks;
-    //                 this.httpClient.put(this.urlPort + "/api/invoices/changeExpenseStatus", data, { withCredentials: true })
-    //                     .map(
-    //                         (response) => response
-    //                     )
-    //                     .catch((err) => {
-    //                         this.loading1 = false;
-    //                         var error = err["_body"]
-    //                         if (error == "session expired") {
-    //                             this.sessionSnackBar(err["_body"]);
-    //                             this.router.navigate(['/pages/auth/login-2']);
-    //                         }
-    //                         return Observable.throw(err)
-    //                     })
-    //                     .subscribe((res: Response) => {
-    //                         this.loading1 = false;
-    //                         var snackBar = this._translateService.instant("Expense Rejected");
-    //                         this.openSnackBar(snackBar)
-    //                         this.ngOnInit();
-    //                     })
-    //             } else {
-    //                 this.loading1 = false;
-    //                 var snackBar = this._translateService.instant('operation cancelled!!!');
-    //                 this.openSnackBar(snackBar)
-    //             }
-    //         })
-    //     }
-    // }
 
     backToMilestone() {
         sessionStorage.setItem("backFromMilestone", "true")

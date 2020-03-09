@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatDialog, MatSnackBarVerti
 import { ComGoTranslationLoaderService } from '@ComGo/services/translation-loader.service';
 import { locale as english } from '../../../../layout/i18n/en';
 import { locale as spanish } from '../../../../layout/i18n/tr';
+import { Login2Service } from './login2.service'
 var introJS = require('intro.js')
 
 @Component({
@@ -50,6 +51,7 @@ export class Login2Component implements OnInit {
     public loading1 = false;
 
     constructor(
+        private login2Service: Login2Service,
         private _ComGoConfigService: ComGoConfigService,
         private _formBuilder: FormBuilder,
         private routerData: ActivatedRoute,
@@ -106,13 +108,19 @@ export class Login2Component implements OnInit {
             var BKCAllByParamsData = {
                 "projId": this.projectId
               }
-              this.http.post(this.urlPort + "/api/projects/BKCGetAllDetailsByParamsWeb", BKCAllByParamsData, { withCredentials: true })
-                    .catch((err) => {
+
+              /**
+              * @author Kuldeep
+              * @param: data- JSON  consist of projectId
+              * @description This function will return Project Details
+              */
+             this.login2Service.getProjectDetails(BKCAllByParamsData)
+             .catch((err) => {
                             this.openSnackBar("Failed to get Project Details");
                             this.loading1 = false;
                             return Observable.throw(err)
                         })
-                        .subscribe(res => {
+                        .then(res => {
                   this.dataOfProjectByProjectId.push(JSON.parse(res["_body"]));
                   console.log("this.dataOfProjectByProjectId: ",this.dataOfProjectByProjectId[0])
                   this.loading1 = false;
@@ -172,7 +180,7 @@ export class Login2Component implements OnInit {
                 },
                 {
                     element: '#loginButton',
-                    intro: 'User can log into ComGo by clicking here.',
+                    intro: 'User can log into Comgo by clicking here.',
                     position: 'left'
                 },
                 {
@@ -196,17 +204,20 @@ export class Login2Component implements OnInit {
             "username": data.username,
             "sessionCheck": true
         }
-        this.http.post(this.urlPort + "/api/users/getUserDetails", body, { withCredentials: true })
-            .map(
-                (response) => response.json()
-            )
-            .catch((err) => {
+
+        /**
+        * @author Kuldeep
+        * @param: body- JSON  consist of username
+        * @description This function will return User Details
+        */
+       this.login2Service.getUserDetails(body)
+       .catch((err) => {
                 this.loading1 = false;
                 var snackBar = this._translateService.instant("Username or Password is Incorrect");
                 this.openSnackBar(snackBar)
                 return Observable.throw(err)
             })
-            .subscribe((res: Response) => {
+            .then((res: Response) => {
                 // var userCheck = res['createFlag'];
                 // this.regUser = res['regUser'];
                 sessionStorage.setItem("foundationName", res['foundationName'])
@@ -222,27 +233,35 @@ export class Login2Component implements OnInit {
                 //     this.loading1 = false
                 //     this.openSnackBar("Your Account has been Deactivated");
                 // }
-                    this.http.get("https://ipinfo.io/")
-                        .subscribe(
-                            (res: Response) => {
+
+                /**
+                * @author Kuldeep
+                * @description This function will return Current Location of the system.
+                */
+                this.login2Service.getCurrentLocation()
+                .then(
+                        (res: Response) => {
                                 this.myip = res.json().loc;
                                 data.latitude = parseFloat(this.myip.split(",")[0]);
                                 data.longitude = parseFloat(this.myip.split(",")[1]);
                                 data.ip = window.location.origin
                                 if(this.projectId != undefined && this.projectId != null && this.projectId != ''){
-                                this.http.post(this.urlPort + "/api/users/authenticate", data, { withCredentials: true })
-                                    // this.http.post(this.urlPort + "/login", data, { withCredentials: true })
-                                    .map(
-                                        (response) => response.json()
-                                    )
+
+                                /**
+                                * @author Kuldeep
+                                * @param: data- JSON  consist of username and password
+                                * @description This function is used to authenticate user
+                                */
+                               this.login2Service.authenticate(data)
                                     .catch((err) => {
                                         this.loading1 = false;
                                         this.openSnackBar('Username or Password is incorrect.');
                                         return Observable.throw(err)
                                     })
-                                    .subscribe((res: Response) => {
+                                    .then((res: Response) => {
                                         var userRules: any
                                         var rules: any
+                                        console.log("res: ",res)
                                         sessionStorage.setItem("role", "xyz")
                                         sessionStorage.setItem("username", res["username"])
                                         sessionStorage.setItem("token", res["userToken"])
@@ -269,7 +288,7 @@ export class Login2Component implements OnInit {
                                             // } else {
                                             //     sessionStorage.setItem("orgName", '') 
                                             // }
-                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "ComGo", addProjByNgo: "true" }]);    
+                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "comgo", addProjByNgo: "true" }]);    
                                             if (res["regUser"] == 0) {
                                                 this.openSnackBar('User Deactivated');
                                             } else {
@@ -277,11 +296,15 @@ export class Login2Component implements OnInit {
                                                     projectId: this.projectId
                                                   }
                                                   this.loading1 = true;
-                                                  this.httpClient.post(this.urlPort + "/api/alldonor/getAllDonorListDB", data, { withCredentials: true })
-                                                    .map(
-                                                      (response) => response
-                                                    )
-                                                    .catch((err) => {
+
+                                                  /**
+                                                  * @author Kuldeep
+                                                  * @param: data- JSON  consist of projectId
+                                                  * @description This function will return Donations of a project
+                                                  */
+
+                                                this.login2Service.getAllDonorListDB(data)
+                                                 .catch((err) => {
                                                         console.log("getAllDonorListDB error")
                                                       var error = err["_body"]
                                                       if (error == "session expired") {
@@ -294,7 +317,7 @@ export class Login2Component implements OnInit {
                                                       this.loading1 = false;
                                                       return Observable.throw(err)
                                                     })
-                                                    .subscribe(res => {
+                                                    .then(res => {
                                                       this.donorList = res;
                                                       console.log("getAllDonorListDB: ",this.donorList)
                                                       for (var i = 0; i < this.donorList.length; i++) {
@@ -330,19 +353,22 @@ export class Login2Component implements OnInit {
                                         }
                                     })
                                 } else {
-                                    this.http.post(this.urlPort + "/api/users/authenticate", data, { withCredentials: true })
-                                    // this.http.post(this.urlPort + "/login", data, { withCredentials: true })
-                                    .map(
-                                        (response) => response.json()
-                                    )
+
+                                    /**
+                                    * @author Kuldeep
+                                    * @param: data- JSON  consist of username and password
+                                    * @description This function is used to authenticate user
+                                    */
+                                   this.login2Service.authenticate(data)
                                     .catch((err) => {
                                         this.loading1 = false;
                                         this.openSnackBar('Username or Password is incorrect.');
                                         return Observable.throw(err)
                                     })
-                                    .subscribe((res: Response) => {
+                                    .then((res: Response) => {
                                         var userRules: any
                                         var rules: any
+                                        console.log("res: ",res)
                                         sessionStorage.setItem("role", "xyz")
                                         sessionStorage.setItem("username", res["username"])
                                         sessionStorage.setItem("token", res["userToken"])
@@ -369,7 +395,7 @@ export class Login2Component implements OnInit {
                                             // } else {
                                             //     sessionStorage.setItem("orgName", '') 
                                             // }
-                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "ComGo", addProjByNgo: "true" }]);    
+                                            // this.router.navigate(["/projects/project/addproject", { operationalFlag: 0, ProjectName: "comgo", addProjByNgo: "true" }]);    
                                             if (res["regUser"] == 0) {
                                                 this.openSnackBar('User Deactivated');
                                             } else {
